@@ -1,6 +1,7 @@
 // src/App.jsx
 import { BrowserRouter, Routes, Route, Navigate, Link, useLocation } from "react-router-dom";
 import { useCart } from "./context/CartContext";
+import { CartProvider } from './context/CartContext';
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import RestaurantDetail from "./pages/RestaurantDetail";
