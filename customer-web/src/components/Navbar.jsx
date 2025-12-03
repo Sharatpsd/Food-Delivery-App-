@@ -1,177 +1,81 @@
 // src/components/Navbar.jsx
 import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useCart } from "../context/CartContext";
+import { Search, MapPin } from "lucide-react";
+
+const mainLinks = ["Home", "Search", "Offers", "Become a Partner", "Help"];
 
 export default function Navbar() {
-  const { cart } = useCart();
-  const location = useLocation();
-  const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
-
-  // Login page এ navbar দেখাবো না
-  if (location.pathname === "/login") return null;
-
-  const cartCount = cart.reduce((sum, item) => sum + item.qty, 0);
-
-  const handleLogout = () => {
-    localStorage.removeItem("access");
-    localStorage.removeItem("refresh");
-    navigate("/login");
-    window.location.reload();
-  };
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <nav className="bg-white shadow-md fixed top-0 left-0 right-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16 items-center">
-          {/* Brand */}
-          <Link
-            to="/"
-            className="text-2xl sm:text-3xl font-extrabold text-orange-600 tracking-tight"
-          >
-            FoodExpress
-          </Link>
-
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-8">
-            <Link
-              to="/"
-              className={`font-medium hover:text-orange-600 ${
-                location.pathname === "/" ? "text-orange-600" : "text-gray-700"
-              }`}
-            >
-              Home
-            </Link>
-            <Link
-              to="/orders"
-              className={`font-medium hover:text-orange-600 ${
-                location.pathname.startsWith("/orders")
-                  ? "text-orange-600"
-                  : "text-gray-700"
-              }`}
-            >
-              My Orders
-            </Link>
-
-            {/* Cart Icon */}
-            <Link to="/cart" className="relative">
-              <svg
-                className="w-7 h-7 text-gray-700"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                />
-              </svg>
-              {cartCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                  {cartCount}
-                </span>
-              )}
-            </Link>
-
-            <button
-              onClick={handleLogout}
-              className="bg-red-500 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-red-600 transition"
-            >
-              Logout
-            </button>
+    <header className="sticky top-0 z-40 bg-white border-b border-gray-100">
+      <nav className="max-w-6xl mx-auto px-4 lg:px-0 h-16 flex items-center justify-between">
+        {/* logo */}
+        <div className="flex items-center gap-2">
+          <div className="w-9 h-9 rounded-2xl bg-gradient-to-br from-pink-500 to-pink-600 flex items-center justify-center">
+            <span className="text-white font-bold text-lg">F</span>
           </div>
-
-          {/* Mobile Right Side */}
-          <div className="md:hidden flex items-center gap-4">
-            {/* Cart (mobile) */}
-            <Link to="/cart" className="relative">
-              <svg
-                className="w-7 h-7 text-gray-700"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                />
-              </svg>
-              {cartCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                  {cartCount}
-                </span>
-              )}
-            </Link>
-
-            {/* Hamburger */}
-            <button
-              onClick={() => setOpen(!open)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:bg-gray-100 focus:outline-none"
-            >
-              {open ? (
-                <svg
-                  className="h-6 w-6"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  fill="none"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              ) : (
-                <svg
-                  className="h-6 w-6"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  fill="none"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                </svg>
-              )}
-            </button>
-          </div>
+          <span className="text-2xl font-extrabold text-pink-600 tracking-tight">
+            FoodDash
+          </span>
         </div>
-      </div>
 
-      {/* Mobile Dropdown Menu */}
-      {open && (
-        <div className="md:hidden bg-white border-t border-gray-200 shadow-md">
-          <div className="px-4 py-3 space-y-3">
-            <Link
-              to="/"
-              onClick={() => setOpen(false)}
-              className="block text-gray-700 font-medium hover:text-orange-600"
+        {/* center links – desktop */}
+        <ul className="hidden md:flex items-center gap-6 text-sm font-semibold text-gray-800">
+          {mainLinks.map((item) => (
+            <li
+              key={item}
+              className="cursor-pointer hover:text-pink-600 transition-colors"
             >
-              Home
-            </Link>
-            <Link
-              to="/orders"
-              onClick={() => setOpen(false)}
-              className="block text-gray-700 font-medium hover:text-orange-600"
-            >
-              My Orders
-            </Link>
-            <button
-              onClick={handleLogout}
-              className="w-full text-left bg-red-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-red-600"
-            >
-              Logout
-            </button>
-          </div>
+              {item}
+            </li>
+          ))}
+        </ul>
+
+        {/* right side actions – desktop */}
+        <div className="hidden md:flex items-center gap-3">
+          <button className="inline-flex items-center gap-2 bg-pink-600 hover:bg-pink-700 text-white text-sm font-semibold px-4 py-2.5 rounded-full transition">
+            <MapPin size={18} />
+            <span>Choose location</span>
+          </button>
+          <button className="w-9 h-9 rounded-full flex items-center justify-center border border-gray-300 hover:border-pink-500 hover:text-pink-600 transition">
+            <Search size={18} />
+          </button>
+        </div>
+
+        {/* mobile menu button */}
+        <button
+          className="md:hidden w-9 h-9 flex items-center justify-center rounded-full border border-gray-300"
+          onClick={() => setMobileOpen((v) => !v)}
+        >
+          <span className="block w-4 h-[2px] bg-gray-800 relative">
+            <span className="absolute -top-1.5 left-0 w-4 h-[2px] bg-gray-800" />
+            <span className="absolute top-1.5 left-0 w-4 h-[2px] bg-gray-800" />
+          </span>
+        </button>
+      </nav>
+
+      {/* mobile dropdown */}
+      {mobileOpen && (
+        <div className="md:hidden border-t border-gray-100 bg-white">
+          <ul className="px-4 py-3 space-y-2 text-sm font-semibold text-gray-800">
+            {mainLinks.map((item) => (
+              <li
+                key={item}
+                className="py-1 cursor-pointer hover:text-pink-600 transition-colors"
+              >
+                {item}
+              </li>
+            ))}
+            <li className="pt-2">
+              <button className="w-full inline-flex items-center justify-center gap-2 bg-pink-600 hover:bg-pink-700 text-white text-sm font-semibold px-5 py-2.5 rounded-full transition">
+                <MapPin size={18} />
+                <span>Choose location</span>
+              </button>
+            </li>
+          </ul>
         </div>
       )}
-    </nav>
+    </header>
   );
 }

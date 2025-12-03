@@ -16,6 +16,6 @@ urlpatterns = [
     path('api/delivery/', include('delivery.urls')),
 ]
 
-# MEDIA ফাইল সার্ভ করার জন্য (ইমেজ দেখানোর জন্য জরুরি!)
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

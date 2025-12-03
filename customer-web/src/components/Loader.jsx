@@ -1,7 +1,9 @@
 export default function Loader() {
   return (
-    <div className="flex justify-center items-center py-32">
-      <div className="animate-spin rounded-full h-20 w-20 border-t-4 border-b-4 border-orange-600"></div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 animate-pulse p-4">
+      {Array.from({ length: 6 }).map((_, i) => (
+        <div key={i} className="bg-gray-200 h-64 rounded-xl" />
+      ))}
     </div>
   );
 }

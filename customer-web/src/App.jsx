@@ -1,9 +1,9 @@
 // src/App.jsx
 import { Routes, Route, Navigate } from "react-router-dom";
+import { CartProvider } from "./context/CartContext";
+
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-
-import { CartProvider } from "./context/CartContext";
 
 import Login from "./pages/Login";
 import Home from "./pages/Home";
@@ -26,45 +26,36 @@ export default function App() {
 
       <div className="pt-20 min-h-screen bg-gray-50">
         <Routes>
-          {/* Public Routes */}
           <Route path="/" element={<Home />} />
           <Route path="/restaurant/:id" element={<RestaurantDetail />} />
-
-          {/* Login */}
-          <Route 
-            path="/login" 
-            element={!token ? <Login /> : <Navigate to="/" />} 
+          <Route
+            path="/login"
+            element={!token ? <Login /> : <Navigate to="/" />}
           />
-
-          {/* Protected Routes */}
-          <Route 
-            path="/cart" 
+          <Route
+            path="/cart"
             element={
               <RequireAuth>
                 <Cart />
               </RequireAuth>
-            } 
+            }
           />
-
-          <Route 
-            path="/checkout" 
+          <Route
+            path="/checkout"
             element={
               <RequireAuth>
                 <Checkout />
               </RequireAuth>
-            } 
+            }
           />
-
-          <Route 
-            path="/orders" 
+          <Route
+            path="/orders"
             element={
               <RequireAuth>
                 <Orders />
               </RequireAuth>
-            } 
+            }
           />
-
-          {/* Fallback */}
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>

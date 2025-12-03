@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from cloudinary.models import CloudinaryField   
 
 class Restaurant(models.Model):
     owner = models.ForeignKey(
@@ -9,11 +10,11 @@ class Restaurant(models.Model):
     )
 
     name = models.CharField(max_length=255)
-    logo = models.ImageField(upload_to="restaurant_logos/", blank=True)
+    logo = CloudinaryField('logo', blank=True, null=True)  
     address = models.TextField()
     rating = models.FloatField(default=0.0)
 
-    # 🔥 New fields
+    # New fields
     avg_cost = models.CharField(max_length=100, blank=True)
     theme = models.CharField(max_length=255, blank=True)
     must_try = models.CharField(max_length=255, blank=True)

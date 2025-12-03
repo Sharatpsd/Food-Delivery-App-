@@ -4,18 +4,23 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Restaurant
 from .serializers import RestaurantSerializer
-from users.permissions import IsRestaurantOwner 
+from users.permissions import IsRestaurantOwner
 
+
+# All restaurants (for customer app)
 class RestaurantListView(generics.ListAPIView):
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
 
 
+# Single restaurant detail
 class RestaurantDetailView(generics.RetrieveAPIView):
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
+    lookup_field = 'id'
 
 
+# Create new restaurant (only authenticated user)
 class RestaurantCreateView(generics.CreateAPIView):
     serializer_class = RestaurantSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -28,13 +33,14 @@ class MyRestaurantView(APIView):
     permission_classes = [permissions.IsAuthenticated, IsRestaurantOwner]
 
     def get(self, request):
-        try:
-            restaurant = Restaurant.objects.get(owner=request.user)
-        except Restaurant.DoesNotExist:
+       
+        restaurant = Restaurant.objects.filter(owner=request.user).first()
+        
+        if not restaurant:
             return Response(
-                {"detail": "No restaurant found. Create one first."},
+                {"detail": "No restaurant found. Please create one first."},
                 status=status.HTTP_404_NOT_FOUND
             )
 
         serializer = RestaurantSerializer(restaurant)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
