@@ -1,19 +1,47 @@
-from rest_framework import permissions
+from rest_framework.permissions import BasePermission, SAFE_METHODS
 
-class IsOwnerOrReadOnly(permissions.BasePermission):
+class IsOwnerOrReadOnly(BasePermission):
+    """
+    Allow read-only access to everyone,
+    but write/delete access only to the owner of the object.
+    """
     def has_object_permission(self, request, view, obj):
-        if request.method in permissions.SAFE_METHODS:
+        if request.method in SAFE_METHODS:
             return True
-        return obj.owner == request.user
+        return hasattr(obj, "owner") and obj.owner == request.user
 
-class IsRestaurantOwner(permissions.BasePermission):
-    def has_permission(self, request, view):
-        return request.user.is_authenticated and request.user.role == 'restaurant'
 
-class IsDeliveryBoy(permissions.BasePermission):
+class IsRestaurantOwner(BasePermission):
+    """
+    Only users with role 'restaurant'
+    """
     def has_permission(self, request, view):
-        return request.user.is_authenticated and request.user.role == 'delivery'
+        return bool(
+            request.user and
+            request.user.is_authenticated and
+            getattr(request.user, "role", None) == "restaurant"
+        )
 
-class IsCustomer(permissions.BasePermission):
+
+class IsDeliveryBoy(BasePermission):
+    """
+    Only delivery role users.
+    """
     def has_permission(self, request, view):
-        return request.user.is_authenticated and request.user.role == 'customer'
+        return bool(
+            request.user and
+            request.user.is_authenticated and
+            getattr(request.user, "role", None) == "delivery"
+        )
+
+
+class IsCustomer(BasePermission):
+    """
+    Only customer role users.
+    """
+    def has_permission(self, request, view):
+        return bool(
+            request.user and
+            request.user.is_authenticated and
+            getattr(request.user, "role", None) == "customer"
+        )

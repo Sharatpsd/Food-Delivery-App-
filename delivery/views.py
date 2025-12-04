@@ -1,29 +1,27 @@
-from rest_framework import generics, status
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
-from users.permissions import IsDeliveryBoy
+from rest_framework import generics, permissions
 from orders.models import Order
-from orders.serializers import OrderSerializer
+from .serializers import DeliveryOrderSerializer
+from users.permissions import IsDeliveryBoy
+from rest_framework.response import Response
+from rest_framework import status
 
 class DeliveryBoyOrdersView(generics.ListAPIView):
-    serializer_class = OrderSerializer
-    permission_classes = [IsAuthenticated, IsDeliveryBoy]
+    serializer_class = DeliveryOrderSerializer
+    permission_classes = [permissions.IsAuthenticated, IsDeliveryBoy]
 
     def get_queryset(self):
-        return Order.objects.filter(
-            assigned_delivery_boy=self.request.user,
-            status__in=['accepted', 'cooking', 'on_the_way']
-        )
+        return Order.objects.filter(assigned_delivery_boy=self.request.user).order_by('-created_at')
+
 
 class DeliverOrderView(generics.UpdateAPIView):
+    serializer_class = DeliveryOrderSerializer
+    permission_classes = [permissions.IsAuthenticated, IsDeliveryBoy]
     queryset = Order.objects.all()
-    serializer_class = OrderSerializer
-    permission_classes = [IsAuthenticated, IsDeliveryBoy]
 
-    def partial_update(self, request, *args, **kwargs):
+    def perform_update(self, serializer):
         order = self.get_object()
-        if order.assigned_delivery_boy != request.user:
-            return Response({"detail": "Not assigned to you"}, status=403)
-        order.status = 'delivered'
-        order.save()
-        return Response({"detail": "Order delivered successfully"})
+        # ensure order is assigned to this delivery boy
+        if order.assigned_delivery_boy != self.request.user:
+            raise PermissionError("This order is not assigned to you.")
+        # update to delivered (or whatever status passed)
+        serializer.save(status="delivered")

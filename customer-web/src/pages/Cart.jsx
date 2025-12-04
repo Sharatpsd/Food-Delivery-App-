@@ -1,36 +1,57 @@
-// src/pages/Cart.jsx
-import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import { Link } from "react-router-dom";
 
 export default function Cart() {
-  const { cart, updateQty, clearCart, total } = useCart();
+  const {
+    cart,
+    increaseQty,
+    decreaseQty,
+    removeFromCart,
+    totalPrice,
+  } = useCart();
 
-  if (cart.length === 0) {
-    return <div className="text-center text-2xl mt-20">Your cart is empty</div>;
-  }
+  if (cart.length === 0)
+    return (
+      <div className="p-5 text-center">
+        <h2>Your cart is empty 😔</h2>
+      </div>
+    );
 
   return (
-    <div className="p-8 max-w-4xl mx-auto">
-      <h1 className="text-4xl font-bold mb-8">Your Cart</h1>
-      {cart.map(item => (
-        <div key={item.id} className="flex justify-between items-center bg-white p-4 mb-4 rounded shadow">
+    <div className="p-5">
+      <h2 className="text-xl font-bold mb-3">Your Cart</h2>
+
+      {cart.map((item) => (
+        <div
+          key={item.id}
+          className="flex justify-between items-center bg-white p-3 rounded shadow mb-3"
+        >
           <div>
-            <h3 className="text-xl font-semibold">{item.title}</h3>
-            <p>৳{item.price} × {item.qty}</p>
+            <h3 className="font-semibold">{item.title}</h3>
+            <p>৳ {item.price}</p>
           </div>
+
           <div className="flex items-center gap-3">
-            <button onClick={() => updateQty(item.id, item.qty - 1)} className="px-3 py-1 bg-gray-300 rounded">-</button>
-            <span className="text-xl">{item.qty}</span>
-            <button onClick={() => updateQty(item.id, item.qty + 1)} className="px-3 py-1 bg-gray-300 rounded">+</button>
+            <button onClick={() => decreaseQty(item.id)} className="px-2 py-1 bg-gray-200">-</button>
+            <span>{item.quantity}</span>
+            <button onClick={() => increaseQty(item.id)} className="px-2 py-1 bg-gray-200">+</button>
+
+            <button
+              onClick={() => removeFromCart(item.id)}
+              className="text-red-600 font-bold ml-5"
+            >
+              X
+            </button>
           </div>
         </div>
       ))}
-      <div className="text-right text-2xl font-bold mt-8">
-        Total: ৳{total}
-      </div>
-      <div className="mt-6 text-right">
-        <Link to="/checkout" className="bg-green-600 text-white px-8 py-3 rounded-lg hover:bg-green-700">
-          Proceed to Checkout
+
+      <div className="text-right mt-4">
+        <h2 className="text-lg font-bold">Total: ৳ {totalPrice}</h2>
+        <Link to="/checkout">
+          <button className="bg-blue-600 text-white px-4 py-2 rounded mt-3">
+            Proceed to Checkout
+          </button>
         </Link>
       </div>
     </div>
