@@ -25,7 +25,7 @@ export default function RestaurantCard({ item }) {
           {item.name}
         </h3>
         <p className="text-sm text-gray-500 mb-3">
-          {item.address || "Near you"}
+          {item.city || "Near you"}
         </p>
 
         <div className="flex items-center justify-between">
@@ -36,7 +36,7 @@ export default function RestaurantCard({ item }) {
             </span>
           </div>
           <span className="text-xs px-3 py-1 rounded-full bg-pink-50 text-pink-700 font-medium">
-            {item.category || "Others"}
+            {item.theme || "Restaurant"}
           </span>
         </div>
       </div>

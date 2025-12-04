@@ -26,7 +26,8 @@ export default function Home() {
     try {
       setLoading(true);
       const data = await getRestaurants({ category: cat });
-      setRestaurants(data.data?.results || data.data || []);
+      setRestaurants(data.data || []);
+
     } catch (err) {
       console.error(err);
     } finally {

@@ -36,7 +36,8 @@ export default function RestaurantDetail() {
       {/* HEADER */}
       <div className="text-center py-12 bg-white shadow-xl">
         <img
-          src={`http://127.0.0.1:8000${restaurant.logo}`}
+          src={restaurant.logo}
+
           className="mx-auto w-40 h-40 rounded-full object-cover shadow-xl border-4 border-orange-300"
         />
         <h1 className="text-5xl font-bold mt-6">{restaurant.name}</h1>
