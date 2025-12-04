@@ -1,35 +1,40 @@
-// src/App.jsx
+// src/App.jsx – FINAL & PERFECT VERSION
 import { Routes, Route, Navigate } from "react-router-dom";
 import { CartProvider } from "./context/CartContext";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
 // Pages
-import Login from "./pages/Login";
 import Home from "./pages/Home";
-import About from "./pages/About";           // New
-import Contact from "./pages/Contact";       // New
-import Partner from "./pages/Partner";       // New (Become a Partner)
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Partner from "./pages/Partner";
+import Login from "./pages/Login";
+import Register from "./pages/Register";        // ADDED
 import RestaurantDetail from "./pages/RestaurantDetail";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import Orders from "./pages/Orders";
 
-// Auth Guard
+// Auth Guard Component
 function RequireAuth({ children }) {
   const token = localStorage.getItem("access");
   return token ? children : <Navigate to="/login" replace />;
 }
 
-export default function App() {
+// Redirect logged-in users away from auth pages
+function RedirectIfLoggedIn({ children }) {
   const token = localStorage.getItem("access");
+  return token ? <Navigate to="/" replace /> : children;
+}
 
+export default function App() {
   return (
     <CartProvider>
       <div className="flex flex-col min-h-screen">
         <Navbar />
 
-        <main className="flex-1 pt-20 bg-gray-50">
+        <main className="flex-1 bg-gray-50">
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={<Home />} />
@@ -38,13 +43,25 @@ export default function App() {
             <Route path="/partner" element={<Partner />} />
             <Route path="/restaurant/:id" element={<RestaurantDetail />} />
 
-            {/* Login Route - Redirect if already logged in */}
+            {/* Auth Routes */}
             <Route
               path="/login"
-              element={!token ? <Login /> : <Navigate to="/" replace />}
+              element={
+                <RedirectIfLoggedIn>
+                  <Login />
+                </RedirectIfLoggedIn>
+              }
+            />
+            <Route
+              path="/register"
+              element={
+                <RedirectIfLoggedIn>
+                  <Register />
+                </RedirectIfLoggedIn>
+              }
             />
 
-            {/* Protected Routes - Need Login */}
+            {/* Protected Routes (Require Login) */}
             <Route
               path="/cart"
               element={
