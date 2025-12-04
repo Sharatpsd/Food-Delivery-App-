@@ -10,7 +10,7 @@ export default function Navbar() {
     <nav className="bg-gradient-to-r from-orange-600 to-red-600 text-white shadow-2xl fixed top-0 left-0 right-0 z-50">
       <div className="max-w-7xl mx-auto px-8 py-6 flex justify-between items-center">
         <Link to="/" className="text-3xl font-bold flex items-center gap-3">
-          <span className="text-5xl">Restaurant</span> FoodExpress Partner
+          <span className="text-5xl">Restaurant</span> Bite Partner
         </Link>
 
         <div className="flex items-center gap-8 text-lg">

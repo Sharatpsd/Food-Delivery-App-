@@ -4,12 +4,12 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto px-4 py-10 flex flex-col md:flex-row md:items-start md:justify-between gap-8">
         {/* left */}
         <div className="md:w-1/3 text-left">
-          <h2 className="text-lg font-semibold text-white">FoodExpress</h2>
+          <h2 className="text-lg font-semibold text-white">Bite</h2>
           <p className="mt-3 text-sm opacity-80">
             Premium food delivery experience with fast, reliable service and a modern interface.
           </p>
           <p className="mt-4 text-xs opacity-60">
-            © {new Date().getFullYear()} FoodExpress. All rights reserved.
+            © {new Date().getFullYear()} Bite. All rights reserved.
           </p>
         </div>
 
@@ -75,7 +75,7 @@ export default function Footer() {
             Built with ❤️ by Sharat Acharja Mugdho
           </p>
           <p className="text-xs text-gray-500">
-            Crafted for a Foodpanda‑style food delivery experience.
+            Crafted for a food delivery experience.
           </p>
         </div>
       </div>
