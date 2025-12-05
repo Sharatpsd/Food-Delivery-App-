@@ -79,3 +79,15 @@ cp .env.example .env         # Add Cloudinary keys
 python manage.py migrate
 python manage.py createsuperuser
 python manage.py runserver
+Frontend (React)
+cd customer-web
+npm install
+npm run dev
+Developer
+Sharat Acharja Mugdho
+Full-Stack Developer | Building the future of food delivery in Bangladesh
+
+Email: sharatacharjee6@gmail.com
+Phone: +880 1783-720914
+GitHub: @Sharatpsd
+Portfolio: mugdho-portfolio.netlify.app
