@@ -56,7 +56,7 @@ export default function About() {
             {[
               { number: "150+", label: "Restaurants in Beta" },
               { number: "5", label: "Cities Testing" },
-              { number: "2025", label: "Nationwide Launch" }
+              { number: "2026", label: "Nationwide Launch" }
             ].map((stat, i) => (
               <div key={i} className="text-center">
                 <div className="text-7xl md:text-8xl font-black text-orange-300">

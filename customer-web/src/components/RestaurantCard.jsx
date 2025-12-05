@@ -6,6 +6,9 @@ export default function RestaurantCard({ item }) {
       )
     : "https://via.placeholder.com/500x300/FF6B6B/F8F9FA?text=Restaurant";
 
+  // Random or backend time
+  const deliveryTime = item.delivery_time_estimate || Math.floor(Math.random() * 20) + 20;
+
   return (
     <article className="group bg-white rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 overflow-hidden border border-gray-100">
       <div className="h-48 w-full overflow-hidden relative">
@@ -15,8 +18,10 @@ export default function RestaurantCard({ item }) {
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           loading="lazy"
         />
+
+        {/* Dynamic delivery time */}
         <div className="absolute top-3 right-3 bg-white/90 text-xs font-semibold px-3 py-1 rounded-full">
-          25 min
+          {deliveryTime} min
         </div>
       </div>
 

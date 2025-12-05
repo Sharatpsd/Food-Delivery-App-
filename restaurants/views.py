@@ -3,8 +3,7 @@
 from rest_framework import generics, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
-from django.db.models import Sum
+from django.db.models import Sum, Q
 from datetime import date
 
 from .models import Restaurant
@@ -14,26 +13,39 @@ from .serializers import RestaurantSerializer
 from users.permissions import IsRestaurantOwner
 
 
-# -------------------------------------------------
-# 1️⃣ CUSTOMER ENDPOINT — All Restaurants
-# -------------------------------------------------
+# -------------------------------------------
+# LIST + SEARCH RESTAURANTS (CUSTOMER)
+# -------------------------------------------
 class RestaurantListView(generics.ListAPIView):
-    queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
 
+    def get_queryset(self):
+        qs = Restaurant.objects.all()
+        search = self.request.query_params.get("search")
 
-# -------------------------------------------------
-# 2️⃣ CUSTOMER ENDPOINT — Single Restaurant Detail
-# -------------------------------------------------
+        if search:
+            qs = qs.filter(
+                Q(name__icontains=search) |
+                Q(city__icontains=search) |
+                Q(theme__icontains=search) |
+                Q(must_try__icontains=search)
+            )
+
+        return qs
+
+
+# -------------------------------------------
+# SINGLE RESTAURANT DETAIL
+# -------------------------------------------
 class RestaurantDetailView(generics.RetrieveAPIView):
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
     lookup_field = "id"
 
 
-# -------------------------------------------------
-# 3️⃣ RESTAURANT OWNER — Create Restaurant
-# -------------------------------------------------
+# -------------------------------------------
+# CREATE RESTAURANT
+# -------------------------------------------
 class RestaurantCreateView(generics.CreateAPIView):
     serializer_class = RestaurantSerializer
     permission_classes = [permissions.IsAuthenticated, IsRestaurantOwner]
@@ -42,9 +54,9 @@ class RestaurantCreateView(generics.CreateAPIView):
         serializer.save(owner=self.request.user)
 
 
-# -------------------------------------------------
-# 4️⃣ RESTAURANT OWNER — My Restaurant
-# -------------------------------------------------
+# -------------------------------------------
+# MY RESTAURANT (OWNER)
+# -------------------------------------------
 class MyRestaurantView(APIView):
     permission_classes = [permissions.IsAuthenticated, IsRestaurantOwner]
 
@@ -54,13 +66,12 @@ class MyRestaurantView(APIView):
         if not restaurant:
             return Response({"detail": "No restaurant found!"}, status=404)
 
-        serializer = RestaurantSerializer(restaurant)
-        return Response(serializer.data)
+        return Response(RestaurantSerializer(restaurant).data)
 
 
-# -------------------------------------------------
-# 5️⃣ RESTAURANT OWNER DASHBOARD — Stats
-# -------------------------------------------------
+# -------------------------------------------
+# RESTAURANT DASHBOARD (OWNER)
+# -------------------------------------------
 class RestaurantDashboardView(APIView):
     permission_classes = [permissions.IsAuthenticated, IsRestaurantOwner]
 
@@ -71,12 +82,10 @@ class RestaurantDashboardView(APIView):
             return Response({"detail": "Restaurant not found!"}, status=404)
 
         orders = Order.objects.filter(restaurant=restaurant)
-
         today = date.today()
 
-        # Stats
         stats = {
-            "total_orders": orders.count(),
+            "total": orders.count(),
             "pending": orders.filter(status="pending").count(),
             "accepted": orders.filter(status="accepted").count(),
             "cooking": orders.filter(status="cooking").count(),
@@ -85,19 +94,15 @@ class RestaurantDashboardView(APIView):
             "cancelled": orders.filter(status="cancelled").count(),
         }
 
-        # Revenue
         revenue = {
-            "total_revenue": orders.filter(status="delivered").aggregate(total=Sum("total"))["total"] or 0,
-            "today_revenue": orders.filter(status="delivered", created_at__date=today).aggregate(total=Sum("total"))["total"] or 0,
-            "monthly_revenue": orders.filter(status="delivered", created_at__month=today.month).aggregate(total=Sum("total"))["total"] or 0,
+            "total": orders.filter(status="delivered").aggregate(total=Sum("total"))["total"] or 0,
+            "today": orders.filter(status="delivered", created_at__date=today).aggregate(total=Sum("total"))["total"] or 0,
+            "monthly": orders.filter(status="delivered", created_at__month=today.month).aggregate(total=Sum("total"))["total"] or 0,
         }
 
-        # Popular foods
-        popular_foods = (
-            Food.objects.filter(restaurant=restaurant)
-            .annotate(total_sold=Sum("order_items__quantity"))
-            .order_by("-total_sold")[:5]
-        )
+        popular_foods = Food.objects.filter(restaurant=restaurant).annotate(
+            total_sold=Sum("order_items__quantity")
+        ).order_by("-total_sold")[:5]
 
         popular_food_list = [
             {
@@ -110,7 +115,6 @@ class RestaurantDashboardView(APIView):
             for f in popular_foods
         ]
 
-        # Recent orders
         recent_orders = orders.order_by("-created_at")[:5]
         recent_order_list = [
             {
