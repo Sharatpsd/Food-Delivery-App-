@@ -1,24 +1,21 @@
 <div align="center">
 
-# Bite
-
+# Bite  
 **Bangladesh's Fastest Growing Food Delivery App**  
-*Hot food delivered in minutes — from your favorite local restaurants*
+*Hot & Fresh Food Delivered in Minutes*
 
-![Bite Hero](https://drive.google.com/uc?id=1u5G5jZ9v0Z9Z9v0Z9v0Z9v0Z9v0Z9v0Z)  
-*(Premium orange-red hero with creamy "Bite" logo)*
+<img src="https://drive.google.com/uc?id=1eLes5bb7NEak3KLgHyF_5zLqY7DsU1YN" alt="Bite Hero" width="100%"/>
 
 <p align="center">
-  <a href="https://bite-demo.netlify.app">Live Demo</a> •
-  <a href="#-features">Features</a> •
-  <a href="#-tech-stack">Tech Stack</a> •
-  <a href="#-screenshots">Screenshots</a> •
-  <a href="#-installation">Get Started</a>
+  <a href="#features">Features</a> •
+  <a href="#screenshots">Screenshots</a> •
+  <a href="#tech-stack">Tech Stack</a> •
+  <a href="#installation">Installation</a> •
+  <a href="#contact">Contact</a>
 </p>
 
 ![GitHub stars](https://img.shields.io/github/stars/Sharatpsd/Food-Delivery-App-.svg?style=social&label=Star)
 ![GitHub forks](https://img.shields.io/github/forks/Sharatpsd/Food-Delivery-App-.svg?style=social&label=Fork)
-![License](https://img.shields.io/github/license/Sharatpsd/Food-Delivery-App-)
 
 </div>
 
@@ -28,26 +25,10 @@
 
 | For Customers                          | For Restaurants                     |
 |----------------------------------------|-------------------------------------|
-| Browse 10,000+ restaurants             | Zero commission in beta            |
-| Real-time order tracking               | Easy partner registration          |
-| Lightning-fast delivery (avg. 28 min)  | Live order dashboard               |
-| Secure payment (bKash ready)           | Menu & analytics management        |
-| Save addresses & favorites             | Grow with zero risk                |
-
----
-
-## Tech Stack
-
-| Layer         | Technology                                   |
-|---------------|----------------------------------------------|
-| **Backend**   | Django 5.2 + Django REST Framework          |
-| **Frontend**  | React 18 + Vite + Tailwind CSS               |
-| **Database**  | SQLite (dev) → PostgreSQL (production ready) |
-| **Images**    | Cloudinary (auto-optimized)                  |
-| **Auth**      | JWT Authentication                           |
-| **Styling**   | Tailwind + Custom Premium Gradients          |
-| **Animations**| Framer Motion + AOS                          |
-| **Icons**     | Lucide React                                 |
+| Browse & search restaurants            | Zero commission (beta)             |
+| Real-time cart & checkout              | Easy partner registration          |
+| Secure JWT authentication             | Menu & order management            |
+| Responsive premium design              | Analytics dashboard (coming soon)  |
 
 ---
 
@@ -55,35 +36,46 @@
 
 <div align="center">
 
-**Home – Premium Hero**  
-![Home Page](https://drive.google.com/uc?id=1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q)
-
-**Restaurant Grid**  
-![Restaurants](https://drive.google.com/uc?id=1x1x1x1x1x1x1x1x1x1x1x1x1x1x1x1x)
+**Premium Hero & Search**  
+<img src="https://drive.google.com/uc?id=1482cYSnG9kD9eIfSCs2uaU06-h1k4ZOP" alt="Hero" width="100%"/>
 
 **Login & Register**  
-![Auth Pages](https://drive.google.com/uc?id=1y2y2y2y2y2y2y2y2y2y2y2y2y2y2y2y)
+<img src="https://drive.google.com/uc?id=15Veux7kxHjHMkqVQvi_T_v61L5s7oV_R" alt="Auth" width="48%"/> <img src="https://drive.google.com/uc?id=1Zy4wI9NrBUu8o2kkIpkTAdMopFFMZKEd" alt="Register" width="48%"/>
 
 **Become a Partner**  
-![Partner Page](https://drive.google.com/uc?id=1z9z9z9z9z9z9z9z9z9z9z9z9z9z9z9z)
+<img src="https://drive.google.com/uc?id=1OdV_Z_0nb11PRS10O_0KrngSKqUW_J_g" alt="Partner" width="100%"/>
 
-**Premium Footer**  
-![Footer](https://drive.google.com/uc?id=1w1w1w1w1w1w1w1w1w1w1w1w1w1w1w1w)
+**Contact & Footer**  
+<img src="https://drive.google.com/uc?id=14M_m5ziYriu_jYNpEkKxFtKjIafMS2Hu" alt="Contact" width="100%"/>
 
 </div>
 
 ---
 
-## Installation (Run Locally)
+## Tech Stack
+
+| Layer        | Technology                              |
+|--------------|-----------------------------------------|
+| Backend      | Django 5.2 + Django REST Framework      |
+| Frontend     | React 18 + Vite + Tailwind CSS          |
+| Database     | SQLite (dev) → PostgreSQL (production) |
+| Images       | Cloudinary                              |
+| Auth         | JWT Authentication                      |
+| Styling      | Tailwind + Custom Premium Gradients     |
+| Icons        | Lucide React                            |
+
+---
+
+## Installation
 
 ### Backend (Django)
 ```bash
 cd backend
 python -m venv venv
-venv\Scripts\activate    # Windows
-# source venv/bin/activate  # Mac/Linux
+venv\Scripts\activate        # Windows
+# source venv/bin/activate   # Mac/Linux
 pip install -r requirements.txt
-cp .env.example .env     # Add your Cloudinary keys
+cp .env.example .env         # Add Cloudinary keys
 python manage.py migrate
 python manage.py createsuperuser
 python manage.py runserver
