@@ -2,15 +2,21 @@ from pathlib import Path
 from datetime import timedelta
 from decouple import config
 import cloudinary
-from decouple import config 
+import dj_database_url
+import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# SECURITY
 SECRET_KEY = config("SECRET_KEY", default="test-secret")
-DEBUG = config("DEBUG", default=True, cast=bool)
+DEBUG = config("DEBUG", default=False, cast=bool)
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS = ["*"]  # Render deploy এর জন্য বাধ্যতামূলক
 
+
+# ================================================================
+# INSTALLED APPS
+# ================================================================
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -25,8 +31,6 @@ INSTALLED_APPS = [
     "cloudinary",
 
     "users",
-    "decouple",
-
     "restaurants",
     "foods",
     "orders",
@@ -34,9 +38,17 @@ INSTALLED_APPS = [
     "delivery",
 ]
 
+
+# ================================================================
+# MIDDLEWARE
+# ================================================================
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
+
+    # Render static files middleware (mandatory)
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -45,8 +57,13 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+
 ROOT_URLCONF = "backend.urls"
 
+
+# ================================================================
+# TEMPLATES
+# ================================================================
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -62,50 +79,76 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = "backend.wsgi.application"
 
+
+# ================================================================
+# DATABASE — Render Uses DATABASE_URL
+# ================================================================
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "foodapp",
-        "USER": "postgres",
-        "PASSWORD": "sharat2061",
-        "HOST": "localhost",
-        "PORT": "5432",
-    }
+    "default": dj_database_url.parse(
+        config("DATABASE_URL"),
+        conn_max_age=600,
+        ssl_require=True
+    )
 }
 
 
+# ================================================================
+# AUTH
+# ================================================================
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
 ]
 
+AUTH_USER_MODEL = "users.User"
+
+
+# ================================================================
+# INTERNATIONALIZATION
+# ================================================================
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
-STATIC_URL = "static/"
 
-AUTH_USER_MODEL = "users.User"
+# ================================================================
+# STATIC & MEDIA (Render Ready)
+# ================================================================
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
-# CLOUDINARY CONFIG
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+
+# ================================================================
+# CLOUDINARY STORAGE
+# ================================================================
 cloudinary.config(
     cloud_name=config("CLOUDINARY_CLOUD_NAME"),
     api_key=config("CLOUDINARY_API_KEY"),
     api_secret=config("CLOUDINARY_API_SECRET"),
-    secure=True
+    secure=True,
 )
 
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
-# CORS
-CORS_ALLOW_ALL_ORIGINS = True  
 
-# JWT
+# ================================================================
+# CORS
+# ================================================================
+CORS_ALLOW_ALL_ORIGINS = True
+
+
+# ================================================================
+# JWT CONFIG
+# ================================================================
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=config("JWT_ACCESS_MINUTES", cast=int)),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=config("JWT_REFRESH_DAYS", cast=int)),
 }
+
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
