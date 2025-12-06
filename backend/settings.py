@@ -1,17 +1,18 @@
 from pathlib import Path
 from datetime import timedelta
 from decouple import config
-import cloudinary
 import dj_database_url
+import cloudinary
 import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# ================================================================
 # SECURITY
+# ================================================================
 SECRET_KEY = config("SECRET_KEY", default="test-secret")
 DEBUG = config("DEBUG", default=False, cast=bool)
-
-ALLOWED_HOSTS = ["*"]  # Render deploy এর জন্য বাধ্যতামূলক
+ALLOWED_HOSTS = ["*"]  # Render required
 
 
 # ================================================================
@@ -46,7 +47,7 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
 
-    # Render static files middleware (mandatory)
+    # Required for Render static file serving
     "whitenoise.middleware.WhiteNoiseMiddleware",
 
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -96,7 +97,7 @@ DATABASES = {
 
 
 # ================================================================
-# AUTH
+# AUTH & PASSWORD VALIDATORS
 # ================================================================
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
@@ -115,7 +116,7 @@ USE_TZ = True
 
 
 # ================================================================
-# STATIC & MEDIA (Render Ready)
+# STATIC & MEDIA (Render Compatible)
 # ================================================================
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
@@ -146,9 +147,16 @@ CORS_ALLOW_ALL_ORIGINS = True
 # JWT CONFIG
 # ================================================================
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=config("JWT_ACCESS_MINUTES", cast=int)),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=config("JWT_REFRESH_DAYS", cast=int)),
+    "ACCESS_TOKEN_LIFETIME": timedelta(
+        minutes=config("JWT_ACCESS_MINUTES", default=60, cast=int)
+    ),
+    "REFRESH_TOKEN_LIFETIME": timedelta(
+        days=config("JWT_REFRESH_DAYS", default=7, cast=int)
+    ),
 }
 
 
+# ================================================================
+# DEFAULT FIELD
+# ================================================================
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
