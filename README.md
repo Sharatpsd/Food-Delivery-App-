@@ -3,8 +3,8 @@
 # Bite  
 **Bangladesh's Fastest Growing Food Delivery App**  
 *Hot & Fresh Food Delivered in Minutes* </br>
-*frontend live  = https://food-delivery-frontend-mktt.onrender.com *</br>
-*Backend live = https://food-delivery-app-1-ihcm.onrender.com *
+frontend live  = https://food-delivery-frontend-mktt.onrender.com </br></br>
+Backend live = https://food-delivery-app-1-ihcm.onrender.com 
 
 
 
