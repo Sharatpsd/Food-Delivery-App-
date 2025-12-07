@@ -12,7 +12,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # ================================================================
 SECRET_KEY = config("SECRET_KEY", default="test-secret")
 DEBUG = config("DEBUG", default=False, cast=bool)
-ALLOWED_HOSTS = ["*"]  # Render required
+
+# Render backend URL auto-allowed
+ALLOWED_HOSTS = ["*", "food-delivery-app-1-ihcm.onrender.com"]
 
 
 # ================================================================
@@ -47,7 +49,7 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
 
-    # Required for Render static file serving
+    # Static support for Render
     "whitenoise.middleware.WhiteNoiseMiddleware",
 
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -85,7 +87,7 @@ WSGI_APPLICATION = "backend.wsgi.application"
 
 
 # ================================================================
-# DATABASE — Render Uses DATABASE_URL
+# DATABASE (Render Uses DATABASE_URL)
 # ================================================================
 DATABASES = {
     "default": dj_database_url.parse(
@@ -97,7 +99,7 @@ DATABASES = {
 
 
 # ================================================================
-# AUTH & PASSWORD VALIDATORS
+# AUTH
 # ================================================================
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
@@ -138,9 +140,14 @@ DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 
 # ================================================================
-# CORS
+# CORS SETTINGS (Frontend Render Allowed)
 # ================================================================
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    "https://food-delivery-app-2.onrender.com",   # Your frontend URL
+    "http://localhost:5173",                      # Dev mode
+]
+
+CORS_ALLOW_CREDENTIALS = True
 
 
 # ================================================================
@@ -159,4 +166,4 @@ SIMPLE_JWT = {
 # ================================================================
 # DEFAULT FIELD
 # ================================================================
-
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
