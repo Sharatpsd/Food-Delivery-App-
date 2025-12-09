@@ -2,7 +2,11 @@
 
 # Bite  
 **Bangladesh's Fastest Growing Food Delivery App**  
-*Hot & Fresh Food Delivered in Minutes*
+*Hot & Fresh Food Delivered in Minutes* </br>
+frontend live  = https://food-delivery-frontend-mktt.onrender.com </br></br>
+Backend live = https://food-delivery-app-1-ihcm.onrender.com 
+
+
 
 <img src="https://drive.google.com/uc?id=1eLes5bb7NEak3KLgHyF_5zLqY7DsU1YN" alt="Bite Hero" width="100%"/>
 

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://127.0.0.1:8000/api",
+  baseURL: "https://food-delivery-app-1-ihcm.onrender.com/api",
 });
 
 // attach token
