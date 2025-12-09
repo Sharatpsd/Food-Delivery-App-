@@ -1,176 +1,252 @@
-// src/pages/About.jsx – 100% WORKING & REALISTIC (Demo Ready)
+// src/pages/About.jsx – Professional, Modern, Realistic Animations + Images Added
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { motion } from "framer-motion";
-import { ChefHat, Bike, Clock, Star, Users, ArrowRight, MapPin, Sparkles } from "lucide-react";
+import { ChefHat, Bike, Clock, Users, Store, ArrowRight, MapPin } from "lucide-react";
 
 export default function About() {
   useEffect(() => {
-    AOS.init({ duration: 1200, once: true, easing: "ease-out-cubic" });
+    AOS.init({ duration: 1200, once: true, easing: 'ease-in-out-cubic' }); // More realistic easing
   }, []);
 
   return (
     <>
-      {/* HERO */}
+      {/* HERO SECTION – Added Parallax-like Image + Smoother Animations */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        <img
-          src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=1920&q=80"
-          alt="Fresh food"
+        <motion.img
+          src="https://static.themoscowtimes.com/image/article_1360/9c/resizedArabiantable002.jpg?utm_source=chatgpt.com" // Added realistic Dhaka food delivery image
+          alt="Food Delivery in Dhaka"
           className="absolute inset-0 w-full h-full object-cover"
+          initial={{ scale: 1.2 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 2, ease: 'easeOut' }} // Realistic zoom-in
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-black/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/70 to-black/30" />
 
-        <div className="relative z-10 text-center px-6 max-w-7xl mx-auto">
+        <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
           <motion.h1
-            initial={{ y: -80, opacity: 0 }}
+            initial={{ y: -100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 1.2, type: "spring" }}
-            className="text-8xl md:text-9xl font-black tracking-tighter"
+            transition={{ duration: 1.2, type: "spring", stiffness: 80 }} // More realistic spring bounce
+            className="text-6xl sm:text-7xl md:text-9xl font-black tracking-tighter"
             style={{
-              background: "linear-gradient(135deg, #FFF3E0, #FFB74D, #FF8A65)",
+              background: "linear-gradient(135deg, #FFF3E0, #FFB74D, #FF8A65, #FF5722)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
-              filter: "drop-shadow(0 15px 40px rgba(0,0,0,0.7))"
             }}
           >
-            About Bite
+            Bite
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.7 }}
-            className="mt-6 text-3xl md:text-5xl font-light text-orange-100"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.5, duration: 1, ease: 'easeInOut' }}
+            className="mt-4 text-2xl sm:text-3xl font-bold text-orange-100"
           >
-            Coming Soon to Bangladesh
+            Bangladesh's Fastest Growing Food Delivery App
           </motion.p>
 
-          {/* Realistic Stats */}
-          <motion.div
-            initial={{ y: 60, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 1 }}
-            className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-12"
+          <motion.p
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.8, duration: 0.8 }}
+            className="mt-3 text-lg sm:text-xl text-orange-200 font-medium"
           >
-            {[
-              { number: "150+", label: "Restaurants in Beta" },
-              { number: "5", label: "Cities Testing" },
-              { number: "2026", label: "Nationwide Launch" }
-            ].map((stat, i) => (
-              <div key={i} className="text-center">
-                <div className="text-7xl md:text-8xl font-black text-orange-300">
-                  {stat.number}
-                </div>
-                <p className="text-xl md:text-2xl mt-4 text-orange-100 font-medium">
-                  {stat.label}
-                </p>
-              </div>
-            ))}
+            Hot & Fresh Food Delivered in Minutes
+          </motion.p>
+
+          <motion.div
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 1.1, duration: 1 }}
+            className="mt-12 flex flex-wrap justify-center gap-8 text-orange-100"
+          >
+            <div className="text-center" data-aos="fade-right" data-aos-delay="200">
+              <div className="text-5xl font-black text-orange-400">Live Now</div>
+              <p className="text-sm mt-1">Beta Running</p>
+            </div>
+            <div className="text-center" data-aos="fade-up" data-aos-delay="400">
+              <div className="text-5xl font-black text-orange-400">0%</div>
+              <p className="text-sm mt-1">Commission (Beta)</p>
+            </div>
+            <div className="text-center" data-aos="fade-left" data-aos-delay="600">
+              <div className="text-5xl font-black text-orange-400">100+</div>
+              <p className="text-sm mt-1">Partner Restaurants</p>
+            </div>
           </motion.div>
         </div>
       </section>
 
-      {/* OUR VISION – With WORKING Team Image */}
-      <section className="py-32 bg-white">
-        <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20 items-center">
-          <div data-aos="fade-right">
-            <h2 className="text-6xl md:text-7xl font-black text-gray-900 leading-tight">
-              Food Delivery,<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-600">
-                Done Right
-              </span>
-            </h2>
-            <p className="mt-10 text-xl text-gray-700 leading-relaxed">
-              We’re a small passionate team from Bangladesh building <strong>Bite</strong> — the food delivery app we always wished existed.
-            </p>
-            <p className="mt-6 text-lg text-gray-600">
-              Fast. Fair. Local. That’s our promise.
-            </p>
-
-            <div className="mt-16 grid grid-cols-2 gap-10">
-              <div className="text-center bg-orange-50 rounded-3xl p-10 border-2 border-orange-200">
-                <Bike className="w-20 h-20 mx-auto text-orange-600 mb-4" />
-                <div className="text-5xl font-black text-orange-600">Target</div>
-                <p className="text-gray-700 font-medium mt-2">&lt; 30 min delivery</p>
-              </div>
-              <div className="text-center bg-yellow-50 rounded-3xl p-10 border-2 border-yellow-200">
-                <Star className="w-20 h-20 mx-auto text-yellow-500 mb-4" />
-                <div className="text-5xl font-black text-orange-600">Goal</div>
-                <p className="text-gray-700 font-medium mt-2">5.0 Experience</p>
-              </div>
-            </div>
-          </div>
-
-          {/* THIS IMAGE WORKS 100% – Fast & Professional */}
-          <div data-aos="fade-left">
-            <img
-              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&q=80&fit=crop"
-              alt="Bite team working together"
-              className="rounded-3xl shadow-3xl hover:scale-105 transition-all duration-700 border-12 border-white object-cover w-full h-full"
-            />
-          </div>
+      {/* OUR MISSION – Added Image + Fade Animations */}
+      <section className="py-24 bg-white">
+        <div className="max-w-6xl mx-auto px-6 text-center">
+          <motion.h2
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-5xl md:text-6xl font-black text-gray-900 mb-8"
+            data-aos="fade-up"
+          >
+            Food Delivery, <span className="text-orange-600">Reimagined for Bangladesh</span>
+          </motion.h2>
+          {/* <img
+            src="https://pressxpress.org/wp-content/uploads/2023/07/food-delivery-revolution-in-Bangladesh-585x307.jpg" // Added realistic delivery scene image
+            alt="Food Delivery Revolution in Bangladesh"
+            className="w-full max-w-2xl mx-auto rounded-2xl shadow-xl mb-8"
+            data-aos="zoom-in" data-aos-delay="200"
+          /> */}
+          <p 
+            className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
+            data-aos="fade-up" data-aos-delay="400"
+          >
+            Bite is proudly built in Bangladesh, by Bangladeshis — to solve real problems: 
+            high commissions killing small restaurants, slow delivery, and complicated apps. 
+            We’re here to change that with <strong>zero commission in beta</strong>, lightning-fast experience, 
+            and a platform that works for customers, restaurants, and riders alike.
+          </p>
         </div>
       </section>
 
-      {/* WHY BITE – Realistic & Honest */}
-      <section className="py-32 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <h2 className="text-6xl font-black mb-20 text-gray-900" data-aos="fade-up">
-            Why Bite Will Be Different
-          </h2>
-          <div className="grid md:grid-cols-3 gap-12">
+      {/* CORE VALUES – More Hover Animations + Realistic Transitions */}
+      <section className="py-24 bg-gray-50">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="grid md:grid-cols-3 gap-10">
             {[
-              { icon: Clock, title: "Real Speed", desc: "Live tracking from kitchen to door", color: "from-orange-400 to-red-500" },
-              { icon: Users, title: "Rider First", desc: "Better pay & support for delivery heroes", color: "from-emerald-400 to-teal-500" },
-              { icon: ChefHat, title: "Local Focus", desc: "Zero commission for small restaurants in beta", color: "from-purple-400 to-pink-500" }
+              { icon: Clock, title: "Blazing Fast", desc: "Real-time tracking & instant order updates" },
+              { icon: Store, title: "Restaurant First", desc: "Zero commission in beta — keep 100% of your earnings" },
+              { icon: Bike, title: "Rider Friendly", desc: "Fair pay, smart routing, and respect for delivery heroes" },
+              { icon: Users, title: "Customer Obsessed", desc: "Beautiful UI, easy checkout, and reliable delivery" },
+              { icon: ChefHat, title: "Local at Heart", desc: "Made in Bangladesh, for Bangladesh" },
+              { icon: MapPin, title: "Growing Fast", desc: "Expanding to every major city soon" },
             ].map((item, i) => (
               <motion.div
                 key={i}
-                whileHover={{ y: -15 }}
-                className="group relative"
-                data-aos="zoom-in"
+                initial={{ y: 50, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                viewport={{ once: true }}
+                whileHover={{ scale: 1.05, boxShadow: "0 10px 20px rgba(0,0,0,0.1)" }} // Realistic hover lift
+                transition={{ delay: i * 0.1, duration: 0.6, ease: 'easeInOut' }}
+                className="bg-white rounded-3xl p-8 text-center shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-100"
+                data-aos="fade-up"
                 data-aos-delay={i * 150}
               >
-                <div className={`absolute inset-0 bg-gradient-to-br ${item.color} blur-3xl opacity-30 group-hover:opacity-60 transition`} />
-                <div className="relative bg-white rounded-3xl p-12 shadow-xl border border-gray-100">
-                  <div className={`w-24 h-24 mx-auto mb-8 rounded-3xl bg-gradient-to-br ${item.color} flex items-center justify-center shadow-lg`}>
-                    <item.icon className="w-14 h-14 text-white" />
-                  </div>
-                  <h3 className="text-3xl font-bold text-gray-900 mb-4">{item.title}</h3>
-                  <p className="text-lg text-gray-600">{item.desc}</p>
-                </div>
+                <item.icon className="w-16 h-16 mx-auto text-orange-600 mb-5" />
+                <h3 className="text-2xl font-bold text-gray-900 mb-3">{item.title}</h3>
+                <p className="text-gray-600">{item.desc}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* FINAL CTA */}
-      <section className="py-40 bg-gradient-to-r from-orange-600 to-red-700 text-white">
-        <div className="text-center px-6 max-w-6xl mx-auto">
-          <motion.h2
-            initial={{ scale: 0.8 }}
-            whileInView={{ scale: 1 }}
-            className="text-7xl md:text-9xl font-black mb-10"
-            style={{
-              background: "linear-gradient(135deg, #FFF3E0, #FFB74D, #FF8A65)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-            }}
+      {/* DEVELOPER SECTION – Added Realistic Team Image + Smooth Fade */}
+      <section className="py-24 bg-gradient-to-br from-orange-600 to-red-700 text-white">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h2 
+            className="text-4xl md:text-5xl font-black mb-6"
+            data-aos="fade-down"
           >
-            Be the First to Bite
-          </motion.h2>
-          <p className="text-3xl mb-16 opacity-90">
-            Launching 2026 – Join the waitlist
+            Built with Love in Bangladesh
+          </h2>
+          <p 
+            className="text-xl opacity-90 mb-10"
+            data-aos="fade-up" data-aos-delay="200"
+          >
+            A solo passion project that’s becoming the future of food delivery
           </p>
-          <a
-            href="#"
-            className="bg-white text-orange-600 px-28 py-12 rounded-full text-4xl font-black 
-                     hover:scale-110 transition-all duration-500 shadow-3xl inline-flex items-center gap-6"
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: 'easeOut' }}
+            className="bg-white/10 backdrop-blur-lg rounded-3xl p-10 inline-block"
+            data-aos="zoom-in" data-aos-delay="400"
           >
-            Join Waitlist Now <Sparkles className="w-12 h-12" />
-          </a>
+           
+            <h3 className="text-3xl font-bold mb-2">Sharat Acharja Mugdho</h3>
+            <p className="text-orange-200 text-lg mb-6">Full-Stack Developer & Founder</p>
+            
+            <p className="text-lg max-w-2xl mx-auto opacity-90 mb-8">
+              Turning ideas into reality with code. Building Bite to empower local restaurants 
+              and bring joy through faster, fairer food delivery across Bangladesh.
+            </p>
+
+            <div className="flex flex-wrap justify-center gap-4 text-sm">
+              <a
+                href="mailto:sharatacharjee6@gmail.com"
+                className="bg-white text-orange-600 px-6 py-3 rounded-full font-bold hover:scale-105 transition"
+              >
+                Email Me
+              </a>
+              <a
+                href="https://mugdho-portfolio.netlify.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="border-2 border-white px-6 py-3 rounded-full font-bold hover:bg-white hover:text-orange-600 transition"
+              >
+                Portfolio
+              </a>
+              <a
+                href="https://github.com/Sharatpsd"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="border-2 border-white px-6 py-3 rounded-full font-bold hover:bg-white hover:text-orange-600 transition"
+              >
+                GitHub @Sharatpsd
+              </a>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* FINAL CTA – Added Smooth Button Animation */}
+      <section className="py-28 bg-black text-white text-center">
+        <div className="max-w-5xl mx-auto px-6">
+          <h2 
+            className="text-5xl md:text-7xl font-black mb-6"
+            data-aos="fade-up"
+          >
+            Ready to Join the Food Revolution?
+          </h2>
+          <p 
+            className="text-2xl text-orange-300 mb-12"
+            data-aos="fade-up" data-aos-delay="200"
+          >
+            Live Demo Available Now
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+            <motion.a
+              href="https://food-delivery-frontend-mktt.onrender.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.1, rotate: 2 }} // Realistic hover tilt
+              transition={{ duration: 0.3 }}
+              className="bg-orange-600 text-white px-12 py-6 rounded-full text-2xl font-bold hover:bg-orange-700 transition flex items-center gap-3"
+              data-aos="fade-right" data-aos-delay="400"
+            >
+              Try Bite Live <ArrowRight className="w-8 h-8" />
+            </motion.a>
+            <motion.a
+              href="https://github.com/Sharatpsd/Food-Delivery-App-.git"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.1, rotate: -2 }}
+              transition={{ duration: 0.3 }}
+              className="border-4 border-orange-600 text-orange-400 px-12 py-6 rounded-full text-2xl font-bold hover:bg-orange-600 hover:text-white transition"
+              data-aos="fade-left" data-aos-delay="600"
+            >
+              Star on GitHub
+            </motion.a>
+          </div>
+
+          <p className="mt-12 text-orange-200 text-lg" data-aos="fade-up" data-aos-delay="800">
+            Built by <strong>Sharat Acharja Mugdho</strong> • Launching Nationwide 2025
+          </p>
         </div>
       </section>
     </>

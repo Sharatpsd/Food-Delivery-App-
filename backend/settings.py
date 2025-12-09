@@ -11,9 +11,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY
 # ================================================================
 SECRET_KEY = config("SECRET_KEY", default="test-secret")
-DEBUG = config("DEBUG", default=False, cast=bool)
-ALLOWED_HOSTS = ["*"]  # Render required
-
+DEBUG = config("DEBUG", default=True, cast=bool)
+ALLOWED_HOSTS = ["*"]
 
 # ================================================================
 # INSTALLED APPS
@@ -33,12 +32,11 @@ INSTALLED_APPS = [
 
     "users",
     "restaurants",
-    "foods",
+    # "foods",
     "orders",
     "payments",
     "delivery",
 ]
-
 
 # ================================================================
 # MIDDLEWARE
@@ -47,7 +45,6 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
 
-    # Required for Render static file serving
     "whitenoise.middleware.WhiteNoiseMiddleware",
 
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -58,9 +55,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-
 ROOT_URLCONF = "backend.urls"
-
 
 # ================================================================
 # TEMPLATES
@@ -80,31 +75,37 @@ TEMPLATES = [
     },
 ]
 
-
 WSGI_APPLICATION = "backend.wsgi.application"
 
+# ================================================================
+# DATABASE CONFIG — Render + Local
+# ================================================================
+DATABASE_URL = config("DATABASE_URL", default=None)
+
+if DATABASE_URL:
+    DATABASES = {
+        "default": dj_database_url.parse(
+            DATABASE_URL,
+            conn_max_age=600,
+            ssl_require=True
+        )
+    }
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 # ================================================================
-# DATABASE — Render Uses DATABASE_URL
-# ================================================================
-DATABASES = {
-    "default": dj_database_url.parse(
-        config("DATABASE_URL"),
-        conn_max_age=600,
-        ssl_require=True
-    )
-}
-
-
-# ================================================================
-# AUTH & PASSWORD VALIDATORS
+# AUTH
 # ================================================================
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
 ]
 
 AUTH_USER_MODEL = "users.User"
-
 
 # ================================================================
 # INTERNATIONALIZATION
@@ -114,38 +115,48 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
-
 # ================================================================
-# STATIC & MEDIA (Render Compatible)
+# STATIC & MEDIA
 # ================================================================
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # ================================================================
 # CLOUDINARY STORAGE
 # ================================================================
 cloudinary.config(
-    cloud_name=config("CLOUDINARY_CLOUD_NAME"),
-    api_key=config("CLOUDINARY_API_KEY"),
-    api_secret=config("CLOUDINARY_API_SECRET"),
+    cloud_name=config("CLOUDINARY_CLOUD_NAME", default=""),
+    api_key=config("CLOUDINARY_API_KEY", default=""),
+    api_secret=config("CLOUDINARY_API_SECRET", default=""),
     secure=True,
 )
 
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
-
 # ================================================================
 # CORS
 # ================================================================
 CORS_ALLOW_ALL_ORIGINS = True
-
+CORS_ALLOW_HEADERS = ["*"]
+CORS_ALLOW_METHODS = ["*"]
 
 # ================================================================
-# JWT CONFIG
+# REST FRAMEWORK + JWT
 # ================================================================
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+    "DEFAULT_PERMISSION_CLASSES": (
+        "rest_framework.permissions.AllowAny",
+    ),
+}
+
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(
         minutes=config("JWT_ACCESS_MINUTES", default=60, cast=int)
@@ -155,8 +166,7 @@ SIMPLE_JWT = {
     ),
 }
 
-
 # ================================================================
 # DEFAULT FIELD
 # ================================================================
-
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

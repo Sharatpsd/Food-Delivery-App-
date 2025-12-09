@@ -1,152 +1,172 @@
-// src/pages/Contact.jsx
+// src/pages/Contact.jsx → ULTRA MODERN + MOBILE-FIRST + BEAUTIFUL ANIMATIONS + FULLY RESPONSIVE
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { motion } from "framer-motion";
-import { 
-  Mail, Phone, MapPin, Send, Clock, Shield, MessageCircle 
-} from "lucide-react";
+import { Phone, Mail, MapPin, Send, MessageCircle } from "lucide-react";
 
 export default function Contact() {
   useEffect(() => {
-    AOS.init({ duration: 1000, once: true });
+    AOS.init({ duration: 1000, once: true, easing: "ease-out-cubic" });
   }, []);
 
   return (
-    <>
-      {/* PREMIUM HERO */}
-      <section className="relative py-40 bg-gradient-to-br from-orange-600 via-red-600 to-orange-700 overflow-hidden">
-        <div className="absolute inset-0 bg-black/50" />
-        <img
-          src="https://images.unsplash.com/photo-1556742111-a22f18684f52?w=1920&q=80"
-          alt="Contact us"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="relative z-10 text-center text-white px-6">
-          <motion.h1
-            initial={{ y: -100, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 1, type: "spring" }}
-            className="text-8xl md:text-9xl font-black"
-            style={{
-              background: "linear-gradient(135deg, #FFF3E0, #FFB74D, #FF8A65)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              filter: "drop-shadow(0 15px 40px rgba(0,0,0,0.6))"
-            }}
-          >
-            Contact Bite
-          </motion.h1>
-          <p className="mt-6 text-3xl md:text-5xl font-light text-orange-100">
-            We reply in minutes
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-orange-50">
+
+      {/* HERO – সুন্দর গ্রেডিয়েন্ট + অ্যানিমেশন */}
+      <section className="relative py-24 md:py-32 text-center overflow-hidden">
+        <motion.div
+          initial={{ scale: 1.1 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          className="absolute inset-0 -z-10"
+        >
+          <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-red-600/20" />
+        </motion.div>
+
+        <motion.div
+          initial={{ y: -60, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 1, type: "spring", stiffness: 80 }}
+          className="max-w-4xl mx-auto px-6"
+        >
+          <h1 className="text-5xl md:text-7xl font-black text-gray-900 mb-4 leading-tight">
+            Get in <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-600">Touch</span>
+          </h1>
+          <p className="text-xl md:text-2xl text-gray-700 font-medium">
+            We reply <span className="text-orange-600 font-bold">within minutes</span>
           </p>
-        </div>
+        </motion.div>
       </section>
 
-      {/* YOUR CONTACT CARDS */}
-      <section className="py-24 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-12">
+      {/* CONTACT CARDS – প্রো হোভার + মোবাইলে সুন্দর */}
+      <section className="py-16 px-6 md:py-20">
+        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
-            { icon: Phone, title: "Call / WhatsApp", info: "01783-720914", color: "from-green-400 to-emerald-500" },
-            { icon: Mail, title: "Email Us", info: "sharatacharjee6@gmail.com", color: "from-orange-400 to-red-500" },
-            { icon: MapPin, title: "Location", info: "Dhaka, Bangladesh", color: "from-purple-400 to-pink-500" }
+            {
+              icon: Phone,
+              title: "Call / WhatsApp",
+              info: "01783-720914",
+              color: "from-green-500 to-emerald-600",
+              link: "tel:01783720914"
+            },
+            {
+              icon: Mail,
+              title: "Email Us",
+              info: "sharatacharjee6@gmail.com",
+              color: "from-blue-500 to-indigo-600",
+              link: "mailto:sharatacharjee6@gmail.com"
+            },
+            {
+              icon: MapPin,
+              title: "Location",
+              info: "Dhaka, Bangladesh",
+              color: "from-purple-500 to-pink-600",
+              link: null
+            },
           ].map((item, i) => (
-            <motion.div
+            <motion.a
               key={i}
-              whileHover={{ y: -20, scale: 1.05 }}
-              className="group relative"
+              href={item.link || undefined}
+              target={item.link?.includes("mailto") ? "_blank" : undefined}
+              initial={{ y: 60, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.2 }}
+              whileHover={{ y: -12, scale: 1.05 }}
+              className={`block bg-white rounded-3xl p-10 text-center shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-100 group ${item.link ? "cursor-pointer" : ""}`}
               data-aos="fade-up"
-              data-aos-delay={i * 200}
+              data-aos-delay={i * 150}
             >
-              <div className={`absolute inset-0 bg-gradient-to-br ${item.color} blur-3xl opacity-40 group-hover:opacity-70 transition`} />
-              <div className="relative bg-white/95 backdrop-blur-xl rounded-3xl p-12 shadow-2xl border border-white/50 text-center">
-                <div className={`w-24 h-24 bg-gradient-to-br ${item.color} rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl`}>
-                  <item.icon className="w-14 h-14 text-white" />
-                </div>
-                <h3 className="text-3xl font-bold text-gray-900 mb-4">{item.title}</h3>
-                <p className="text-xl font-semibold text-gray-700 break-all">{item.info}</p>
+              <div className={`w-20 h-20 mx-auto rounded-full bg-gradient-to-br ${item.color} p-5 mb-6 shadow-lg group-hover:scale-110 transition`}>
+                <item.icon className="w-full h-full text-white" />
               </div>
-            </motion.div>
+              <h3 className="text-2xl font-bold text-gray-800 mb-3">{item.title}</h3>
+              <p className="text-lg text-gray-600 break-all font-medium">{item.info}</p>
+            </motion.a>
           ))}
         </div>
       </section>
 
-      {/* SEND MESSAGE FORM → GOES DIRECTLY TO YOUR GMAIL */}
-      <section className="py-24 bg-white">
-        <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-5xl font-black text-center mb-16 text-gray-900" data-aos="fade-up">
-            Send Message – We Reply Fast!
-          </h2>
-
-          {/* Formspree Form – 100% working, no backend needed */}
-          <form
-            action="https://formspree.io/f/xblrjwpz"
-            method="POST"
-            className="bg-gradient-to-br from-orange-50 to-red-50 rounded-3xl p-12 shadow-2xl border border-orange-200"
+      {/* CONTACT FORM – সুপার মডার্ন + ফোকাস অ্যানিমেশন */}
+      <section className="py-20 px-6 md:py-28">
+        <div className="max-w-3xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-200"
             data-aos="fade-up"
           >
-            <div className="grid md:grid-cols-2 gap-8 mb-8">
-              <input
-                type="text"
-                name="name"
-                placeholder="Your Name"
-                required
-                className="px-8 py-6 rounded-2xl border-2 border-orange-200 focus:border-orange-600 focus:ring-4 focus:ring-orange-100 outline-none text-lg transition"
-              />
-              <input
-                type="email"
-                name="email"
-                placeholder="Your Email"
-                required
-                className="px-8 py-6 rounded-2xl border-2 border-orange-200 focus:border-orange-600 focus:ring-4 focus:ring-orange-100 outline-none text-lg transition"
-              />
+            <div className="bg-gradient-to-r from-orange-600 to-red-600 p-8 text-center">
+              <h2 className="text-3xl md:text-4xl font-black text-white flex items-center justify-center gap-3">
+                <MessageCircle className="w-10 h-10" />
+                Send us a Message
+              </h2>
+              <p className="text-orange-100 mt-2 text-lg">We'll reply faster than your food arrives!</p>
             </div>
-            <input
-              type="text"
-              name="phone"
-              placeholder="Your Phone (optional)"
-              className="w-full px-8 py-6 rounded-2xl border-2 border-orange-200 focus:border-orange-600 focus:ring-4 focus:ring-orange-100 outline-none text-lg transition mb-8"
-            />
-            <textarea
-              name="message"
-              rows="7"
-              placeholder="Write your message here..."
-              required
-              className="w-full px-8 py-6 rounded-2xl border-2 border-orange-200 focus:border-orange-600 focus:ring-4 focus:ring-orange-100 outline-none text-lg resize-none transition mb-8"
-            />
-            <button
-              type="submit"
-              className="w-full bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 
-                       text-white font-black text-2xl py-7 rounded-2xl shadow-2xl hover:shadow-orange-500/50 
-                       hover:scale-105 transition-all duration-300 flex items-center justify-center gap-4"
+
+            <form
+              action="https://formspree.io/f/xblrjwpz"
+              method="POST"
+              className="p-8 md:p-12 space-y-7"
             >
-              Send Message Now <Send className="w-8 h-8" />
-            </button>
-            <p className="text-center mt-6 text-gray-600 text-lg">
-              We reply within 5–10 minutes on WhatsApp/Email
-            </p>
-          </form>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <motion.input
+                  whileFocus={{ scale: 1.02 }}
+                  type="text"
+                  name="name"
+                  placeholder="Your Name *"
+                  required
+                  className="w-full px-6 py-5 rounded-2xl border-2 border-gray-200 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 outline-none text-lg transition-all duration-300"
+                />
+                <motion.input
+                  whileFocus={{ scale: 1.02 }}
+                  type="email"
+                  name="email"
+                  placeholder="Your Email *"
+                  required
+                  className="w-full px-6 py-5 rounded-2xl border-2 border-gray-200 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 outline-none text-lg transition-all duration-300"
+                />
+              </div>
+
+              <motion.input
+                whileFocus={{ scale: 1.02 }}
+                type="tel"
+                name="phone"
+                placeholder="Phone Number (Optional)"
+                className="w-full px-6 py-5 rounded-2xl border-2 border-gray-200 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 outline-none text-lg transition-all duration-300"
+              />
+
+              <motion.textarea
+                whileFocus={{ scale: 1.02 }}
+                name="message"
+                rows="6"
+                placeholder="How can we help you today? 😊"
+                required
+                className="w-full px-6 py-5 rounded-2xl border-2 border-gray-200 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 outline-none text-lg resize-none transition-all duration-300"
+              />
+
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+                type="submit"
+                className="w-full bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white font-black text-xl py-6 rounded-2xl shadow-xl hover:shadow-orange-500/50 transition-all duration-300 flex items-center justify-center gap-3"
+              >
+                Send Message
+                <Send className="w-6 h-6" />
+              </motion.button>
+            </form>
+          </motion.div>
         </div>
       </section>
 
-      {/* FINAL CTA */}
-      <section className="py-32 bg-gradient-to-r from-orange-600 to-red-700 text-white text-center">
-        <h2 className="text-6xl md:text-8xl font-black mb-8">Need Help Now?</h2>
-        <div className="flex flex-col sm:flex-row gap-8 justify-center">
-          <a
-            href="tel:01783720914"
-            className="bg-white text-orange-600 px-20 py-8 rounded-full text-3xl font-bold hover:scale-110 transition flex items-center gap-4 justify-center"
-          >
-            <Phone className="w-10 h-10" /> Call 01783-720914
-          </a>
-          <a
-            href="mailto:sharatacharjee6@gmail.com"
-            className="border-4 border-white px-20 py-8 rounded-full text-3xl font-bold hover:bg-white hover:text-orange-600 transition flex items-center gap-4 justify-center"
-          >
-            <Mail className="w-10 h-10" /> Email Us
-          </a>
-        </div>
-      </section>
-    </>
+      {/* FINAL TOUCH – ছোট ফুটার */}
+      <footer className="py-12 bg-gray-900 text-white text-center">
+        <p className="text-sm md:text-base">
+          © 2025 <span className="text-orange-400 font-bold">Bite</span> • Made with love by Sharat Acharja Mugdho
+        </p>
+      </footer>
+    </div>
   );
 }

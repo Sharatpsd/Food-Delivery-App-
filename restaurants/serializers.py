@@ -1,23 +1,35 @@
 from rest_framework import serializers
-from .models import Restaurant
+from .models import RestaurantRequest, DeliveryRequest, Restaurant, Food
 
-class RestaurantSerializer(serializers.ModelSerializer):
-    logo = serializers.SerializerMethodField(read_only=True)
+
+class RestaurantRequestSerializer(serializers.ModelSerializer):
     owner = serializers.PrimaryKeyRelatedField(read_only=True)
 
-    def get_logo(self, obj):
-        if obj.logo:
-            try:
-                return obj.logo.url
-            except Exception:
-                return str(obj.logo)
-        return None
+    class Meta:
+        model = RestaurantRequest
+        fields = "__all__"
+        read_only_fields = ("approved", "created_at", "owner")
+
+
+class DeliveryRequestSerializer(serializers.ModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(read_only=True)
+
+    class Meta:
+        model = DeliveryRequest
+        fields = "__all__"
+        read_only_fields = ("approved", "created_at", "user")
+
+
+class FoodSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Food
+        fields = "__all__"
+        read_only_fields = ("created_at",)
+
+
+class RestaurantSerializer(serializers.ModelSerializer):
+    foods = FoodSerializer(many=True, read_only=True)
 
     class Meta:
         model = Restaurant
-        fields = [
-            'id', 'owner', 'name', 'logo', 'address', 'rating',
-            'avg_cost', 'theme', 'must_try', 'timings', 'city',
-            'website', 'social'
-        ]
-        read_only_fields = ['owner', 'rating']
+        fields = "__all__"

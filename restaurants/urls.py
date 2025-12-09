@@ -1,16 +1,18 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 from .views import (
-    RestaurantListView,
-    RestaurantDetailView,
-    RestaurantCreateView,
-    MyRestaurantView,
-    RestaurantDashboardView
+    RestaurantRequestViewSet,
+    DeliveryRequestViewSet,
+    RestaurantViewSet,
+    FoodViewSet,
 )
 
+router = DefaultRouter()
+router.register("restaurant-requests", RestaurantRequestViewSet)
+router.register("delivery-requests", DeliveryRequestViewSet)
+router.register("restaurants", RestaurantViewSet)
+router.register("foods", FoodViewSet)
+
 urlpatterns = [
-    path("", RestaurantListView.as_view(), name="restaurant-list"),
-    path("<int:id>/", RestaurantDetailView.as_view(), name="restaurant-detail"),
-    path("create/", RestaurantCreateView.as_view(), name="restaurant-create"),
-    path("my/", MyRestaurantView.as_view(), name="my-restaurant"),
-    path("dashboard/", RestaurantDashboardView.as_view(), name="restaurant-dashboard"),
+    path("", include(router.urls)),
 ]

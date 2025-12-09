@@ -1,22 +1,25 @@
-// src/App.jsx – FINAL FIXED VERSION
 import { Routes, Route, Navigate } from "react-router-dom";
 import { CartProvider } from "./context/CartContext";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
+import Stats from "./components/Stats";
+import Features from "./components/Features";
 
 // Pages
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-import Partner from "./pages/Partner";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import RestaurantDetail from "./pages/RestaurantDetail";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import Orders from "./pages/Orders";
+// ✅ NEW PARTNER PAGES
+import RestaurantOwner from "./pages/RestaurantOwner";
+import DeliveryPartner from "./pages/DeliveryPartner";
 
 function RequireAuth({ children }) {
   const token = localStorage.getItem("access");
@@ -30,77 +33,85 @@ function RedirectIfLoggedIn({ children }) {
 
 export default function App() {
   return (
-    <>
-      <ScrollToTop />
+    <CartProvider>
+      <div className="flex flex-col min-h-screen">
+        <ScrollToTop />
+        
+        <Navbar />
+        
+        <main className="flex-1">
+          <Routes>
+            <Route 
+              path="/" 
+              element={
+                <>
+                  <Home />
+                  <Stats />
+                  <Features />
+                </>
+              } 
+            />
+            
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            
+            {/* ✅ NEW PARTNER ROUTES */}
+            <Route path="/restaurant-owner" element={<RestaurantOwner />} />
+            <Route path="/delivery-partner" element={<DeliveryPartner />} />
+            
+            <Route path="/restaurant/:id" element={<RestaurantDetail />} />
 
-      <CartProvider>
-        <div className="flex flex-col min-h-screen">
-          <Navbar />
+            <Route 
+              path="/login" 
+              element={
+                <RedirectIfLoggedIn>
+                  <Login />
+                </RedirectIfLoggedIn>
+              } 
+            />
+            
+            <Route 
+              path="/register" 
+              element={
+                <RedirectIfLoggedIn>
+                  <Register />
+                </RedirectIfLoggedIn>
+              } 
+            />
 
-          <main className="flex-1 bg-gray-50">
-            <Routes>
-              {/* Public Routes */}
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/partner" element={<Partner />} />
-              <Route path="/restaurant/:id" element={<RestaurantDetail />} />
+            <Route 
+              path="/cart" 
+              element={
+                <RequireAuth>
+                  <Cart />
+                </RequireAuth>
+              } 
+            />
+            
+            <Route 
+              path="/checkout" 
+              element={
+                <RequireAuth>
+                  <Checkout />
+                </RequireAuth>
+              } 
+            />
+            
+            <Route 
+              path="/orders" 
+              element={
+                <RequireAuth>
+                  <Orders />
+                </RequireAuth>
+              } 
+            />
 
-              {/* Auth Routes */}
-              <Route
-                path="/login"
-                element={
-                  <RedirectIfLoggedIn>
-                    <Login />
-                  </RedirectIfLoggedIn>
-                }
-              />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </main>
 
-              <Route
-                path="/register"
-                element={
-                  <RedirectIfLoggedIn>
-                    <Register />
-                  </RedirectIfLoggedIn>
-                }
-              />
-
-              {/* Protected Routes */}
-              <Route
-                path="/cart"
-                element={
-                  <RequireAuth>
-                    <Cart />
-                  </RequireAuth>
-                }
-              />
-
-              <Route
-                path="/checkout"
-                element={
-                  <RequireAuth>
-                    <Checkout />
-                  </RequireAuth>
-                }
-              />
-
-              <Route
-                path="/orders"
-                element={
-                  <RequireAuth>
-                    <Orders />
-                  </RequireAuth>
-                }
-              />
-
-              {/* Fallback */}
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </main>
-
-          <Footer />
-        </div>
-      </CartProvider>
-    </>
+        <Footer />
+      </div>
+    </CartProvider>
   );
 }

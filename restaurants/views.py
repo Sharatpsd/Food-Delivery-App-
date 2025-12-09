@@ -1,135 +1,94 @@
-# restaurants/views.py
-
-from rest_framework import generics, permissions
-from rest_framework.views import APIView
+from rest_framework import viewsets, permissions, status
+from rest_framework.decorators import action
 from rest_framework.response import Response
-from django.db.models import Sum, Q
-from datetime import date
-
-from .models import Restaurant
-from foods.models import Food
-from orders.models import Order
-from .serializers import RestaurantSerializer
-from users.permissions import IsRestaurantOwner
-
-
-# -------------------------------------------
-# LIST + SEARCH RESTAURANTS (CUSTOMER)
-# -------------------------------------------
-class RestaurantListView(generics.ListAPIView):
-    serializer_class = RestaurantSerializer
-
-    def get_queryset(self):
-        qs = Restaurant.objects.all()
-        search = self.request.query_params.get("search")
-
-        if search:
-            qs = qs.filter(
-                Q(name__icontains=search) |
-                Q(city__icontains=search) |
-                Q(theme__icontains=search) |
-                Q(must_try__icontains=search)
-            )
-
-        return qs
+from rest_framework.parsers import MultiPartParser, FormParser
+from .models import RestaurantRequest, DeliveryRequest, Restaurant, Food
+from .serializers import (
+    RestaurantRequestSerializer,
+    DeliveryRequestSerializer,
+    RestaurantSerializer,
+    FoodSerializer,
+)
+from rest_framework import serializers as drf_serializers
 
 
-# -------------------------------------------
-# SINGLE RESTAURANT DETAIL
-# -------------------------------------------
-class RestaurantDetailView(generics.RetrieveAPIView):
-    queryset = Restaurant.objects.all()
-    serializer_class = RestaurantSerializer
-    lookup_field = "id"
+class IsOwnerOrReadOnly(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        owner = getattr(obj, "owner", None)
+        return owner == request.user
 
 
-# -------------------------------------------
-# CREATE RESTAURANT
-# -------------------------------------------
-class RestaurantCreateView(generics.CreateAPIView):
-    serializer_class = RestaurantSerializer
-    permission_classes = [permissions.IsAuthenticated, IsRestaurantOwner]
+# -----------------------------
+# Restaurant Join Request API
+# -----------------------------
+class RestaurantRequestViewSet(viewsets.ModelViewSet):
+    queryset = RestaurantRequest.objects.all().order_by("-created_at")
+    serializer_class = RestaurantRequestSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
+    @action(detail=True, methods=["post"], permission_classes=[permissions.IsAdminUser])
+    def approve(self, request, pk=None):
+        req = self.get_object()
+        if req.approved:
+            return Response({"detail": "Already approved."}, status=400)
 
-# -------------------------------------------
-# MY RESTAURANT (OWNER)
-# -------------------------------------------
-class MyRestaurantView(APIView):
-    permission_classes = [permissions.IsAuthenticated, IsRestaurantOwner]
+        req.approved = True
+        req.save()
 
-    def get(self, request):
-        restaurant = Restaurant.objects.filter(owner=request.user).first()
+        Restaurant.objects.create(
+            owner=req.owner,
+            name=req.name,
+            logo=req.logo,
+            address=req.address,
+            city=req.city,
+            theme=req.theme,
+        )
 
-        if not restaurant:
-            return Response({"detail": "No restaurant found!"}, status=404)
-
-        return Response(RestaurantSerializer(restaurant).data)
+        return Response({"detail": "Restaurant approved & created."})
 
 
-# -------------------------------------------
-# RESTAURANT DASHBOARD (OWNER)
-# -------------------------------------------
-class RestaurantDashboardView(APIView):
-    permission_classes = [permissions.IsAuthenticated, IsRestaurantOwner]
+# -----------------------------
+# Delivery Partner Request API
+# -----------------------------
+class DeliveryRequestViewSet(viewsets.ModelViewSet):
+    queryset = DeliveryRequest.objects.all().order_by("-created_at")
+    serializer_class = DeliveryRequestSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser]
 
-    def get(self, request):
-        restaurant = request.user.restaurants.first()
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
-        if not restaurant:
-            return Response({"detail": "Restaurant not found!"}, status=404)
 
-        orders = Order.objects.filter(restaurant=restaurant)
-        today = date.today()
+# -----------------------------
+# Public Restaurants API
+# -----------------------------
+class RestaurantViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Restaurant.objects.filter(is_active=True).order_by("-created_at")
+    serializer_class = RestaurantSerializer
+    permission_classes = [permissions.AllowAny]
 
-        stats = {
-            "total": orders.count(),
-            "pending": orders.filter(status="pending").count(),
-            "accepted": orders.filter(status="accepted").count(),
-            "cooking": orders.filter(status="cooking").count(),
-            "on_the_way": orders.filter(status="on_the_way").count(),
-            "delivered": orders.filter(status="delivered").count(),
-            "cancelled": orders.filter(status="cancelled").count(),
-        }
 
-        revenue = {
-            "total": orders.filter(status="delivered").aggregate(total=Sum("total"))["total"] or 0,
-            "today": orders.filter(status="delivered", created_at__date=today).aggregate(total=Sum("total"))["total"] or 0,
-            "monthly": orders.filter(status="delivered", created_at__month=today.month).aggregate(total=Sum("total"))["total"] or 0,
-        }
+# -----------------------------
+# Owner Can Add Foods
+# -----------------------------
+class FoodViewSet(viewsets.ModelViewSet):
+    queryset = Food.objects.all().order_by("-created_at")
+    serializer_class = FoodSerializer
+    permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
+    parser_classes = [MultiPartParser, FormParser]
 
-        popular_foods = Food.objects.filter(restaurant=restaurant).annotate(
-            total_sold=Sum("order_items__quantity")
-        ).order_by("-total_sold")[:5]
+    def perform_create(self, serializer):
+        restaurant_id = self.request.data.get("restaurant")
+        restaurant = Restaurant.objects.get(pk=restaurant_id)
 
-        popular_food_list = [
-            {
-                "id": f.id,
-                "title": f.title,
-                "total_sold": f.total_sold or 0,
-                "price": f.price,
-                "image": f.image.url if f.image else None,
-            }
-            for f in popular_foods
-        ]
+        if restaurant.owner != self.request.user:
+            raise permissions.PermissionDenied("You do not own this restaurant.")
 
-        recent_orders = orders.order_by("-created_at")[:5]
-        recent_order_list = [
-            {
-                "id": o.id,
-                "customer": o.customer.name,
-                "total": o.total,
-                "status": o.status,
-                "created_at": o.created_at,
-            }
-            for o in recent_orders
-        ]
-
-        return Response({
-            "stats": stats,
-            "revenue": revenue,
-            "popular_foods": popular_food_list,
-            "recent_orders": recent_order_list,
-        })
+        serializer.save()
