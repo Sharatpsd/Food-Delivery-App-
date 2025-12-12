@@ -1,16 +1,16 @@
 from django.db import models
 from users.models import User
-from restaurants.models import Restaurant
+from restaurants.models import Restaurant, Food
 
 
 class OrderItem(models.Model):
     order = models.ForeignKey('Order', on_delete=models.CASCADE, related_name='order_items')
-    food = models.ForeignKey('foods.Food', on_delete=models.CASCADE)
+    food = models.ForeignKey(Food, on_delete=models.CASCADE)   # FIXED
     quantity = models.PositiveIntegerField(default=1)
     price = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
-        return f"{self.quantity} x {self.food.title}"
+        return f"{self.quantity} x {self.food.name}"
 
 
 class Order(models.Model):
@@ -37,4 +37,4 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Order {self.id} by {self.customer.name}"
+        return f"Order {self.id} by {self.customer.username}"

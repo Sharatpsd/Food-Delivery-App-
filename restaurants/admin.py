@@ -1,6 +1,5 @@
 from django.contrib import admin
-from .models import RestaurantRequest, DeliveryRequest, Restaurant, Food
-
+from .models import RestaurantRequest, DeliveryRequest, Restaurant
 
 @admin.register(RestaurantRequest)
 class RestaurantRequestAdmin(admin.ModelAdmin):
@@ -23,7 +22,6 @@ class RestaurantRequestAdmin(admin.ModelAdmin):
                 )
         self.message_user(request, "Requests approved & restaurants created.")
 
-
 @admin.register(DeliveryRequest)
 class DeliveryRequestAdmin(admin.ModelAdmin):
     list_display = ("full_name", "user", "city", "approved", "created_at")
@@ -33,14 +31,6 @@ class DeliveryRequestAdmin(admin.ModelAdmin):
         queryset.update(approved=True)
         self.message_user(request, "Delivery partners approved.")
 
-
 @admin.register(Restaurant)
 class RestaurantAdmin(admin.ModelAdmin):
     list_display = ("name", "owner", "city", "rating", "is_active", "created_at")
-
-
-@admin.register(Food)
-class FoodAdmin(admin.ModelAdmin):
-    list_display = ("name", "restaurant", "price", "is_available", "created_at")
-    list_filter = ("restaurant", "is_available")
-    search_fields = ("name", "restaurant__name")

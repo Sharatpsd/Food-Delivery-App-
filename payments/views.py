@@ -6,6 +6,7 @@ from .models import Payment
 from orders.models import Order
 from users.permissions import IsCustomer
 
+
 # --------------------------
 # 1️⃣ Initiate Payment (Customer)
 # --------------------------
@@ -20,34 +21,27 @@ class InitiatePaymentView(generics.CreateAPIView):
         if not order_id:
             return Response({"detail": "Order ID required"}, status=400)
 
-        if method not in ['bkash', 'nagad', 'card', 'cod']:
+        if method not in ["bkash", "nagad", "card", "cod"]:
             return Response({"detail": "Invalid payment method"}, status=400)
 
-        # Check order belongs to customer
         try:
             order = Order.objects.get(id=order_id, customer=request.user)
         except Order.DoesNotExist:
             return Response({"detail": "Order not found"}, status=404)
 
-        # Prevent duplicate payment
         if hasattr(order, "payment"):
             return Response({"detail": "Payment already exists"}, status=400)
 
-        # COD handled immediately
+        # COD (Cash On Delivery) → instant confirm
         if method == "cod":
-            payment = Payment.objects.create(
-                order=order,
-                method="cod",
-                status="completed"
-            )
+            payment = Payment.objects.create(order=order, method="cod", status="completed")
             order.status = "accepted"
             order.save()
             return Response({"detail": "Order accepted with COD"}, status=200)
 
-        # For digital methods → create pending payment
+        # Online payment (pending)
         payment = Payment.objects.create(order=order, method=method)
         serializer = self.get_serializer(payment)
-
         return Response(serializer.data, status=201)
 
 
@@ -57,7 +51,7 @@ class InitiatePaymentView(generics.CreateAPIView):
 class CompletePaymentView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated, IsCustomer]
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         payment_id = request.data.get("payment_id")
         transaction_id = request.data.get("transaction_id")
 
@@ -74,16 +68,13 @@ class CompletePaymentView(generics.GenericAPIView):
                     order__customer=request.user
                 )
 
-                # prevent double-complete
                 if payment.status == "completed":
                     return Response({"detail": "Payment already completed"}, status=400)
 
-                # Update payment
                 payment.transaction_id = transaction_id
                 payment.status = "completed"
                 payment.save()
 
-                # Auto accept order
                 order = payment.order
                 order.status = "accepted"
                 order.save()

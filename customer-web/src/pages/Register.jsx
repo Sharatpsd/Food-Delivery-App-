@@ -1,4 +1,4 @@
-// src/pages/Register.jsx – ULTRA PREMIUM SIGN UP
+// src/pages/Register.jsx – ULTRA PREMIUM SIGN UP (FULLY UPDATED)
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -7,43 +7,55 @@ import { ChefHat, ArrowRight, Eye, EyeOff, User, Mail, Phone, Lock } from "lucid
 
 export default function Register() {
   const [formData, setFormData] = useState({
-    full_name: "",
+    name: "",
     username: "",
     email: "",
     phone: "",
     password: "",
     password2: "",
   });
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
+  // Handle Input Change
+  const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
 
+  // Handle Submit
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (formData.password !== formData.password2) {
       alert("Passwords do not match!");
       return;
     }
 
     setLoading(true);
+
     try {
-      await axios.post("http://127.0.0.1:8000/api/auth/register/", {
-        full_name: formData.full_name,
+      const payload = {
         username: formData.username,
+        password: formData.password,
+        name: formData.name,
         email: formData.email,
         phone: formData.phone,
-        password: formData.password,
-        password2: formData.password2,
-      });
-      alert("Account created! Please log in.");
+      };
+
+      await axios.post("http://127.0.0.1:8000/api/auth/register/", payload);
+
+      alert("Account created successfully! Please log in.");
       navigate("/login");
     } catch (err) {
-      alert(err.response?.data?.detail || "Registration failed. Try another username/email.");
+      console.log(err);
+      alert(
+        err.response?.data?.username?.[0] ||
+          err.response?.data?.detail ||
+          "Registration failed!"
+      );
     } finally {
       setLoading(false);
     }
@@ -51,11 +63,12 @@ export default function Register() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-600 via-red-600 to-orange-700 flex items-center justify-center px-6 relative overflow-hidden">
-      {/* Background Image + Overlay */}
+
+      {/* Background Image */}
       <div className="absolute inset-0 opacity-25">
         <img
           src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=1920&q=80"
-          alt="Food"
+          alt="Food bg"
           className="w-full h-full object-cover"
         />
       </div>
@@ -64,14 +77,12 @@ export default function Register() {
       <motion.div
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.8, type: "spring" }}
-        className="relative z-10 bg-white/95 backdrop-blur-2xl rounded-3xl shadow-4xl p-10 w-full max-w-lg border border-white/40"
+        transition={{ duration: 0.7, type: "spring" }}
+        className="relative z-10 bg-white/95 backdrop-blur-xl rounded-3xl shadow-3xl p-10 w-full max-w-lg border border-white/40"
       >
         {/* Logo */}
-        <div className="text-center mb-8">
-          <motion.h1
-            initial={{ y: -50 }}
-            animate={{ y: 0 }}
+        <div className="text-center mb-10">
+          <h1
             className="text-7xl font-black tracking-tighter inline-block"
             style={{
               background: "linear-gradient(135deg, #FFB74D, #FF8A65, #FF7043)",
@@ -80,26 +91,29 @@ export default function Register() {
             }}
           >
             Bite
-          </motion.h1>
-          <p className="text-gray-600 mt-3 text-lg">Join thousands of food lovers</p>
+          </h1>
+          <p className="text-gray-600 mt-2 text-lg">Join thousands of food lovers</p>
         </div>
 
-        <h2 className="text-4xl font-bold text-center text-gray-800 mb-8">
+        {/* Title */}
+        <h2 className="text-4xl font-extrabold text-center text-gray-800 mb-8">
           Create Your Account
         </h2>
 
+        {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
+
           {/* Full Name */}
           <div className="relative">
             <User className="absolute left-5 top-5 w-6 h-6 text-gray-400" />
             <input
               type="text"
-              name="full_name"
+              name="name"
               placeholder="Full Name"
-              value={formData.full_name}
+              value={formData.name}
               onChange={handleChange}
               required
-              className="w-full pl-14 pr-6 py-5 rounded-2xl border-2 border-gray-300 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 outline-none text-lg transition-all"
+              className="w-full pl-14 pr-6 py-5 rounded-2xl border-2 border-gray-300 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 outline-none text-lg"
             />
           </div>
 
@@ -113,7 +127,7 @@ export default function Register() {
               value={formData.username}
               onChange={handleChange}
               required
-              className="w-full pl-14 pr-6 py-5 rounded-2xl border-2 border-gray-300 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 outline-none text-lg transition-all"
+              className="w-full pl-14 pr-6 py-5 rounded-2xl border-2 border-gray-300 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 outline-none text-lg"
             />
           </div>
 
@@ -127,7 +141,7 @@ export default function Register() {
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full pl-14 pr-6 py-5 rounded-2xl border-2 border-gray-300 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 outline-none text-lg transition-all"
+              className="w-full pl-14 pr-6 py-5 rounded-2xl border-2 border-gray-300 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 text-lg outline-none"
             />
           </div>
 
@@ -137,11 +151,11 @@ export default function Register() {
             <input
               type="tel"
               name="phone"
-              placeholder="Phone Number (01xxxxxxxxx)"
+              placeholder="Phone Number"
               value={formData.phone}
               onChange={handleChange}
               required
-              className="w-full pl-14 pr-6 py-5 rounded-2xl border-2 border-gray-300 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 outline-none text-lg transition-all"
+              className="w-full pl-14 pr-6 py-5 rounded-2xl border-2 border-gray-300 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 text-lg outline-none"
             />
           </div>
 
@@ -155,7 +169,7 @@ export default function Register() {
               value={formData.password}
               onChange={handleChange}
               required
-              className="w-full pl-14 pr-16 py-5 rounded-2xl border-2 border-gray-300 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 outline-none text-lg"
+              className="w-full pl-14 pr-16 py-5 rounded-2xl border-2 border-gray-300 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 text-lg outline-none"
             />
             <button
               type="button"
@@ -176,7 +190,7 @@ export default function Register() {
               value={formData.password2}
               onChange={handleChange}
               required
-              className="w-full pl-14 pr-16 py-5 rounded-2xl border-2 border-gray-300 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 outline-none text-lg"
+              className="w-full pl-14 pr-16 py-5 rounded-2xl border-2 border-gray-300 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 text-lg outline-none"
             />
             <button
               type="button"
@@ -187,39 +201,24 @@ export default function Register() {
             </button>
           </div>
 
-          {/* Submit Button */}
+          {/* Submit */}
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 
-                     text-white font-black text-2xl py-6 rounded-2xl shadow-2xl hover:shadow-orange-500/60 
-                     transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-4 disabled:opacity-70"
+            className="w-full bg-gradient-to-r from-orange-500 to-red-600 text-white font-black text-2xl py-6 rounded-2xl shadow-2xl hover:scale-105 transition-all flex items-center justify-center gap-3 disabled:opacity-70"
           >
-            {loading ? "Creating Account..." : (
-              <>
-                Sign Up Free <ArrowRight className="w-8 h-8" />
-              </>
-            )}
+            {loading ? "Creating Account..." : <>Sign Up <ArrowRight className="w-7 h-7" /></>}
           </button>
         </form>
 
         {/* Login Link */}
-        <p className="text-center mt-10 text-gray-600">
+        <p className="text-center mt-8 text-gray-700">
           Already have an account?{" "}
-          <a href="/login" className="text-orange-600 font-bold hover:underline text-lg">
-            Log in
+          <a href="/login" className="text-orange-700 font-bold hover:underline">
+            Login
           </a>
         </p>
-
-        <div className="text-center mt-8 text-sm text-gray-500 flex items-center justify-center gap-2">
-          <ChefHat className="w-5 h-5 text-orange-600" />
-          <span>© 2025 Bite – Made with love in Bangladesh</span>
-        </div>
       </motion.div>
-
-      {/* Floating Blobs */}
-      <div className="absolute top-10 left-10 w-72 h-72 bg-orange-400/20 rounded-full blur-3xl animate-pulse" />
-      <div className="absolute bottom-10 right-10 w-96 h-96 bg-red-500/20 rounded-full blur-3xl animate-pulse delay-1000" />
     </div>
   );
 }

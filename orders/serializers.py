@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.db import transaction
 from .models import Order, OrderItem
-from foods.models import Food
+# from foods.models import Food
 from restaurants.models import Restaurant
 
 class OrderItemSerializer(serializers.ModelSerializer):

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from orders.models import Order, OrderItem
-from foods.serializers import FoodSerializer  # optional, only if exists
+# from foods.serializers import FoodSerializer  # optional, only if exists
 
 class DeliveryOrderItemSerializer(serializers.ModelSerializer):
     food_title = serializers.CharField(source='food.title', read_only=True)
