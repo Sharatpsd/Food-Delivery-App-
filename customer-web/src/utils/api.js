@@ -1,79 +1,81 @@
 import axios from "axios";
 
+/**
+ * ✅ VITE environment variable
+ * Render / Local — both supported
+ */
+const API_BASE =
+  import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000";
+
+/**
+ * ✅ Axios instance
+ */
 const API = axios.create({
-  baseURL: "http://127.0.0.1:8000/api",
+  baseURL: `${API_BASE}/api`,
 });
 
-// Send token automatically if exists
-API.interceptors.request.use((config) => {
-  const token = localStorage.getItem("access");
-  if (token) config.headers.Authorization = `Bearer ${token}`;
-  return config;
-});
+/**
+ * ✅ Auto attach JWT token
+ */
+API.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("access");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
-export default API;   // ⭐ THIS FIXES YOUR ERROR
+export default API;
 
-// ---------------------------------------------------------
-// GET RESTAURANTS LIST
-// ---------------------------------------------------------
+/* =========================================================
+   RESTAURANTS
+========================================================= */
+
+// ✅ GET restaurants
 export const getRestaurants = async ({ category = "", search = "" } = {}) => {
-  const params = new URLSearchParams();
-  if (search) params.append("search", search);
+  const params = {};
+  if (search) params.search = search;
 
-  const res = await fetch(`${API.defaults.baseURL}/restaurants/?${params.toString()}`);
+  const res = await API.get("/restaurants/", { params });
+  let data = res.data;
 
-  if (!res.ok) throw new Error("Failed to fetch restaurants");
-
-  const data = await res.json();
-
+  // Frontend filter (optional)
   if (category) {
     const cat = category.toLowerCase();
-    return {
-      data: data.filter(
-        (r) =>
-          (r.theme && r.theme.toLowerCase().includes(cat)) ||
-          (r.must_try && r.must_try.toLowerCase().includes(cat)) ||
-          (r.city && r.city.toLowerCase().includes(cat))
-      ),
-    };
+    data = data.filter(
+      (r) =>
+        r.theme?.toLowerCase().includes(cat) ||
+        r.must_try?.toLowerCase().includes(cat) ||
+        r.city?.toLowerCase().includes(cat)
+    );
   }
 
   return { data };
 };
 
-// ---------------------------------------------------------
-// GET SINGLE RESTAURANT
-// ---------------------------------------------------------
+// ✅ GET single restaurant
 export const getRestaurantDetail = async (id) => {
-  const res = await fetch(`${API.defaults.baseURL}/restaurants/${id}/`);
-  if (!res.ok) throw new Error("Restaurant not found");
-  return { data: await res.json() };
+  const res = await API.get(`/restaurants/${id}/`);
+  return { data: res.data };
 };
 
-// ---------------------------------------------------------
-// OWNER REQUEST
-// ---------------------------------------------------------
+/* =========================================================
+   PARTNER REQUESTS
+========================================================= */
+
+// ✅ Restaurant Owner request
 export const submitRestaurantOwnerRequest = async (formData) => {
-  const res = await fetch(`${API.defaults.baseURL}/restaurant-requests/`, {
-    method: "POST",
-    body: formData,
-  });
-
-  if (!res.ok) throw new Error("Request failed");
-  return await res.json();
+  const res = await API.post("/restaurant-requests/", formData);
+  return res.data;
 };
 
-// ---------------------------------------------------------
-// DELIVERY REQUEST
-// ---------------------------------------------------------
+// ✅ Delivery Partner request
 export const submitDeliveryPartnerRequest = async (formData) => {
-  const res = await fetch(`${API.defaults.baseURL}/delivery-requests/`, {
-    method: "POST",
-    body: formData,
-  });
-
-  if (!res.ok) throw new Error("Request failed");
-  return await res.json();
+  const res = await API.post("/delivery-requests/", formData);
+  return res.data;
 };
 
-console.log("⚡ Bite API Connected →", API.defaults.baseURL);
+console.log("⚡ Bite API Connected →", `${API_BASE}/api`);
