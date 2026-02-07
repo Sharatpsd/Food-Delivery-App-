@@ -1,21 +1,40 @@
+# Core
 Django==5.0.4
+
+# Django REST
 djangorestframework==3.15.1
-django-cors-headers==4.3.1
 django-filter==24.1
+django-cors-headers==4.3.1
 
-python-decouple==3.8
-Pillow==10.4.0
-
-cloudinary==1.39.0
-django-cloudinary-storage==0.3.0
-
+# Auth & JWT
 PyJWT==2.8.0
 djangorestframework-simplejwt==5.3.1
 
+# Environment & Config
+python-decouple==3.8
+dj-database-url==2.1.0
+
+# Database
+psycopg[binary]
+
+# Media & Images
+Pillow==10.4.0
+cloudinary==1.39.0
+django-cloudinary-storage==0.3.0
+
+# Google Auth
+google-auth==2.29.0
+
+# HTTP Requests
 requests==2.32.3
 
-gunicorn==21.2.0
-psycopg[binary]
+# Static & Production
 whitenoise==6.5.0
+gunicorn==21.2.0
 
-dj-database-url==2.1.0
+# git clone https://github.com/Sharatpsd/Food-Delivery-App-.git
+# cd Food-Delivery-App-
+# py -3.11 -m venv venv
+# venv\Scripts\activate
+# pip install -r requirements.txt
+# py manage.py runserver

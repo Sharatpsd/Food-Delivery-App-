@@ -39,7 +39,8 @@ export const getRestaurants = async ({ category = "", search = "" } = {}) => {
   const params = {};
   if (search) params.search = search;
 
-  const res = await API.get("/restaurants/", { params });
+const res = await API.get("/restaurants/restaurants/", { params });
+
   let data = res.data;
 
   // Frontend filter (optional)
@@ -58,7 +59,8 @@ export const getRestaurants = async ({ category = "", search = "" } = {}) => {
 
 // ✅ GET single restaurant
 export const getRestaurantDetail = async (id) => {
-  const res = await API.get(`/restaurants/${id}/`);
+  const res = await API.get(`/restaurants/restaurants/${id}/`);
+
   return { data: res.data };
 };
 

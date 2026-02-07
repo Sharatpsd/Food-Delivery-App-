@@ -5,6 +5,14 @@ import dj_database_url
 import cloudinary
 import os
 
+from decouple import config
+import os
+
+# Force load CLOUDINARY_URL into os.environ
+if config("CLOUDINARY_URL", default=None):
+    os.environ["CLOUDINARY_URL"] = config("CLOUDINARY_URL")
+
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # ================================================================
@@ -129,14 +137,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # ================================================================
 # CLOUDINARY STORAGE
 # ================================================================
-cloudinary.config(
-    cloud_name=config("CLOUDINARY_CLOUD_NAME", default=""),
-    api_key=config("CLOUDINARY_API_KEY", default=""),
-    api_secret=config("CLOUDINARY_API_SECRET", default=""),
-    secure=True,
-)
-
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+
 
 # ================================================================
 # CORS

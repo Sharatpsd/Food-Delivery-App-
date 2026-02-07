@@ -1,4 +1,15 @@
+# =====================
+# ENV / SECRETS
+# =====================
+.env
+.env.*
+venv/
+__pycache__/
+*.sqlite3
+
+# =====================
 # Logs
+# =====================
 logs
 *.log
 npm-debug.log*
@@ -7,12 +18,17 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# =====================
+# Node
+# =====================
 node_modules
 dist
 dist-ssr
 *.local
 
-# Editor directories and files
+# =====================
+# Editor / OS
+# =====================
 .vscode/*
 !.vscode/extensions.json
 .idea
