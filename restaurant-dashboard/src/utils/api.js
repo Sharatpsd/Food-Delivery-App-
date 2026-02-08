@@ -1,21 +1,19 @@
-// src/utils/api.js
-
 import axiosClient from "./axiosClient";
 
 export const API = {
   // Auth
-  login: (data) => axiosClient.post("/api/auth/token/", data),
-  getUser: () => axiosClient.get("/api/auth/user/"),
+  login: (data) => axiosClient.post("/auth/token/", data),
+  getUser: () => axiosClient.get("/auth/user/"),
 
   // Restaurant
-  getMyRestaurant: () => axiosClient.get("/api/restaurants/my-restaurant/"),
+  getMyRestaurant: () => axiosClient.get("/restaurants/my-restaurant/"),
   createRestaurant: (data) =>
-    axiosClient.post("/api/restaurants/create/", data),
+    axiosClient.post("/restaurants/create/", data),
 
   // Orders
   getRestaurantOrders: () =>
-    axiosClient.get("/api/orders/restaurant-orders/"),
+    axiosClient.get("/orders/restaurant-orders/"),
 
   updateOrderStatus: (id, status) =>
-    axiosClient.patch(`/api/orders/${id}/update-status/`, { status }),
+    axiosClient.patch(`/orders/${id}/update-status/`, { status }),
 };
