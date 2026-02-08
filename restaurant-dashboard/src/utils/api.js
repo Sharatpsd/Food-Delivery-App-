@@ -6,6 +6,7 @@ export const API = {
   getUser: () => axiosClient.get("/auth/user/"),
 
   // Restaurant
+  getRestaurants: () => axiosClient.get("/restaurants/"),
   getMyRestaurant: () => axiosClient.get("/restaurants/my-restaurant/"),
   createRestaurant: (data) =>
     axiosClient.post("/restaurants/create/", data),
