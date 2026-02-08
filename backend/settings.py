@@ -123,6 +123,7 @@ if DATABASE_URL:
         "default": dj_database_url.parse(
             DATABASE_URL,
             conn_max_age=600,
+            ssl_require=False,   # 🔥 THIS IS THE FIX
         )
     }
 else:
@@ -132,6 +133,7 @@ else:
             "NAME": BASE_DIR / "db.sqlite3",
         }
     }
+
 
 
 # ================================================================
