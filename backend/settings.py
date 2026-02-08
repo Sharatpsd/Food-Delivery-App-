@@ -123,15 +123,11 @@ if DATABASE_URL:
         "default": dj_database_url.parse(
             DATABASE_URL,
             conn_max_age=600,
-            ssl_require=False,   # 🔥 THIS IS THE FIX
+            ssl_require=True,
         )
     }
-else:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
+    DATABASES["default"]["OPTIONS"] = {
+        "sslmode": "require"
     }
 
 
