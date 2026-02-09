@@ -1,52 +1,39 @@
-// import axiosClient from "./axiosClient";
-// import sampleRestaurants from "./sampleRestaurants.json";
-
-// export const API = {
-//   // Auth
-//   login: (data) => axiosClient.post("/auth/token/", data),
-//   getUser: () => axiosClient.get("/auth/user/"),
-
-//   // Restaurant
-//   getRestaurants: () => axiosClient.get("/restaurants/"),
-//   getMyRestaurant: () => axiosClient.get("/restaurants/my-restaurant/"),
-//   createRestaurant: (data) =>
-//     axiosClient.post("/restaurants/create/", data),
-
-//   // Orders
-//   getRestaurantOrders: () =>
-//     axiosClient.get("/orders/restaurant-orders/"),
-
-//   updateOrderStatus: (id, status) =>
-//     axiosClient.patch(`/orders/${id}/update-status/`, { status }),
-// };
 import axios from "axios";
 import sampleRestaurants from "./sampleRestaurants.json";
 
 /**
- * Base URL (Render / Local)
- * Render env MUST be: https://food-delivery-app-1-ihcm.onrender.com
+ * ✅ VITE environment variable
+ * Render / Local — both supported
  */
-const API_BASE =
-  import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000";
+const normalizeApiBase = (baseUrl) => {
+  if (!baseUrl) return "http://127.0.0.1:8000";
+  return baseUrl.endsWith("/api")
+    ? baseUrl.slice(0, -"/api".length)
+    : baseUrl;
+};
+
+const API_BASE = normalizeApiBase(import.meta.env.VITE_API_BASE_URL);
 
 /**
- * Axios instance
- * NOTE: /api only once
+ * ✅ Axios instance
  */
 const API = axios.create({
   baseURL: `${API_BASE}/api`,
 });
 
 /**
- * Auto attach JWT
+ * ✅ Auto attach JWT token
  */
-API.interceptors.request.use((config) => {
-  const token = localStorage.getItem("access");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
+API.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("access");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
 export default API;
 
@@ -54,9 +41,9 @@ export default API;
    RESTAURANTS
 ========================================================= */
 
-const USE_SAMPLE_DATA = import.meta.env.DEV === true;
+const USE_SAMPLE_DATA = Boolean(import.meta.env.DEV);
 
-// ✅ GET restaurants (SAFE + CLEAN)
+// ✅ GET restaurants
 export const getRestaurants = async ({ category = "", search = "" } = {}) => {
   const params = {};
   if (search) params.search = search;
@@ -64,18 +51,18 @@ export const getRestaurants = async ({ category = "", search = "" } = {}) => {
   let data = [];
 
   try {
-    const res = await API.get("/restaurants/", { params });
+    const res = await API.get("/restaurants/restaurants/", { params });
     data = res.data;
   } catch (error) {
     if (USE_SAMPLE_DATA) {
-      console.warn("Backend error → using sample data");
+      console.warn("Falling back to sample restaurants data.", error);
       data = sampleRestaurants;
     } else {
       throw error;
     }
   }
 
-  // Optional frontend filtering
+  // Frontend filter (optional)
   if (category) {
     const cat = category.toLowerCase();
     data = data.filter(
@@ -91,6 +78,25 @@ export const getRestaurants = async ({ category = "", search = "" } = {}) => {
 
 // ✅ GET single restaurant
 export const getRestaurantDetail = async (id) => {
-  const res = await API.get(`/restaurants/${id}/`);
+  const res = await API.get(`/restaurants/restaurants/${id}/`);
+
   return { data: res.data };
 };
+
+/* =========================================================
+   PARTNER REQUESTS
+========================================================= */
+
+// ✅ Restaurant Owner request
+export const submitRestaurantOwnerRequest = async (formData) => {
+  const res = await API.post("/restaurant-requests/", formData);
+  return res.data;
+};
+
+// ✅ Delivery Partner request
+export const submitDeliveryPartnerRequest = async (formData) => {
+  const res = await API.post("/delivery-requests/", formData);
+  return res.data;
+};
+
+console.log("⚡ Bite API Connected →", `${API_BASE}/api`);
