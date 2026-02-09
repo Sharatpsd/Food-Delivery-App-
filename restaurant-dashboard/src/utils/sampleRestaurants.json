@@ -1,0 +1,46 @@
+[
+  {
+    "id": 1,
+    "name": "Chillox",
+    "city": "Dhaka",
+    "theme": "Burgers",
+    "must_try": "Classic Beef Burger",
+    "logo": "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80",
+    "rating": 4.6,
+    "delivery_time_estimate": 28,
+    "price_range": "$$"
+  },
+  {
+    "id": 2,
+    "name": "Sultan's Dine",
+    "city": "Dhaka",
+    "theme": "Biryani",
+    "must_try": "Kacchi Biryani",
+    "logo": "https://images.unsplash.com/photo-1604908812657-33b6f0c89c37?auto=format&fit=crop&w=800&q=80",
+    "rating": 4.8,
+    "delivery_time_estimate": 38,
+    "price_range": "$$"
+  },
+  {
+    "id": 3,
+    "name": "Pizza Roma",
+    "city": "Chattogram",
+    "theme": "Pizza",
+    "must_try": "Pepperoni Pizza",
+    "logo": "https://images.unsplash.com/photo-1548365328-9f547fb0955f?auto=format&fit=crop&w=800&q=80",
+    "rating": 4.4,
+    "delivery_time_estimate": 32,
+    "price_range": "$$"
+  },
+  {
+    "id": 4,
+    "name": "Khana's",
+    "city": "Sylhet",
+    "theme": "Desserts",
+    "must_try": "Chocolate Lava Cake",
+    "logo": "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=800&q=80",
+    "rating": 4.5,
+    "delivery_time_estimate": 24,
+    "price_range": "$"
+  }
+]
