@@ -1,155 +1,97 @@
-<div align="center">
-  <h1>Bite</h1>
-  <h3>🚀 Bangladesh's Fastest Growing Food Delivery Platform</h3>
-  <p><em>Hot & Fresh Food Delivered in Minutes</em></p>
+# 🍔 Bite – Full-Stack Food Delivery Platform
 
-  <br/>
+Modern, scalable food delivery system tailored for the Bangladesh market.
 
-  <p>
-    <strong>Frontend Live Demo:</strong>  
-    <a href="https://food-delivery-frontend-mktt.onrender.com" target="_blank">https://food-delivery-frontend-mktt.onrender.com</a>
-  </p>
+**Frontend Live** → https://food-delivery-frontend-mktt.onrender.com  
+**Backend API**   → https://food-delivery-app-1-ihcm.onrender.com
 
-  <p>
-    <strong>Backend API Live:</strong>  
-    <a href="https://food-delivery-app-1-ihcm.onrender.com" target="_blank">https://food-delivery-app-1-ihcm.onrender.com</a>
-  </p>
-
-  <br/>
-
-  <img 
-    src="https://drive.google.com/uc?id=1eLes5bb7NEak3KLgHyF_5zLqY7DsU1YN" 
-    alt="Bite Hero Banner" 
-    width="90%" 
-    style="border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);"
-  />
-
-  <br/><br/>
-
-  <p>
-    <a href="#-features">Features</a> •
-    <a href="#-screenshots">Screenshots</a> •
-    <a href="#-tech-stack">Tech Stack</a> •
-    <a href="#-installation">Installation</a> •
-    <a href="#-contact">Contact</a>
-  </p>
-
-  <img src="https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge&logo=status" alt="Status" />
-  <img src="https://img.shields.io/badge/Frontend-React-blue?style=for-the-badge&logo=react" alt="Frontend" />
-  <img src="https://img.shields.io/badge/Backend-Django-green?style=for-the-badge&logo=django" alt="Backend" />
-
-</div>
+![Hero / Landing Page](assets/bite-landing.png)
+*Clean, mobile-first interface built for fast food discovery & ordering*
 
 ---
 
-## ✨ Features
+## 🌟 Project Highlights
 
-| Customers                                      | Restaurants / Partners                          |
-|------------------------------------------------|-------------------------------------------------|
-| Browse & search nearby restaurants             | **Zero commission** during beta phase           |
-| Real-time cart with live price calculation     | Simple & fast partner registration              |
-| Secure JWT-based authentication                | Full menu management (add/edit/delete items)    |
-| Premium responsive design (mobile-first)       | Order tracking & status updates                 |
-| Order history & favorites                      | Basic analytics dashboard (coming soon)         |
-| Dark/Light mode support (planned)              | Easy order acceptance & preparation flow        |
+Bite connects hungry customers with local restaurants through a production-grade full-stack application.
+
+Key capabilities:
+
+- Seamless customer ordering experience
+- Restaurant partner onboarding & menu management
+- Secure JWT-based authentication
+- Real-time cart & order calculations
+- RESTful API architecture
+- Ready for cloud deployment (Render + Cloudinary)
+
+Demonstrates clean separation of concerns, modern frontend tooling and production-ready backend practices.
 
 ---
 
 ## 📸 Screenshots
 
-<div align="center">
+| Section                  | Preview                              |
+|--------------------------|--------------------------------------|
+| **Landing Page**         | ![Landing](assets/bite-landing.png)   |
+| **Categories & Filters** | ![Category](assets/category.png)      |
+| **Login / Auth**         | ![Sign In](assets/signin.png)         |
+| **Become a Partner**     | ![Partner](assets/partner.png)        |
+| **Contact Section**      | ![Contact](assets/contact.png)        |
 
-### Hero & Restaurant Listing
-<img 
-  src="https://drive.google.com/uc?id=1D8S87v9q0rTZ4xew-9dhvDrusaByjmRz" 
-  alt="Home - Hero & Restaurants" 
-  width="85%" 
-  style="border-radius: 10px; margin: 12px 0;"
-/>
+---
 
-### Search & Filters
-<img 
-  src="https://drive.google.com/uc?id=1kFJbf_nhZScldagyDyZeRdpxOiU3p3R4" 
-  alt="Search & Filter Screen" 
-  width="85%" 
-  style="border-radius: 10px; margin: 12px 0;"
-/>
+## ✨ Features
 
-### Cart & Checkout Flow
-<img 
-  src="https://drive.google.com/uc?id=1-rD4dNQHLeUitHPNJ1Jha2jaNYAmqOiE" 
-  alt="Cart and Checkout Page" 
-  width="85%" 
-  style="border-radius: 10px; margin: 12px 0;"
-/>
+### 👤 Customer Experience
+- Browse restaurants by category & cuisine
+- Real-time cart with dynamic pricing & quantity controls
+- Secure login/signup with **JWT**
+- Order placement & history view
+- Fully responsive — mobile-first design
 
-### Restaurant Partner Dashboard
-<img 
-  src="https://drive.google.com/uc?id=1jTadE5ehnE7K25A-GUhZzZEq1zqb_51I" 
-  alt="Partner / Restaurant Dashboard" 
-  width="85%" 
-  style="border-radius: 10px; margin: 12px 0;"
-/>
+### 🏪 Restaurant Partner Dashboard
+- Easy restaurant registration flow
+- Menu & item management (extendable)
+- View and manage incoming orders
+- Zero-commission beta model support
 
-### Order Details & Management
-<img 
-  src="https://drive.google.com/uc?id=1iJ-T8Rr1IPJabJe8TxWuh1nnlICm3ToB" 
-  alt="Order Management Screen" 
-  width="85%" 
-  style="border-radius: 10px; margin: 12px 0;"
-/>
-
-### Login & Registration Pages
-<div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin: 20px 0;">
-  <img src="https://drive.google.com/uc?id=15Veux7kxHjHMkqVQvi_T_v61L5s7oV_R" alt="Login" width="45%" style="border-radius: 10px;"/>
-  <img src="https://drive.google.com/uc?id=1Zy4wI9NrBUu8o2kkIpkTAdMopFFMZKEd" alt="Register" width="45%" style="border-radius: 10px;"/>
-</div>
-
-### Become a Partner Page
-<img src="https://drive.google.com/uc?id=1OdV_Z_0nb11PRS10O_0KrngSKqUW_J_g" alt="Become a Partner" width="85%" style="border-radius: 10px;"/>
-
-### Contact & Footer Section
-<img src="https://drive.google.com/uc?id=14M_m5ziYriu_jYNpEkKxFtKjIafMS2Hu" alt="Contact & Footer" width="85%" style="border-radius: 10px;"/>
-
-</div>
+### 🔐 Security & Foundation
+- JWT token authentication
+- Role-based access (customer / restaurant / future: delivery)
+- Input validation & proper error handling
 
 ---
 
 ## 🛠 Tech Stack
 
-| Layer            | Technology                              |
-|------------------|-----------------------------------------|
-| **Frontend**     | React 18 + Vite + Tailwind CSS          |
-| **Backend**      | Django 5.2 + Django REST Framework      |
-| **Database**     | SQLite (development) → PostgreSQL (prod)|
-| **Image Storage**| Cloudinary                              |
-| **Authentication**| JWT (JSON Web Tokens)                   |
-| **Styling**      | Tailwind CSS + Custom gradients         |
-| **Icons**        | Lucide React                            |
-| **Deployment**   | Render.com (frontend & backend)         |
+| Layer          | Technology                          | Purpose / Notes                              |
+|----------------|-------------------------------------|----------------------------------------------|
+| **Frontend**   | React 18 • Vite                     | Fast development & build tool                |
+| **Styling**    | Tailwind CSS                        | Utility-first, highly customizable           |
+| **HTTP Client**| Axios                               | API communication                            |
+| **Icons**      | Lucide React                        | Clean, modern icon set                       |
+| **Backend**    | Django 5+ • Django REST Framework   | Robust API & ORM                             |
+| **Auth**       | djangorestframework-simplejwt       | Secure token-based auth                      |
+| **Database**   | PostgreSQL (prod) • SQLite (dev)    | Reliable & easy local setup                  |
+| **Media**      | Cloudinary                          | Image upload & optimization                  |
+| **Deployment** | Render                              | Frontend + Backend + Gunicorn                |
 
 ---
 
-## 🚀 Installation & Setup
+## 🚀 Quick Start (Local Development)
 
-### Backend (Django)
+### Backend
 
 ```bash
 git clone https://github.com/Sharatpsd/Food-Delivery-App-.git
 cd Food-Delivery-App-/backend
 
-# Create & activate virtual environment
+# Create virtual environment
 python -m venv venv
-# Windows
-venv\Scripts\activate
-# macOS / Linux
-# source venv/bin/activate
+source venv/bin/activate    # Linux/macOS
+# or venv\Scripts\activate   # Windows
 
 pip install -r requirements.txt
 
-# Copy example env and configure (especially Cloudinary keys)
-cp .env.example .env
-
+# Apply migrations & start server
 python manage.py migrate
-python manage.py createsuperuser
 python manage.py runserver
