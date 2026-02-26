@@ -2,16 +2,7 @@ from pathlib import Path
 from datetime import timedelta
 from decouple import config
 import dj_database_url
-import cloudinary
 import os
-
-from decouple import config
-import os
-
-# Force load CLOUDINARY_URL into os.environ
-if config("CLOUDINARY_URL", default=None):
-    os.environ["CLOUDINARY_URL"] = config("CLOUDINARY_URL")
-
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -19,7 +10,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY
 # ================================================================
 SECRET_KEY = config("SECRET_KEY", default="test-secret")
-DEBUG = config("DEBUG", default=False, cast=bool)
+
+DEBUG = config("DEBUG", default=True, cast=bool)
 
 ALLOWED_HOSTS = [
     "food-delivery-app-1-ihcm.onrender.com",
@@ -27,10 +19,10 @@ ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
 ]
+
 CSRF_TRUSTED_ORIGINS = [
     "https://food-delivery-app-1-ihcm.onrender.com",
 ]
-
 
 # ================================================================
 # INSTALLED APPS
@@ -50,7 +42,6 @@ INSTALLED_APPS = [
 
     "users",
     "restaurants",
-    # "foods",
     "orders",
     "payments",
     "delivery",
@@ -62,7 +53,6 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
-
     "whitenoise.middleware.WhiteNoiseMiddleware",
 
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -81,7 +71,6 @@ ROOT_URLCONF = "backend.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -96,26 +85,8 @@ TEMPLATES = [
 WSGI_APPLICATION = "backend.wsgi.application"
 
 # ================================================================
-# DATABASE CONFIG — Render + Local
+# DATABASE (Render + Local)
 # ================================================================
-# DATABASE_URL = config("DATABASE_URL", default=None)
-
-# if DATABASE_URL:
-#     DATABASES = {
-#         "default": dj_database_url.parse(
-#             DATABASE_URL,
-#             conn_max_age=600,
-#             ssl_require=True
-#         )
-#     }
-# else:
-#     DATABASES = {
-#         "default": {
-#             "ENGINE": "django.db.backends.sqlite3",
-#             "NAME": BASE_DIR / "db.sqlite3",
-#         }
-#     }
-
 DATABASE_URL = config("DATABASE_URL", default=None)
 
 if DATABASE_URL:
@@ -123,11 +94,7 @@ if DATABASE_URL:
         "default": dj_database_url.parse(
             DATABASE_URL,
             conn_max_age=600,
-            ssl_require=True,
         )
-    }
-    DATABASES["default"]["OPTIONS"] = {
-        "sslmode": "require"
     }
 else:
     DATABASES = {
@@ -137,15 +104,14 @@ else:
         }
     }
 
-
 # ================================================================
 # AUTH
 # ================================================================
+AUTH_USER_MODEL = "users.User"
+
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
 ]
-
-AUTH_USER_MODEL = "users.User"
 
 # ================================================================
 # INTERNATIONALIZATION
@@ -156,31 +122,24 @@ USE_I18N = True
 USE_TZ = True
 
 # ================================================================
-# STATIC & MEDIA
+# STATIC
 # ================================================================
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-
 # ================================================================
-# CLOUDINARY STORAGE
+# MEDIA (Cloudinary)
 # ================================================================
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
-
 
 # ================================================================
 # CORS
 # ================================================================
 CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOW_HEADERS = ["*"]
-CORS_ALLOW_METHODS = ["*"]
 
 # ================================================================
-# REST FRAMEWORK + JWT
+# REST FRAMEWORK
 # ================================================================
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
@@ -191,6 +150,9 @@ REST_FRAMEWORK = {
     ),
 }
 
+# ================================================================
+# JWT
+# ================================================================
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(
         minutes=config("JWT_ACCESS_MINUTES", default=60, cast=int)
@@ -200,7 +162,5 @@ SIMPLE_JWT = {
     ),
 }
 
-# ================================================================
-# DEFAULT FIELD
 # ================================================================
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
