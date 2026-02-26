@@ -10,12 +10,8 @@ class User(AbstractUser):
         ('admin', 'Admin'),
     )
 
-    name = models.CharField(max_length=255, blank=True)
-    role = models.CharField(
-        max_length=20,
-        choices=ROLE_CHOICES,
-        default='admin'
-    )
+    name = models.CharField(max_length=255, blank=True, null=True)
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='admin')
     phone = models.CharField(max_length=15, blank=True)
     address = models.TextField(blank=True)
 
