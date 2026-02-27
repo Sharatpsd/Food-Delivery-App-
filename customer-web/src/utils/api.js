@@ -5,7 +5,7 @@ import axios from "axios";
  * Render / Local — both supported
  */
 const API_BASE =
-  import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000";
+  import.meta.env.VITE_API_BASE_URL || "http://:8000";
 
 /**
  * ✅ Axios instance

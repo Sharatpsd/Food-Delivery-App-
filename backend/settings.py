@@ -16,7 +16,7 @@ ALLOWED_HOSTS = [
     "food-delivery-app-1-ihcm.onrender.com",
     ".onrender.com",
     "localhost",
-    "127.0.0.1",
+    "",
 ]
 
 CSRF_TRUSTED_ORIGINS = [

@@ -45,7 +45,7 @@ export default function Register() {
         phone: formData.phone,
       };
 
-      await axios.post("http://127.0.0.1:8000/api/auth/register/", payload);
+      await axios.post("http://:8000/api/auth/register/", payload);
 
       alert("Account created successfully! Please log in.");
       navigate("/login");

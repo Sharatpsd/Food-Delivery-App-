@@ -65,7 +65,7 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const res = await axios.post("http://127.0.0.1:8000/api/auth/token/", {
+      const res = await axios.post("http://:8000/api/auth/token/", {
         username,
         password,
       });

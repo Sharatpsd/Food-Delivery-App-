@@ -6,7 +6,7 @@ import sampleRestaurants from "./sampleRestaurants.json";
  * Render / Local — both supported
  */
 const normalizeApiBase = (baseUrl) => {
-  if (!baseUrl) return "http://127.0.0.1:8000";
+  if (!baseUrl) return "http://:8000";
   return baseUrl.endsWith("/api")
     ? baseUrl.slice(0, -"/api".length)
     : baseUrl;

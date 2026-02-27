@@ -6,7 +6,7 @@ export default function Orders() {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    axios.get("http://127.0.0.1:8000/api/orders/my-orders/", {
+    axios.get("http://:8000/api/orders/my-orders/", {
       headers: { Authorization: `Bearer ${localStorage.getItem("access")}` }
     })
     .then(res => setOrders(res.data));

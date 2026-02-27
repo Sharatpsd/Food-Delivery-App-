@@ -14,7 +14,7 @@ export default function Orders() {
   const fetchOrders = () => {
     const token = localStorage.getItem("access");
     axios
-      .get("http://127.0.0.1:8000/api/orders/restaurant-orders/", {
+      .get("http://:8000/api/orders/restaurant-orders/", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -28,7 +28,7 @@ export default function Orders() {
     const token = localStorage.getItem("access");
     try {
       await axios.patch(
-        `http://127.0.0.1:8000/api/orders/${orderId}/update-status/`,
+        `http://:8000/api/orders/${orderId}/update-status/`,
         { status },
         { headers: { Authorization: `Bearer ${token}` } }
       );
