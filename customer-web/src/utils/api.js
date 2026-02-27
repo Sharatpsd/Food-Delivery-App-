@@ -1,21 +1,23 @@
 import axios from "axios";
 
 /**
- * ✅ VITE environment variable
- * Render / Local — both supported
+ * Environment Base URL
+ * Local → http://localhost:8000
+ * Production → from VITE_API_BASE_URL
  */
 const API_BASE =
-  import.meta.env.VITE_API_BASE_URL || "http://:8000";
+  import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, "") ||
+  "http://localhost:8000";
 
 /**
- * ✅ Axios instance
+ * Axios Instance
  */
 const API = axios.create({
   baseURL: `${API_BASE}/api`,
 });
 
 /**
- * ✅ Auto attach JWT token
+ * Auto Attach JWT Token
  */
 API.interceptors.request.use(
   (config) => {
@@ -28,22 +30,19 @@ API.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-export default API;
-
 /* =========================================================
    RESTAURANTS
 ========================================================= */
 
-// ✅ GET restaurants
+// Get restaurants
 export const getRestaurants = async ({ category = "", search = "" } = {}) => {
   const params = {};
   if (search) params.search = search;
 
-const res = await API.get("/restaurants/restaurants/", { params });
+  const res = await API.get("/restaurants/restaurants/", { params });
 
   let data = res.data;
 
-  // Frontend filter (optional)
   if (category) {
     const cat = category.toLowerCase();
     data = data.filter(
@@ -57,10 +56,9 @@ const res = await API.get("/restaurants/restaurants/", { params });
   return { data };
 };
 
-// ✅ GET single restaurant
+// Get single restaurant
 export const getRestaurantDetail = async (id) => {
   const res = await API.get(`/restaurants/restaurants/${id}/`);
-
   return { data: res.data };
 };
 
@@ -68,16 +66,18 @@ export const getRestaurantDetail = async (id) => {
    PARTNER REQUESTS
 ========================================================= */
 
-// ✅ Restaurant Owner request
+// Restaurant Owner request
 export const submitRestaurantOwnerRequest = async (formData) => {
   const res = await API.post("/restaurant-requests/", formData);
   return res.data;
 };
 
-// ✅ Delivery Partner request
+// Delivery Partner request
 export const submitDeliveryPartnerRequest = async (formData) => {
   const res = await API.post("/delivery-requests/", formData);
   return res.data;
 };
 
 console.log("⚡ Bite API Connected →", `${API_BASE}/api`);
+
+export default API;
