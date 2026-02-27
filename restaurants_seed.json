@@ -1,0 +1,282 @@
+[
+  {
+    "model": "restaurants.restaurant",
+    "fields": {
+      "owner": 1,
+      "name": "Star Kabab",
+      "logo": "https://images.unsplash.com/photo-1604908176997-4316c288032e",
+      "address": "Old Dhaka",
+      "city": "Dhaka",
+      "rating": "4.6",
+      "theme": "Traditional",
+      "is_active": true,
+      "created_at": "2026-02-27T12:00:00Z"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "fields": {
+      "owner": 1,
+      "name": "Chillox",
+      "logo": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
+      "address": "Banani",
+      "city": "Dhaka",
+      "rating": "4.5",
+      "theme": "Fast Food",
+      "is_active": true,
+      "created_at": "2026-02-27T12:01:00Z"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "fields": {
+      "owner": 1,
+      "name": "Sultan's Dine",
+      "logo": "https://images.unsplash.com/photo-1625943555419-56a2cb596640",
+      "address": "Dhanmondi",
+      "city": "Dhaka",
+      "rating": "4.8",
+      "theme": "Traditional",
+      "is_active": true,
+      "created_at": "2026-02-27T12:02:00Z"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "fields": {
+      "owner": 1,
+      "name": "Madchef",
+      "logo": "https://images.unsplash.com/photo-1550547660-d9450f859349",
+      "address": "Gulshan",
+      "city": "Dhaka",
+      "rating": "4.4",
+      "theme": "Cafe",
+      "is_active": true,
+      "created_at": "2026-02-27T12:03:00Z"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "fields": {
+      "owner": 1,
+      "name": "Kacchi Bhai",
+      "logo": "https://images.unsplash.com/photo-1617093727343-374698b1b08d",
+      "address": "Mirpur",
+      "city": "Dhaka",
+      "rating": "4.7",
+      "theme": "Deshi",
+      "is_active": true,
+      "created_at": "2026-02-27T12:04:00Z"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "fields": {
+      "owner": 1,
+      "name": "North End Coffee",
+      "logo": "https://images.unsplash.com/photo-1509042239860-f550ce710b93",
+      "address": "Banani",
+      "city": "Dhaka",
+      "rating": "4.6",
+      "theme": "Cafe",
+      "is_active": true,
+      "created_at": "2026-02-27T12:05:00Z"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "fields": {
+      "owner": 1,
+      "name": "Takeout",
+      "logo": "https://images.unsplash.com/photo-1594007654729-407eedc4be65",
+      "address": "Jamuna Future Park",
+      "city": "Dhaka",
+      "rating": "4.3",
+      "theme": "Pizza",
+      "is_active": true,
+      "created_at": "2026-02-27T12:06:00Z"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "fields": {
+      "owner": 1,
+      "name": "Bella Italia",
+      "logo": "https://images.unsplash.com/photo-1548365328-9f547fb0953d",
+      "address": "Gulshan 2",
+      "city": "Dhaka",
+      "rating": "4.5",
+      "theme": "Italian",
+      "is_active": true,
+      "created_at": "2026-02-27T12:07:00Z"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "fields": {
+      "owner": 1,
+      "name": "Izumi",
+      "logo": "https://images.unsplash.com/photo-1553621042-f6e147245754",
+      "address": "Gulshan",
+      "city": "Dhaka",
+      "rating": "4.9",
+      "theme": "Japanese",
+      "is_active": true,
+      "created_at": "2026-02-27T12:08:00Z"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "fields": {
+      "owner": 1,
+      "name": "Handi",
+      "logo": "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398",
+      "address": "Dhanmondi",
+      "city": "Dhaka",
+      "rating": "4.6",
+      "theme": "Indian",
+      "is_active": true,
+      "created_at": "2026-02-27T12:09:00Z"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "fields": {
+      "owner": 1,
+      "name": "Mainland China",
+      "logo": "https://images.unsplash.com/photo-1589308078056-fd3f1e7b4e7b",
+      "address": "Banani",
+      "city": "Dhaka",
+      "rating": "4.4",
+      "theme": "Chinese",
+      "is_active": true,
+      "created_at": "2026-02-27T12:10:00Z"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "fields": {
+      "owner": 1,
+      "name": "Cheez",
+      "logo": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
+      "address": "Mohammadpur",
+      "city": "Dhaka",
+      "rating": "4.2",
+      "theme": "Burger",
+      "is_active": true,
+      "created_at": "2026-02-27T12:11:00Z"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "fields": {
+      "owner": 1,
+      "name": "Panshi Restaurant",
+      "logo": "https://images.unsplash.com/photo-1606755962773-d324e0a13086",
+      "address": "Uttara",
+      "city": "Dhaka",
+      "rating": "4.3",
+      "theme": "Deshi",
+      "is_active": true,
+      "created_at": "2026-02-27T12:12:00Z"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "fields": {
+      "owner": 1,
+      "name": "American Burger",
+      "logo": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
+      "address": "Badda",
+      "city": "Dhaka",
+      "rating": "4.1",
+      "theme": "Fast Food",
+      "is_active": true,
+      "created_at": "2026-02-27T12:13:00Z"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "fields": {
+      "owner": 1,
+      "name": "Cafe Mango",
+      "logo": "https://images.unsplash.com/photo-1492724441997-5dc865305da7",
+      "address": "Gulshan",
+      "city": "Dhaka",
+      "rating": "4.4",
+      "theme": "Cafe",
+      "is_active": true,
+      "created_at": "2026-02-27T12:14:00Z"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "fields": {
+      "owner": 1,
+      "name": "BBQ Bangladesh",
+      "logo": "https://images.unsplash.com/photo-1558030006-450675393462",
+      "address": "Mirpur",
+      "city": "Dhaka",
+      "rating": "4.6",
+      "theme": "BBQ",
+      "is_active": true,
+      "created_at": "2026-02-27T12:15:00Z"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "fields": {
+      "owner": 1,
+      "name": "Bhooter Bari",
+      "logo": "https://images.unsplash.com/photo-1606755962773-d324e0a13086",
+      "address": "Dhanmondi",
+      "city": "Dhaka",
+      "rating": "4.2",
+      "theme": "Themed",
+      "is_active": true,
+      "created_at": "2026-02-27T12:16:00Z"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "fields": {
+      "owner": 1,
+      "name": "Yummy Yummy",
+      "logo": "https://images.unsplash.com/photo-1604908554168-8a3b8d07b44f",
+      "address": "Banani",
+      "city": "Dhaka",
+      "rating": "4.3",
+      "theme": "Chinese",
+      "is_active": true,
+      "created_at": "2026-02-27T12:17:00Z"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "fields": {
+      "owner": 1,
+      "name": "Koreana",
+      "logo": "https://images.unsplash.com/photo-1604908177522-402f6cfc4c24",
+      "address": "Gulshan",
+      "city": "Dhaka",
+      "rating": "4.5",
+      "theme": "Korean",
+      "is_active": true,
+      "created_at": "2026-02-27T12:18:00Z"
+    }
+  },
+  {
+    "model": "restaurants.restaurant",
+    "fields": {
+      "owner": 1,
+      "name": "The Manhattan Fish Market",
+      "logo": "https://images.unsplash.com/photo-1544025162-d76694265947",
+      "address": "Banani",
+      "city": "Dhaka",
+      "rating": "4.6",
+      "theme": "Seafood",
+      "is_active": true,
+      "created_at": "2026-02-27T12:19:00Z"
+    }
+  }
+]
