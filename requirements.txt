@@ -31,6 +31,8 @@ requests==2.32.3
 # Static & Production
 whitenoise==6.5.0
 gunicorn==21.2.0
+dj-database-url
+psycopg2-binary
 
 # git clone https://github.com/Sharatpsd/Food-Delivery-App-.git
 # cd Food-Delivery-App-
