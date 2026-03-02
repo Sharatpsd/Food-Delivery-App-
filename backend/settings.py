@@ -86,17 +86,20 @@ TEMPLATES = [
 WSGI_APPLICATION = "backend.wsgi.application"
 
 # ================================================================
-# DATABASE (SQLite)
+# DATABASE 
 # ================================================================
 import dj_database_url
 from decouple import config
-import os
 
 DATABASE_URL = config("DATABASE_URL", default=None)
 
 if DATABASE_URL:
     DATABASES = {
-        "default": dj_database_url.parse(DATABASE_URL)
+        "default": dj_database_url.config(
+            default=DATABASE_URL,
+            conn_max_age=600,
+            ssl_require=True
+        )
     }
 else:
     DATABASES = {
