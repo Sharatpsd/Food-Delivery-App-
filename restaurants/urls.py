@@ -4,10 +4,11 @@ from .views import (
     RestaurantRequestViewSet,
     DeliveryRequestViewSet,
     RestaurantViewSet,
-    FoodViewSet,
+    FoodViewSet
 )
 
 router = DefaultRouter()
+
 router.register("restaurant-requests", RestaurantRequestViewSet)
 router.register("delivery-requests", DeliveryRequestViewSet)
 router.register("restaurants", RestaurantViewSet)

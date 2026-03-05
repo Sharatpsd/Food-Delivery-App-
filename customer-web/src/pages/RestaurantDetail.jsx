@@ -1,128 +1,195 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { useCart } from "../context/CartContext";  // ✅ FIXED: ../ not ../../
-import { ArrowLeft, Star, Clock, MapPin, ShoppingCart } from "lucide-react";
-import { getRestaurantDetail } from "../utils/api";  // ✅ FIXED: ../ not ../../
+import { useCart } from "../context/CartContext";
+import { ArrowLeft, Star, ShoppingCart } from "lucide-react";
+import { getRestaurantDetail, getRestaurantFoods } from "../utils/api";
 
 export default function RestaurantDetail() {
+
   const { id } = useParams();
+
   const [restaurant, setRestaurant] = useState(null);
+  const [foods, setFoods] = useState([]);
   const [loading, setLoading] = useState(true);
+
   const { addToCart } = useCart();
 
   useEffect(() => {
-    async function fetchData() {
+
+    const fetchData = async () => {
       try {
+
         const res = await getRestaurantDetail(id);
         setRestaurant(res.data);
+
+        const foodsRes = await getRestaurantFoods(id);
+        setFoods(foodsRes.data);
+
       } catch (err) {
         console.error("Restaurant load error:", err);
       } finally {
         setLoading(false);
       }
-    }
+    };
+
     fetchData();
+
   }, [id]);
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto mb-4"></div>
-          <p className="text-lg text-gray-600">Loading restaurant...</p>
-        </div>
+      <div className="min-h-screen flex items-center justify-center">
+        Loading restaurant...
       </div>
     );
   }
 
   if (!restaurant) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Restaurant Not Found</h1>
-          <Link to="/" className="bg-orange-500 text-white px-6 py-3 rounded-xl font-semibold hover:bg-orange-600 transition">
-            Back to Home
-          </Link>
-        </div>
+      <div className="min-h-screen flex items-center justify-center">
+        Restaurant not found
       </div>
     );
   }
 
+  // 🔥 FIXED IMAGE LOGIC
+  const imageUrl = restaurant.logo?.startsWith("http")
+    ? restaurant.logo
+    : `http://localhost:8000${restaurant.logo}`;
+
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
+
+      {/* HEADER */}
       <div className="bg-gradient-to-r from-orange-500 to-red-600 text-white">
         <div className="max-w-6xl mx-auto px-4 py-6">
-          <Link 
-            to="/" 
-            className="inline-flex items-center gap-2 text-white/90 hover:text-white font-medium mb-4"
+
+          <Link
+            to="/"
+            className="flex items-center gap-2 text-white/90 hover:text-white"
           >
-            <ArrowLeft size={24} />
-            Back to Restaurants
+            <ArrowLeft size={20} />
+            Back
           </Link>
+
         </div>
       </div>
 
       <div className="max-w-6xl mx-auto px-4 py-12">
-        {/* Restaurant Hero */}
-        <div className="bg-white rounded-3xl shadow-2xl overflow-hidden mb-8">
+
+        {/* RESTAURANT HERO */}
+        <div className="bg-white rounded-3xl shadow-xl overflow-hidden mb-10">
+
           <img
-            src={restaurant.image}
+            src={
+              imageUrl ||
+              "https://images.unsplash.com/photo-1504674900247-0877df9cc836"
+            }
             alt={restaurant.name}
             className="w-full h-80 object-cover"
           />
+
           <div className="p-8">
-            <div className="flex items-start justify-between mb-4">
-              <div>
-                <h1 className="text-4xl md:text-5xl font-black text-gray-900 mb-2">
-                  {restaurant.name}
-                </h1>
-                <p className="text-2xl text-gray-600">{restaurant.city}</p>
-              </div>
-              <div className="text-right">
-                <div className="flex items-center gap-1 text-2xl text-yellow-500 mb-1">
-                  <Star fill="currentColor" className="w-7 h-7" />
-                  <span className="font-bold">{restaurant.rating}</span>
-                </div>
-                <div className="flex items-center gap-2 text-lg text-gray-600">
-                  <Clock className="w-5 h-5" />
-                  {restaurant.time}
-                </div>
-              </div>
+
+            <h1 className="text-4xl font-bold mb-2">
+              {restaurant.name}
+            </h1>
+
+            <p className="text-gray-600 mb-3">
+              {restaurant.city}
+            </p>
+
+            <div className="flex items-center gap-2">
+
+              <Star
+                className="text-yellow-400"
+                fill="currentColor"
+              />
+
+              <span className="font-semibold">
+                {restaurant.rating}
+              </span>
+
             </div>
-            
-            <p className="text-xl text-gray-700 mb-6">{restaurant.theme}</p>
-            <p className="text-lg font-semibold text-orange-600 mb-2">Must Try: {restaurant.must_try}</p>
+
+            <p className="mt-3 text-gray-600">
+              {restaurant.theme}
+            </p>
+
           </div>
+
         </div>
 
-        {/* Menu Grid */}
-        <h2 className="text-3xl font-bold text-gray-900 mb-8">Menu</h2>
+        {/* MENU */}
+        <h2 className="text-3xl font-bold mb-6">
+          Menu
+        </h2>
+
+        {foods.length === 0 && (
+          <p className="text-gray-500">
+            No food available
+          </p>
+        )}
+
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {restaurant.menu.map((item) => (
-            <div key={item.id} className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group">
-              <img
-                src={item.image}
-                alt={item.name}
-                className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-2">{item.name}</h3>
-                <div className="flex items-center justify-between">
-                  <span className="text-2xl font-black text-orange-600">${item.price}</span>
+
+          {foods.map((item) => {
+
+            const foodImage = item.image?.startsWith("http")
+              ? item.image
+              : `http://localhost:8000${item.image}`;
+
+            return (
+              <div
+                key={item.id}
+                className="bg-white rounded-2xl shadow-lg p-6"
+              >
+
+                <img
+                  src={
+                    foodImage ||
+                    "https://images.unsplash.com/photo-1606755962773-d324e0a13086"
+                  }
+                  alt={item.name}
+                  className="w-full h-40 object-cover rounded-xl mb-4"
+                />
+
+                <h3 className="text-xl font-bold mb-2">
+                  {item.name}
+                </h3>
+
+                <p className="text-gray-500 mb-4">
+                  {item.category || "Food"}
+                </p>
+
+                <div className="flex justify-between items-center">
+
+                  <span className="text-orange-600 font-bold">
+                    ৳ {item.price}
+                  </span>
+
                   <button
-                    onClick={() => addToCart({ ...item, restaurant: restaurant.name })}
-                    className="bg-gradient-to-r from-orange-500 to-red-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300 flex items-center gap-2"
+                    onClick={() =>
+                      addToCart({
+                        ...item,
+                        restaurant: restaurant.id,
+                      })
+                    }
+                    className="bg-orange-500 text-white px-4 py-2 rounded"
                   >
-                    <ShoppingCart size={20} />
-                    Add to Cart
+                    <ShoppingCart size={16} />
                   </button>
+
                 </div>
+
               </div>
-            </div>
-          ))}
+            );
+          })}
+
         </div>
+
       </div>
+
     </div>
   );
 }

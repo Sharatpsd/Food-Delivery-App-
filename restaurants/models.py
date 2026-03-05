@@ -1,6 +1,11 @@
 from django.db import models
 from django.conf import settings
 
+class Category(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
 
 # ============================
 # Restaurant Join Request
@@ -45,25 +50,40 @@ class DeliveryRequest(models.Model):
 # Restaurant Model
 # ============================
 class Restaurant(models.Model):
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="restaurants")
+
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
     name = models.CharField(max_length=200)
+
+    # upload image
     logo = models.ImageField(upload_to="restaurants/logos/", blank=True, null=True)
+
+    # url image
+    logo_url = models.URLField(blank=True, null=True)
+
     address = models.TextField(blank=True)
     city = models.CharField(max_length=100, blank=True)
+
     rating = models.DecimalField(max_digits=3, decimal_places=1, default=0)
+
     theme = models.CharField(max_length=100, blank=True)
+
     is_active = models.BooleanField(default=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return self.name
-
-
+    def get_logo(self):
+        if self.logo:
+            return self.logo.url
+        if self.logo_url:
+            return self.logo_url
+        return None
 # ============================
 # Food Model
 # ============================
 class Food(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name="foods")
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="foods")
     name = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=8, decimal_places=2)

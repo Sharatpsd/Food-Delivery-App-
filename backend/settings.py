@@ -2,26 +2,33 @@ from pathlib import Path
 from datetime import timedelta
 from decouple import config
 import os
+import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
 
 # ================================================================
 # SECURITY
 # ================================================================
 SECRET_KEY = config("SECRET_KEY", default="test-secret")
 
-DEBUG = True  # এখন True রাখ, সমস্যা ঠিক হলে False করবি
+DEBUG = True
 
 ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
     "food-delivery-app-1-ihcm.onrender.com",
     ".onrender.com",
-    "localhost",
-    "",
 ]
 
+
+# CSRF trusted origins (VERY IMPORTANT)
 CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:5173",
+    "https://food-delivery-frontend-mktt.onrender.com",
     "https://food-delivery-app-1-ihcm.onrender.com",
 ]
+
 
 # ================================================================
 # INSTALLED APPS
@@ -34,11 +41,11 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
-    "rest_framework",
+    # third party
     "corsheaders",
-    "cloudinary_storage",
-    "cloudinary",
+    "rest_framework",
 
+    # project apps
     "users",
     "restaurants",
     "orders",
@@ -46,23 +53,30 @@ INSTALLED_APPS = [
     "delivery",
 ]
 
+
 # ================================================================
 # MIDDLEWARE
 # ================================================================
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+
     "whitenoise.middleware.WhiteNoiseMiddleware",
+
     "corsheaders.middleware.CorsMiddleware",
 
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
+
     "django.middleware.csrf.CsrfViewMiddleware",
+
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+
 ROOT_URLCONF = "backend.urls"
+
 
 # ================================================================
 # TEMPLATES
@@ -83,14 +97,13 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = "backend.wsgi.application"
 
-# ================================================================
-# DATABASE 
-# ================================================================
-import dj_database_url
-from decouple import config
 
+# ================================================================
+# DATABASE
+# ================================================================
 DATABASE_URL = config("DATABASE_URL", default=None)
 
 if DATABASE_URL:
@@ -98,7 +111,7 @@ if DATABASE_URL:
         "default": dj_database_url.config(
             default=DATABASE_URL,
             conn_max_age=600,
-            ssl_require=True
+            ssl_require=True,
         )
     }
 else:
@@ -108,6 +121,8 @@ else:
             "NAME": BASE_DIR / "db.sqlite3",
         }
     }
+
+
 # ================================================================
 # AUTH
 # ================================================================
@@ -117,35 +132,47 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
 ]
 
+
 # ================================================================
 # INTERNATIONALIZATION
 # ================================================================
 LANGUAGE_CODE = "en-us"
+
 TIME_ZONE = "UTC"
+
 USE_I18N = True
 USE_TZ = True
 
+
 # ================================================================
-# STATIC
+# STATIC FILES
 # ================================================================
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
-# ❗ Manifest বাদ — এইটাই গুরুত্বপূর্ণ
-STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 
 # ================================================================
-# MEDIA (Cloudinary)
+# MEDIA FILES
 # ================================================================
-DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
 
 # ================================================================
-# CORS
+# CORS SETTINGS
 # ================================================================
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "https://food-delivery-frontend-mktt.onrender.com",
+]
+
+CORS_ALLOW_CREDENTIALS = True
+
 
 # ================================================================
-# REST FRAMEWORK
+# DJANGO REST FRAMEWORK
 # ================================================================
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
@@ -156,6 +183,7 @@ REST_FRAMEWORK = {
     ),
 }
 
+
 # ================================================================
 # JWT
 # ================================================================
@@ -163,5 +191,6 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
 }
+
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

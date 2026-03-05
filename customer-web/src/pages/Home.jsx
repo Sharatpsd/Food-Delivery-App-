@@ -150,7 +150,7 @@ export default function Home() {
       </section>
 
       {/* CATEGORIES – Staggered Fade In */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-gray-50 relative z-20">
         <div className="max-w-7xl mx-auto px-6">
           <motion.h2
             initial={{ opacity: 0, y: 30 }}

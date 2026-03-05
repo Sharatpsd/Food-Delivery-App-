@@ -2,17 +2,20 @@ import axios from "axios";
 
 const api = axios.create({
   baseURL: "https://food-delivery-app-1-ihcm.onrender.com/api",
+  timeout: 15000,
 });
 
-// attach token
+// attach JWT token
 api.interceptors.request.use((config) => {
+
   const token = localStorage.getItem("access");
-  if (token) config.headers.Authorization = `Bearer ${token}`;
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
   return config;
+
 });
 
 export default api;
-const axiosClient = axios.create({
-  baseURL: "http://:8000/api",
-  timeout: 15000,
-});

@@ -1,7 +1,8 @@
-from rest_framework import viewsets, permissions, status
+from rest_framework import viewsets, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
+
 from .models import RestaurantRequest, DeliveryRequest, Restaurant, Food
 from .serializers import (
     RestaurantRequestSerializer,
@@ -9,13 +10,17 @@ from .serializers import (
     RestaurantSerializer,
     FoodSerializer,
 )
-from rest_framework import serializers as drf_serializers
 
 
+# -----------------------------
+# Custom Permission
+# -----------------------------
 class IsOwnerOrReadOnly(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
+
         if request.method in permissions.SAFE_METHODS:
             return True
+
         owner = getattr(obj, "owner", None)
         return owner == request.user
 
@@ -34,7 +39,9 @@ class RestaurantRequestViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=["post"], permission_classes=[permissions.IsAdminUser])
     def approve(self, request, pk=None):
+
         req = self.get_object()
+
         if req.approved:
             return Response({"detail": "Already approved."}, status=400)
 
@@ -76,19 +83,21 @@ class RestaurantViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 # -----------------------------
-# Owner Can Add Foods
+# Food API
 # -----------------------------
 class FoodViewSet(viewsets.ModelViewSet):
     queryset = Food.objects.all().order_by("-created_at")
     serializer_class = FoodSerializer
-    permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
+    permission_classes = [permissions.AllowAny]
     parser_classes = [MultiPartParser, FormParser]
 
-    def perform_create(self, serializer):
-        restaurant_id = self.request.data.get("restaurant")
-        restaurant = Restaurant.objects.get(pk=restaurant_id)
+    def get_queryset(self):
 
-        if restaurant.owner != self.request.user:
-            raise permissions.PermissionDenied("You do not own this restaurant.")
+        queryset = Food.objects.filter(is_available=True)
 
-        serializer.save()
+        restaurant_id = self.request.query_params.get("restaurant")
+
+        if restaurant_id:
+            queryset = queryset.filter(restaurant_id=restaurant_id)
+
+        return queryset

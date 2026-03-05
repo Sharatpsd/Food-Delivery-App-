@@ -4,9 +4,9 @@
     "pk": 1,
     "fields": {
       "owner": 1,
-      "name": "Star Kabab",
-      "logo": "https://images.unsplash.com/photo-1604908176997-4316c288032e",
-      "address": "Old Dhaka",
+      "name": "Star Kabab & Restaurant",
+      "logo": "https://seeklogo.com/images/S/star-kabab-logo-5F0F8F6A2C-seeklogo.com.png",
+      "address": "Nazira Bazar",
       "city": "Dhaka",
       "rating": 4.6,
       "theme": "Traditional",
@@ -19,12 +19,12 @@
     "pk": 2,
     "fields": {
       "owner": 1,
-      "name": "Chillox",
-      "logo": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
-      "address": "Banani",
+      "name": "Haji Biriyani",
+      "logo": "https://seeklogo.com/images/H/haji-biriyani-logo-6A54F1E2F4-seeklogo.com.png",
+      "address": "Nazira Bazar",
       "city": "Dhaka",
-      "rating": 4.5,
-      "theme": "Fast Food",
+      "rating": 4.7,
+      "theme": "Biriyani",
       "is_active": true,
       "created_at": "2026-02-27T12:01:00Z"
     }
@@ -35,11 +35,11 @@
     "fields": {
       "owner": 1,
       "name": "Sultan's Dine",
-      "logo": "https://images.unsplash.com/photo-1625943555419-56a2cb596640",
+      "logo": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAk1BMVEXwVCL////wTBD85N72oY3wTRPwUh/vSADwURz1mIDwUBr96uXwUBTvRgDwThbvSgr/+vj4t6X+8+/6zcH+8Ov71sv0im75vq/1lHr84drxWyv6y7/4tKPxZj70hmv71crybUfzeFXxYTXzdlLzf17ycUv5xLb3qZTvOwD1j3PzfVv3p5LyaUL2n4nxYzjxXy/4sJyJaipWAAAQbElEQVR4nO1daXuiOhSGWBIEQxBBBfe9de3//3U3OSdsVqedjk6Z++T9MkJBeZOz54SxLAMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDgwbDc4KffoTnQixehuSnH+JxoPT6jDjYtr3lP/EwTwCly4tD3Nqpi62w937qmR4LZ2aH6WHOREnS2wPDtvODj/U40Gym2IRpd1NQpC4w3P1PNJGKFfCxh6X1JEoP7fd/l6HLamrHx8BwWjKkblybw4B9MEaNRjBP51WKwRoYriuGhadVPXSmyeVfohhkLXtU9QTu5tp0upNQnljoE84ysrtfcx0eZw980k9AXS8IPM+99nZk4isJrDyxOweGmhAlAeU9edzTl5BNpLT0CxRdse/NxIOe/xN4hF1W635/vdicLSZIqWLOKbSvzIh7hDMrYEgn4zVvq+M5Mibv9hd9R3BM5HUb97Pr/hxUsPUujfDB7DBOuod+ITzOQZ8vxUkzxEcjXdtO1SAM9AXqhELrM/lzj+GVwXoSKLt0Y/sag0J42Ekdx5uK1iFDtD50OYKjiDlavBlQbJ0/mxvvo8F6CqgzLmiFYfEx7hQXEKlk0bEic2hX7CNSoBznYra29AkmDWvU+fTBcaDC47OllOMU2P62vT9OprsEDyO3MDjUTe121R5o8cofjZzyUZngPW4W2+vPIziMZqNnhwlOGx9u6DLHc92AsD4oZJiVJtU992v2Vc/hRE+ZpW5I1t0w1Awt79j/gjukVH1L8uSMBIMRe+aS4pHIObwWHje4xVArGnlRBycurMy9c8Od3yZ2xUA9C8EbTGGnqgsEzi0YuQe2hDHIhPwcWExNYSSn3L1/x228glPh16fFQ40rOq/4tX5ShWBp6xdAd6AwZUP1WXp7eun96pYbAJX3P54fPpIi6135OgWtm19C9xWec+jkSeIDMHuk4HJI9ux1bdTospXs1qeXu9ipe8KD+rjEGLUj9c7r37/jJvpS2NMbPzN5ZNTO0Fek9WxHBjkkuK8/AvQwspQeChDzFhjEyi3OvVtFVQ+lBr99UENCHpqWkJ0WNv4bfhdtaQT+RICQDq7CZ7G7/XXu5q0iLVyG9E/PsnTkJN3SmX/FwgMqDHUAV4+yKdnYU175Npm2eIoy5e8JL2MdnoTD/EgmNh/TmocAUlfkuO7UK2gWDRzBPOvDzyLDWDEM+nDvqhKiUdKZSvE7ZEKfDMRys9jPAyvoSBPWm5TeQEYZ+METk3V/f8zcJ0Rw3qq0Ya3DuaqPZDltj3ut5EMCpxkq6gITiUml7tY5oTOJBiu401vPIEDovq5xNHvTa1vJ9mjSI3/+BIpiWLHT4cAt5I3sMA4PIQanHhGMc3LNENSwEuI5x1b5dUNFUWkbWLP34nyvFqlR3lW/vL2l0I+h+FZmFHIYpyIPLhdVhuf9y3ibpAenzrADQZ/v5Qy9lfrTy6YNtMKVqwLsrX2NWqim7Hm45GzpPytKJede9dfHOcXAxQmSw0ryDKvVKRj6kiG1YBTSfOJpR81gm3uEQ/wO1TeX6XwlnHUH+mMl6oXAUc1qcIns+DlxuMumVY7bXBkJmJFQ/qi7GmGS3FLWAw2oLy0fzeBsoaqwfmH3pSlhA/wq+B6MkcI1F4KjaTqUORPwB7lVadizvEcgVoOSYk9T9BbqCIbVZS7IWtopGcoMki5rDOkFxFeVN7BGnAJDHc8tgBUf4E8Uv+35oArKwJLEbj+tpuGxzktUUMSwAquGGK9YAdBNxS2GqZ4Rdx6nuzOUj51TIdR5toWksNjqFyUEqwMq62+EKx3N+ZkBABVuYRKwsIZVwxQZ4oTC2CNDJbCaYavw2zLcA9fu8FM+CmpqIzu3WPpL49L66sDRHh85/eh7H8yR5WYVzT/OYcIqDEeseMgKwyirPxlx24M419W8CpAzPMMdpb65y/xHB9bzF69EngFBiQ+jgbsMO1ZuaeyqcFGHnXJ51wxdYIiijINSYWg5RdoV959fAdeLLmjr0EL0fsXQw/GvlBoDb1jWJtFR1hlez6Gc8mMROr4/nSLN8JHHyqIE0yrDfclwU1gRBwOWMmNga4hp0kOvuOYWw4oeSiGWkV4+Ku0nlN5IrbApcDgHJcORZgg2cCsKhuDm9eXd3CFyrJAPOvih5Xxg6E6uGJKzMqKZjhGj5cONTbarldV1WQMeGROHrbbyUJ+CNAn1E1wEQ/Or7a3MC+Ew4RQTT3AuuaXRDNHVFFZTbCFup+KM4vDQIg38+qUSVZYMT07BUIfJQhUNW2D9KwwdXQ3GOURdhfERoNDo8bW30AxBAPyi4CxjdwxGPRcoPn6pnIf2rhLQMyzcQBaDUhpCS0LgtVQkHZREgKFeLNWFHiydysib6NAFGaLH1wxxePyCB2npHMQSp2JsHwpFaVNKBioWSpdeCe0RzvhGDfBaP+S+YKjDFS3KuvpqbzjH8zpqgxEJazcXNlOVLsO5ooXh6+NbVlS4GxcVYeqBKxviQDK0cGECKYE/1wOPRgdHQZuauANu4YwMe+86SYRrPP5eYYiCUeaBQqlFPGeBoxZ0cq1/JKgKKWY5RQdmIdFUnGp2PMjymQ6qDPVqIRqI/MiOX0APlbdwV9p4kcp3loUdVPbwffqmCI7cJ8RtkNIlFgTbHgNtLxw4z/PycDwvCxw4DUlNMNFrUgvd4EvGgYhyCqDZUS93mZB0VNd9yKnIwJPhU3o40OBHbUoImYPMvZXmjJxP29nofW9VOqA0qxlYQEq0r8ZVfUqmo8GKEIoGJZSOwF3s5xfKcgGA1bxxtVhBssXwsDu0FxfxnLi0qOH7Pjxs2K71XTiMM+LVhhYXDHUkoD1ikfEFDGpsNIty3m61TEg7csb8eiZPPVVLdrynJRZ0/V7EhXJqFp8Vg4JXyHe6dR94tTKg3Y60/fXnVnIfH/92i58nxLwNJb9wtBaf/XowRZeZh0J5LS2u6xCuas1eeS2zCuT0p+efaLaVwuhkl0vn87U7VylYGPpFiFxI+aAme+hSwlHsV5daN3bcZs9euL8LSr9SVafn03R17rDCKGDUCR6jKt+0o+d2VAvDpp0fbe/7Uq82dQKvNhSicCmb6v0QmbYG0/qwPc+cfAWsPfyOucbAGlSx6q+p9baeBOLL6z1/Aawv/dd3rJzI26bqYTMNvB/TuJuAWm0qvjHkVGiVa3gfNJaEe98p6OU5VKMZ6rqgbR++85B823yGljcBe9H71sIBtfyPetg4wEJi8k13HOBSXLMZqq7JaPm7BKl2gbjQ2nCGFttNf/cJA9rW/oXvmq6HCuQ3Q2JCpql90mmToth4hr8JegD7MtWRJms3XkproADXdT3vRgO/QtGLk/cxi7eHl3OfB08tOGSX83G+Wez3q82ZMuFcWyEX606tots++HcIim7L9/04KmpEoT/rnuZFszoCt1mk7r+4KU9UVvWjtKWZhmlb1LI7msXSwfyLBFUzus4XwikRpGNtcE3Xjk7VopvlndNnLIf9FVAsN9k96MCjnuBtrGMny6qyufxfsp51aEEtVgYt4uG0xisg5Tl/gEZkxZphpbWH8ikK7jxQrqL9B3h2z8WXoJcgaj5cIMUoc/M1mG8ifX5HwufQDOtxmG5kSBjNUv/7iLtNME+aYb02pTeg2G1CSec+bv6NiPLzX9pz+Gtohm/1MEUv1MfZrxTJu7VZy9svGuY4NcN+nSEV9g3hrYNa6cceShn/JL/TLf8XcJth3heOi4dq0Uh1giu4gjOhKuEe79oHfnWbsKQGjyaN4qgZXu/wzOM5OVMuWe7fXgYprFg75/dZ2pIRDt+oFfG0zyqz7LIDLtyNlo3QQMQdhvlmw5VXOAy19J53nYTnPKKNh4Vf97Jy9W7XHIp3GOar2m0n6OvVXzWH3lQfVPrYc5dAM3UyHutOncZQvMdwqueCWIHe04z9U7SYp2KvrW4HgBwrmnDdFNCYN6B8ModqJZ5iNwouygd644a/OmcTFNUt/mGvp45iR/sNQ/szuMMwV7gXJYK8VTKkAUxdyw0odV8h9onB4IL1jRQt3byybkgl4BNbChUZdB26sYIA3T6YUBd22tqquqO7p6EdflNKdQNwhyHX+xagNlNjiNtndAyE8quiGBwS8Cj6bRMP3UD5B7jHUC+kwVooKpZmiM0XOcNWfjMudndf5Q16iSppFsPrqI0iQeyeQVI5w17lemQoD9w5yGu4m3uMVw3Qz+M2w7y/Ek8jqfsM5RzqdpsotP1E+5NDE1In615uwXHfUgqtiF9iiJI5zg65v/Sfso/yG8jzwxrDfLFXa+dnDKVf0DuCxpywznE9HL5tvrOO/hTczIAFtkPlvUGf6eHay/VQ2VLqBoETNCe7uFXFwLct2Gm+2xptqX43D9LVDLF3QW2eRTc5aoj9rOJGJSpAP55a+TygP3xBhugPawxVro9N+62mhGoVfKwmkiW+JaR8iQYvvJ5VxDSaIVyqah0Ut5lCow5tkIwWDIvXQ1GOCdKg8kIA7CjG3gYPNwhp20tg/wGIpm6s7jDBabsxiYVVMMxbzgOm57TSY4ntXjFc4WS4CrDCVyvB7ln9pihsmfIH7724MfGMgmbYw30JbI/7IKvttRR7uU+w7wI3v8bDfOtPWBpZS+zzvNj/Gy/2+iqE3u/DYMcOHgxYxTvSbKimsAeteUE/HY1367wAhXlysYXJ48NBK46TE2uQkOZbOyOLcb3raraqdQHDJIdj3U7pMSbKPWLQkFltVw8E63RYs9apdHxmJ+8J+oh1fZObzIVng7flzQiFqi1M6TO2TjwQlBb7nkEd19cVUEmR32seVf37vcZEZ3fAXkp6rd2E/44CiZ4dHXjDCYpVXjBLdytP/J4FFINxkyq/N6H771vbt4yQu63ZdytKjowKPHj7QvXNe/SxLw/6M5BxvH3vM85+1aXttm/8kepuDW8tE4ugHZdvRaRWb9Egb2hxdqPJzSP1vRPKWlJRdXL0PBq7ql+RzXrMCoawVZO6euve819z+Yfw1uOF7v8KOvJfVUujc1/6yeIKmh3a3uTELDFOudr8lHmOOG+WqmWj41dSMVVn/AEKvwS1gtOsH2QqdxLbFqEsPKnFl8mgCM+9N5fKHHcjo9mgH0u1Y/7batfbDpKoHVh8BkEudVSSMaHW+kfpfAS1LjL89ki3ZTHGOpIdT3fiKBh/vcQYb4stltHIwp4Hc3vOBU97hyUXy1WyfRVs1hIy8rEO74y+xJ6r72oKqJXO8R0XrbjXmyXJxhW9Nk9m21HS06+KZvGAS/bMGsYZ9bZ+kiThbNSbzVI7lP8k3W2azGazqJWM5F2z7S+Xyv86yDjiwgkIex11z+dzJkMAupSKNl9PVxOd9AfTOJIUYn97caUwLufz42QyOV8sazmRny+EnDebo5TrMxXiMmlYVOduQn98ar9v45Fltd5HsQfWAt7EVpQHA95ZLTYdjgGbak6ltOhTpXA5nrFu/QcLPw0vG+7edy/DC6N0c7buvNxBUfnLD/Y40MAhxIEQwP3SPj4DAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDA4Nm4T8xHRGZU7W57QAAAABJRU5ErkJggg==",
       "address": "Dhanmondi",
       "city": "Dhaka",
       "rating": 4.8,
-      "theme": "Traditional",
+      "theme": "Kacchi",
       "is_active": true,
       "created_at": "2026-02-27T12:02:00Z"
     }
@@ -49,12 +49,12 @@
     "pk": 4,
     "fields": {
       "owner": 1,
-      "name": "Madchef",
-      "logo": "https://images.unsplash.com/photo-1550547660-d9450f859349",
-      "address": "Gulshan",
+      "name": "Kacchi Bhai",
+      "logo": "https://seeklogo.com/images/K/kacchi-bhai-logo-3E3B0F9EAF-seeklogo.com.png",
+      "address": "Uttara",
       "city": "Dhaka",
-      "rating": 4.4,
-      "theme": "Cafe",
+      "rating": 4.7,
+      "theme": "Biriyani",
       "is_active": true,
       "created_at": "2026-02-27T12:03:00Z"
     }
@@ -64,12 +64,12 @@
     "pk": 5,
     "fields": {
       "owner": 1,
-      "name": "Kacchi Bhai",
-      "logo": "https://images.unsplash.com/photo-1617093727343-374698b1b08d",
-      "address": "Mirpur",
+      "name": "Madchef",
+      "logo": "https://seeklogo.com/images/M/madchef-logo-2B0C83D5F7-seeklogo.com.png",
+      "address": "Gulshan",
       "city": "Dhaka",
-      "rating": 4.7,
-      "theme": "Deshi",
+      "rating": 4.4,
+      "theme": "Burger",
       "is_active": true,
       "created_at": "2026-02-27T12:04:00Z"
     }
@@ -79,12 +79,12 @@
     "pk": 6,
     "fields": {
       "owner": 1,
-      "name": "North End Coffee",
-      "logo": "https://images.unsplash.com/photo-1509042239860-f550ce710b93",
+      "name": "Takeout",
+      "logo": "https://seeklogo.com/images/T/takeout-logo-5D43D6A4B6-seeklogo.com.png",
       "address": "Banani",
       "city": "Dhaka",
-      "rating": 4.6,
-      "theme": "Cafe",
+      "rating": 4.3,
+      "theme": "Pizza",
       "is_active": true,
       "created_at": "2026-02-27T12:05:00Z"
     }
@@ -94,12 +94,12 @@
     "pk": 7,
     "fields": {
       "owner": 1,
-      "name": "Takeout",
-      "logo": "https://images.unsplash.com/photo-1594007654729-407eedc4be65",
-      "address": "Jamuna Future Park",
+      "name": "North End Coffee Roasters",
+      "logo": "https://seeklogo.com/images/N/north-end-coffee-roasters-logo-4E6C9D3F4E-seeklogo.com.png",
+      "address": "Banani",
       "city": "Dhaka",
-      "rating": 4.3,
-      "theme": "Pizza",
+      "rating": 4.6,
+      "theme": "Cafe",
       "is_active": true,
       "created_at": "2026-02-27T12:06:00Z"
     }
@@ -109,12 +109,12 @@
     "pk": 8,
     "fields": {
       "owner": 1,
-      "name": "Bella Italia",
-      "logo": "https://images.unsplash.com/photo-1548365328-9f547fb0953d",
-      "address": "Gulshan 2",
+      "name": "Izumi",
+      "logo": "https://seeklogo.com/images/I/izumi-logo-5D5F6A9F9E-seeklogo.com.png",
+      "address": "Gulshan",
       "city": "Dhaka",
-      "rating": 4.5,
-      "theme": "Italian",
+      "rating": 4.9,
+      "theme": "Japanese",
       "is_active": true,
       "created_at": "2026-02-27T12:07:00Z"
     }
@@ -124,12 +124,12 @@
     "pk": 9,
     "fields": {
       "owner": 1,
-      "name": "Izumi",
-      "logo": "https://images.unsplash.com/photo-1553621042-f6e147245754",
-      "address": "Gulshan",
+      "name": "Bhooter Adda",
+      "logo": "https://seeklogo.com/images/B/bhooter-adda-logo-0F6B9A7E9C-seeklogo.com.png",
+      "address": "Dhanmondi",
       "city": "Dhaka",
-      "rating": 4.9,
-      "theme": "Japanese",
+      "rating": 4.2,
+      "theme": "Themed",
       "is_active": true,
       "created_at": "2026-02-27T12:08:00Z"
     }
@@ -139,12 +139,12 @@
     "pk": 10,
     "fields": {
       "owner": 1,
-      "name": "Handi",
-      "logo": "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398",
-      "address": "Dhanmondi",
+      "name": "Gloria Jean's Coffees",
+      "logo": "https://seeklogo.com/images/G/gloria-jeans-coffees-logo-2C3E0B4D8F-seeklogo.com.png",
+      "address": "Gulshan",
       "city": "Dhaka",
-      "rating": 4.6,
-      "theme": "Indian",
+      "rating": 4.5,
+      "theme": "Cafe",
       "is_active": true,
       "created_at": "2026-02-27T12:09:00Z"
     }
@@ -154,12 +154,12 @@
     "pk": 11,
     "fields": {
       "owner": 1,
-      "name": "Mainland China",
-      "logo": "https://images.unsplash.com/photo-1589308078056-fd3f1e7b4e7b",
-      "address": "Banani",
+      "name": "Chef's Table",
+      "logo": "https://seeklogo.com/images/C/chefs-table-logo-7A5F9C8E1F-seeklogo.com.png",
+      "address": "Gulshan",
       "city": "Dhaka",
-      "rating": 4.4,
-      "theme": "Chinese",
+      "rating": 4.6,
+      "theme": "Food Court",
       "is_active": true,
       "created_at": "2026-02-27T12:10:00Z"
     }
@@ -169,12 +169,12 @@
     "pk": 12,
     "fields": {
       "owner": 1,
-      "name": "Cheez",
-      "logo": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
-      "address": "Mohammadpur",
+      "name": "Panshi Restaurant",
+      "logo": "https://seeklogo.com/images/P/panshi-restaurant-logo-3F6C4A7E8D-seeklogo.com.png",
+      "address": "Uttara",
       "city": "Dhaka",
-      "rating": 4.2,
-      "theme": "Burger",
+      "rating": 4.3,
+      "theme": "Bangladeshi",
       "is_active": true,
       "created_at": "2026-02-27T12:11:00Z"
     }
@@ -184,12 +184,12 @@
     "pk": 13,
     "fields": {
       "owner": 1,
-      "name": "Panshi Restaurant",
-      "logo": "https://images.unsplash.com/photo-1606755962773-d324e0a13086",
-      "address": "Uttara",
+      "name": "Handi",
+      "logo": "https://seeklogo.com/images/H/handi-restaurant-logo-6B4F7A9D2E-seeklogo.com.png",
+      "address": "Dhanmondi",
       "city": "Dhaka",
-      "rating": 4.3,
-      "theme": "Deshi",
+      "rating": 4.5,
+      "theme": "Indian",
       "is_active": true,
       "created_at": "2026-02-27T12:12:00Z"
     }
@@ -199,12 +199,12 @@
     "pk": 14,
     "fields": {
       "owner": 1,
-      "name": "American Burger",
-      "logo": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
-      "address": "Badda",
+      "name": "Cafe Rio",
+      "logo": "https://seeklogo.com/images/C/cafe-rio-logo-3B2F0E8D4F-seeklogo.com.png",
+      "address": "Dhanmondi",
       "city": "Dhaka",
-      "rating": 4.1,
-      "theme": "Fast Food",
+      "rating": 4.4,
+      "theme": "Cafe",
       "is_active": true,
       "created_at": "2026-02-27T12:13:00Z"
     }
@@ -214,12 +214,12 @@
     "pk": 15,
     "fields": {
       "owner": 1,
-      "name": "Cafe Mango",
-      "logo": "https://images.unsplash.com/photo-1492724441997-5dc865305da7",
-      "address": "Gulshan",
+      "name": "The Manhattan Fish Market",
+      "logo": "https://seeklogo.com/images/M/manhattan-fish-market-logo-0D5C6E7A8F-seeklogo.com.png",
+      "address": "Banani",
       "city": "Dhaka",
-      "rating": 4.4,
-      "theme": "Cafe",
+      "rating": 4.5,
+      "theme": "Seafood",
       "is_active": true,
       "created_at": "2026-02-27T12:14:00Z"
     }
@@ -229,74 +229,14 @@
     "pk": 16,
     "fields": {
       "owner": 1,
-      "name": "BBQ Bangladesh",
-      "logo": "https://images.unsplash.com/photo-1558030006-450675393462",
-      "address": "Mirpur",
+      "name": "Spicy Ramna",
+      "logo": "https://seeklogo.com/images/S/spicy-ramna-logo-1C4F6E8B2D-seeklogo.com.png",
+      "address": "Ramna",
       "city": "Dhaka",
-      "rating": 4.6,
-      "theme": "BBQ",
+      "rating": 4.4,
+      "theme": "Bangladeshi",
       "is_active": true,
       "created_at": "2026-02-27T12:15:00Z"
-    }
-  },
-  {
-    "model": "restaurants.restaurant",
-    "pk": 17,
-    "fields": {
-      "owner": 1,
-      "name": "Bhooter Bari",
-      "logo": "https://images.unsplash.com/photo-1606755962773-d324e0a13086",
-      "address": "Dhanmondi",
-      "city": "Dhaka",
-      "rating": 4.2,
-      "theme": "Themed",
-      "is_active": true,
-      "created_at": "2026-02-27T12:16:00Z"
-    }
-  },
-  {
-    "model": "restaurants.restaurant",
-    "pk": 18,
-    "fields": {
-      "owner": 1,
-      "name": "Yummy Yummy",
-      "logo": "https://images.unsplash.com/photo-1604908554168-8a3b8d07b44f",
-      "address": "Banani",
-      "city": "Dhaka",
-      "rating": 4.3,
-      "theme": "Chinese",
-      "is_active": true,
-      "created_at": "2026-02-27T12:17:00Z"
-    }
-  },
-  {
-    "model": "restaurants.restaurant",
-    "pk": 19,
-    "fields": {
-      "owner": 1,
-      "name": "Koreana",
-      "logo": "https://images.unsplash.com/photo-1604908177522-402f6cfc4c24",
-      "address": "Gulshan",
-      "city": "Dhaka",
-      "rating": 4.5,
-      "theme": "Korean",
-      "is_active": true,
-      "created_at": "2026-02-27T12:18:00Z"
-    }
-  },
-  {
-    "model": "restaurants.restaurant",
-    "pk": 20,
-    "fields": {
-      "owner": 1,
-      "name": "The Manhattan Fish Market",
-      "logo": "https://images.unsplash.com/photo-1544025162-d76694265947",
-      "address": "Banani",
-      "city": "Dhaka",
-      "rating": 4.5,
-      "theme": "Seafood",
-      "is_active": true,
-      "created_at": "2026-02-27T12:19:00Z"
     }
   }
 ]

@@ -26,10 +26,13 @@ class FoodSerializer(serializers.ModelSerializer):
         fields = "__all__"
         read_only_fields = ("created_at",)
 
-
 class RestaurantSerializer(serializers.ModelSerializer):
-    foods = FoodSerializer(many=True, read_only=True)
+
+    logo = serializers.SerializerMethodField()
 
     class Meta:
         model = Restaurant
         fields = "__all__"
+
+    def get_logo(self, obj):
+        return obj.get_logo()
