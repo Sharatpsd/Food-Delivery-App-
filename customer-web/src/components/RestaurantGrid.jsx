@@ -1,5 +1,6 @@
+// src/components/RestaurantGrid.jsx – ZEN MODE (NO "Not Found" EVER)
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, MapPin, Clock, Star, Truck } from "lucide-react";
+import { Search, MapPin, Clock, Star, Truck, X } from "lucide-react";
 import RestaurantCard from "./RestaurantCard";
 import { useState } from "react";
 
@@ -12,42 +13,59 @@ export default function RestaurantGrid({
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState("all");
 
-  // Filter & Search Logic
+  // ZEN FILTER LOGIC - ALWAYS SHOWS RESULTS
   const filteredRestaurants = list.filter((restaurant) => {
-    const matchesSearch = restaurant.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         restaurant.cuisine?.toLowerCase().includes(searchTerm.toLowerCase());
+    // Always match search (fallback to show all if no exact match)
+    const matchesSearch = !searchTerm || 
+      restaurant.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      restaurant.cuisine?.toLowerCase().includes(searchTerm.toLowerCase());
     
     const matchesFilter = filterType === "all" || 
-                         restaurant.type?.toLowerCase() === filterType ||
-                         restaurant.cuisine?.toLowerCase() === filterType;
+      restaurant.type?.toLowerCase() === filterType.toLowerCase() ||
+      restaurant.cuisine?.toLowerCase() === filterType.toLowerCase();
     
     return matchesSearch && matchesFilter;
   });
 
-  // Loading States
+  // Loading States - Premium Glassmorphism
   if (loading) {
     return (
       <div className="py-20">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-3 bg-gradient-to-r from-orange-500 to-red-500 text-white px-8 py-4 rounded-3xl font-bold text-xl shadow-2xl mb-8">
-              <Search className="w-6 h-6" />
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mb-16"
+          >
+            <motion.div 
+              animate={{ scale: [1, 1.05, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="inline-flex items-center gap-3 bg-gradient-to-r from-orange-500/90 to-red-500/90 backdrop-blur-2xl text-white px-10 py-5 rounded-3xl font-black text-2xl shadow-2xl border border-white/30"
+            >
+              <Search className="w-7 h-7" />
               Finding best restaurants near you...
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
           
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {[...Array(8)].map((_, i) => (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+            {[...Array(12)].map((_, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                className="bg-white/70 backdrop-blur-xl rounded-3xl p-6 shadow-xl animate-pulse border border-gray-200"
+                transition={{ delay: i * 0.06 }}
+                className="bg-gradient-to-br from-white/70 to-orange-50/70 backdrop-blur-xl rounded-3xl p-6 shadow-2xl border border-white/40 animate-pulse hover:scale-[1.02] transition-all duration-300"
+                whileHover={{ scale: 1.02 }}
               >
-                <div className="w-full h-40 bg-gradient-to-br from-gray-200 to-gray-300 rounded-2xl mb-4"></div>
-                <div className="h-6 bg-gray-300 rounded-full mb-2"></div>
-                <div className="h-4 bg-gray-300 rounded w-3/4"></div>
+                <div className="w-full h-48 bg-gradient-to-br from-orange-100/60 to-red-100/60 rounded-3xl mb-6 shadow-xl" />
+                <div className="h-6 bg-white/50 rounded-xl mb-3 mx-auto w-4/5" />
+                <div className="h-5 bg-white/40 rounded-lg w-3/5 mx-auto" />
+                <div className="mt-4 flex gap-2 justify-center">
+                  <div className="w-3 h-3 bg-orange-300 rounded-full animate-pulse" />
+                  <div className="w-3 h-3 bg-orange-300 rounded-full animate-pulse" />
+                  <div className="w-3 h-3 bg-orange-300 rounded-full animate-pulse" />
+                  <div className="w-3 h-3 bg-orange-300 rounded-full animate-pulse delay-150" />
+                </div>
               </motion.div>
             ))}
           </div>
@@ -56,174 +74,139 @@ export default function RestaurantGrid({
     );
   }
 
-  if (!list || list.length === 0) {
-    return (
-      <div className="py-20 text-center">
-        <div className="max-w-md mx-auto">
-          <div className="w-24 h-24 bg-orange-100 rounded-3xl mx-auto mb-8 flex items-center justify-center">
-            <Search className="w-12 h-12 text-orange-500" />
-          </div>
-          <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-            No restaurants found
-          </h3>
-          <p className="text-gray-600 mb-8 text-lg">
-            Try adjusting your search or explore different categories
-          </p>
-          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-red-500 text-white px-8 py-4 rounded-2xl font-semibold text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 cursor-pointer">
-            Explore Popular Restaurants
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // NO EMPTY STATE - Always show something
+  const displayRestaurants = filteredRestaurants.length > 0 ? filteredRestaurants : list.slice(0, 8);
 
   return (
     <div className="py-12 lg:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Header */}
+        {/* Premium Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
+          className="text-center mb-16 lg:mb-20"
         >
-          <h2 className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 via-gray-700 to-orange-600 bg-clip-text text-transparent mb-6">
+          <h2 className="text-4xl md:text-6xl lg:text-7xl font-black bg-gradient-to-r from-gray-900 via-gray-800 to-orange-600 bg-clip-text text-transparent mb-6 leading-tight tracking-tight">
             {title || "Best Restaurants Near You"}
           </h2>
           {category && (
-            <div className="inline-flex items-center gap-2 bg-orange-100 text-orange-800 px-6 py-3 rounded-full text-lg font-semibold">
-              <MapPin className="w-5 h-5" />
-              {category} Restaurants
-            </div>
+            <motion.div 
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="inline-flex items-center gap-3 bg-gradient-to-r from-orange-500/15 to-red-500/15 backdrop-blur-xl text-orange-800 px-8 py-4 rounded-3xl text-xl font-bold border border-orange-200/60 shadow-lg"
+              whileHover={{ scale: 1.05 }}
+            >
+              <MapPin className="w-6 h-6" />
+              {category} Specials
+            </motion.div>
           )}
         </motion.div>
 
-        {/* Filters & Search */}
+        {/* ZEN FILTERS & SEARCH - NEVER EMPTY */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="mb-12 flex flex-col lg:flex-row gap-4 lg:items-center justify-between bg-white/80 backdrop-blur-xl rounded-3xl p-6 shadow-xl border border-white/50"
+          className="mb-16 lg:mb-20 flex flex-col lg:flex-row gap-6 lg:items-center justify-between bg-gradient-to-r from-white/95 via-white/90 to-orange-50/80 backdrop-blur-3xl rounded-3xl p-8 shadow-2xl border border-white/70 shadow-orange-500/20"
         >
-          {/* Search */}
-          <div className="relative flex-1 max-w-md">
-            <Search className="w-5 h-5 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2" />
+          {/* Zen Search */}
+          <div className="relative flex-1 max-w-lg group">
+            <Search className="w-6 h-6 text-orange-400 absolute left-5 top-1/2 -translate-y-1/2 group-focus-within:text-orange-500 group-hover:text-orange-500 transition-all duration-300" />
             <input
               type="text"
-              placeholder="Search restaurants or cuisine..."
+              placeholder="🔍 Search biryani, pizza, burgers..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-12 pr-6 py-4 border border-gray-200 rounded-2xl focus:ring-3 focus:ring-orange-500/30 focus:border-orange-500 transition-all duration-300 bg-white/50 backdrop-blur-sm"
+              className="w-full pl-14 pr-6 py-5 border-2 border-gray-100 rounded-3xl focus:ring-4 focus:ring-orange-500/30 focus:border-orange-400 transition-all duration-500 bg-white/90 backdrop-blur-2xl shadow-xl hover:shadow-2xl text-xl placeholder-gray-500 font-semibold"
             />
           </div>
 
-          {/* Filter Buttons */}
-          <div className="flex flex-wrap gap-2">
+          {/* Zen Filter Pills */}
+          <div className="flex flex-wrap gap-3">
             {[
-              { label: "All", value: "all" },
-              { label: "Fast Food", value: "fastfood" },
-              { label: "Bengali", value: "bengali" },
-              { label: "Chinese", value: "chinese" },
-              { label: "Pizza", value: "pizza" },
-            ].map(({ label, value }) => (
+              { label: "All", value: "all", emoji: "🌟" },
+              { label: "Fast Food", value: "fastfood", emoji: "🍔" },
+              { label: "Bengali", value: "bengali", emoji: "🍛" },
+              { label: "Chinese", value: "chinese", emoji: "🥡" },
+              { label: "Pizza", value: "pizza", emoji: "🍕" },
+            ].map(({ label, value, emoji }) => (
               <motion.button
                 key={value}
                 onClick={() => setFilterType(value)}
-                className={`px-6 py-3 rounded-2xl font-semibold text-sm transition-all duration-300 ${
-                  filterType === value
-                    ? "bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-lg"
-                    : "bg-white/50 border border-gray-200 hover:bg-orange-50 text-gray-700 hover:shadow-md"
-                }`}
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ 
+                  scale: 1.1, 
+                  y: -4, 
+                  boxShadow: "0 15px 35px rgba(255, 107, 0, 0.4)" 
+                }}
                 whileTap={{ scale: 0.95 }}
+                className={`px-7 py-4 rounded-3xl font-bold text-base transition-all duration-400 flex items-center gap-2.5 backdrop-blur-xl shadow-xl border-2 min-w-[90px] ${
+                  filterType === value
+                    ? "bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-orange-500/50 border-orange-400"
+                    : "bg-white/95 border-gray-200/70 hover:bg-gradient-to-r hover:from-orange-50 hover:to-red-50 hover:border-orange-400 text-gray-800 hover:text-orange-700 hover:shadow-2xl"
+                }`}
               >
-                {label}
+                <span className="text-lg">{emoji}</span>
+                <span>{label}</span>
               </motion.button>
             ))}
           </div>
         </motion.div>
 
-        {/* Stats */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 text-center"
-        >
-          {[
-            { icon: Star, label: "4.8+", num: "1,247" },
-            { icon: Truck, label: "Min Delivery", num: "25" },
-            { icon: Clock, label: "Restaurants", num: filteredRestaurants.length.toLocaleString() },
-          ].map(({ icon: Icon, label, num }, i) => (
-            <div key={i} className="bg-gradient-to-br from-orange-500/10 to-red-500/10 p-6 rounded-2xl border border-orange-200/50 backdrop-blur-sm">
-              <Icon className="w-10 h-10 text-orange-500 mx-auto mb-3" />
-              <div className="text-2xl font-bold text-gray-900 mb-1">{num}</div>
-              <div className="text-sm text-gray-600">{label}</div>
-            </div>
-          ))}
-        </motion.div>
 
-        {/* Restaurant Grid */}
-        <AnimatePresence>
-          <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 ${
-            filteredRestaurants.length === 0 ? "grid-cols-1" : ""
-          }`}>
-            {filteredRestaurants.length > 0 ? (
-              filteredRestaurants.map((item, index) => (
-                <motion.div
-                  key={item.id}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  transition={{ duration: 0.5, delay: index * 0.05 }}
-                  layout
-                >
-                  <RestaurantCard item={item} />
-                </motion.div>
-              ))
-            ) : (
+        {/* ZEN RESTAURANT GRID - NEVER EMPTY */}
+        <AnimatePresence mode="popLayout">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6 lg:gap-8">
+            {displayRestaurants.map((item, index) => (
               <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="col-span-full text-center py-20"
+                key={`${item.id}-${searchTerm}-${filterType}-${index}`}
+                initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ 
+                  duration: 0.6, 
+                  delay: index * 0.04,
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 25
+                }}
+                layout
+                whileHover={{ y: -8 }}
               >
-                <div className="w-24 h-24 bg-gray-100 rounded-3xl mx-auto mb-8 flex items-center justify-center">
-                  <Search className="w-12 h-12 text-gray-400" />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                  No restaurants match your search
-                </h3>
-                <p className="text-gray-600 mb-8">
-                  Try different keywords or clear filters
-                </p>
-                <div className="flex flex-wrap gap-3 justify-center">
-                  <motion.button
-                    onClick={() => {
-                      setSearchTerm("");
-                      setFilterType("all");
-                    }}
-                    className="px-6 py-3 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-2xl font-semibold hover:shadow-2xl"
-                    whileHover={{ scale: 1.05 }}
-                  >
-                    Clear All Filters
-                  </motion.button>
-                </div>
+                <RestaurantCard item={item} />
               </motion.div>
-            )}
+            ))}
           </div>
         </AnimatePresence>
 
-        {/* Load More (if needed) */}
-        {filteredRestaurants.length > 0 && filteredRestaurants.length < list.length && (
-          <div className="text-center mt-16">
+        {/* Zen Load More */}
+        {displayRestaurants.length < list.length && (
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="text-center mt-24 lg:mt-32"
+          >
             <motion.button
-              className="px-12 py-4 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-3xl font-bold text-lg shadow-xl hover:shadow-2xl"
-              whileHover={{ scale: 1.02 }}
+              whileHover={{ scale: 1.05, y: -5 }}
               whileTap={{ scale: 0.98 }}
+              className="px-16 py-6 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-3xl font-black text-xl shadow-2xl hover:shadow-3xl transition-all duration-500 border border-orange-400/50 backdrop-blur-xl"
             >
-              Load More Restaurants
+              Load More Delicious Spots ✨
             </motion.button>
-          </div>
+          </motion.div>
+        )}
+
+        {/* Search Results Counter */}
+        {searchTerm && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="text-center mt-16"
+          >
+            <div className="inline-flex items-center gap-3 bg-gradient-to-r from-emerald-500/90 to-emerald-600/90 text-white px-10 py-4 rounded-3xl font-bold text-xl shadow-2xl backdrop-blur-xl border border-white/30">
+              ✨ {displayRestaurants.length} perfect matches found!
+            </div>
+          </motion.div>
         )}
       </div>
     </div>
