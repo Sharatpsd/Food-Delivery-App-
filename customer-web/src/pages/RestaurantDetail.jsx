@@ -52,7 +52,6 @@ export default function RestaurantDetail() {
     );
   }
 
-  // 🔥 FIXED IMAGE LOGIC
   const imageUrl = restaurant.logo?.startsWith("http")
     ? restaurant.logo
     : `http://localhost:8000${restaurant.logo}`;
@@ -135,9 +134,9 @@ export default function RestaurantDetail() {
 
           {foods.map((item) => {
 
-            const foodImage = item.image?.startsWith("http")
-              ? item.image
-              : `http://localhost:8000${item.image}`;
+            const foodImage =
+              item.image_final ||
+              "https://images.unsplash.com/photo-1606755962773-d324e0a13086";
 
             return (
               <div
@@ -146,10 +145,7 @@ export default function RestaurantDetail() {
               >
 
                 <img
-                  src={
-                    foodImage ||
-                    "https://images.unsplash.com/photo-1606755962773-d324e0a13086"
-                  }
+                  src={foodImage}
                   alt={item.name}
                   className="w-full h-40 object-cover rounded-xl mb-4"
                 />

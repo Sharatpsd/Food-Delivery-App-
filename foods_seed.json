@@ -64,7 +64,7 @@
       "name": "Chicken Tikka Roll",
       "description": "Grilled chicken tikka pieces wrapped in paratha with mint yogurt sauce",
       "price": 220,
-      "image_url": "https://images.unsplash.com/photo-1621996346565-e3ddc09ecad7?w=800&fit=crop",
+      "image_url": "https://images.unsplash.com/photo-1615484478152-b49737c39917?w=800&fit=crop",
       "is_available": true,
       "created_at": "2026-03-05T12:20:00Z"
     }
@@ -78,7 +78,7 @@
       "name": "Beef Chapli Kebab",
       "description": "Spicy minced beef chapli kebab served with naan and chutney",
       "price": 380,
-      "image_url": "https://images.unsplash.com/photo-1598177651678-9b9a6e704bed?w=800&fit=crop",
+      "image_url": "https://images.unsplash.com/photo-1636149113548-951b74e16bd8?w=800&fit=crop",
       "is_available": true,
       "created_at": "2026-03-05T12:25:00Z"
     }
@@ -92,7 +92,7 @@
       "name": "Sultan's Chicken Biryani",
       "description": "Aromatic basmati rice cooked with tender chicken and saffron",
       "price": 290,
-      "image_url": "https://images.unsplash.com/photo-1603484779267-64e7a2a37f3b?w=800&fit=crop",
+      "image_url": "https://images.unsplash.com/photo-1632399598709-42b7a9e196c9?w=800&fit=crop",
       "is_available": true,
       "created_at": "2026-03-05T12:30:00Z"
     }
@@ -109,8 +109,6 @@
       "image_url": "https://images.unsplash.com/photo-1604464562068-caee7c4ef48c?w=800&fit=crop",
       "is_available": true,
       "created_at": "2026-03-05T12:35:00Z"
-    }
-  },
   {
     "model": "restaurants.food",
     "pk": 9,
@@ -134,7 +132,7 @@
       "name": "Madchef Beef Burger",
       "description": "House special beef patty with caramelized onions and truffle mayo",
       "price": 420,
-      "image_url": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&fit=crop",
+      "image_url": "https://images.unsplash.com/photo-1571091711937-23a2f40c95d2?w=800&fit=crop",
       "is_available": true,
       "created_at": "2026-03-05T12:45:00Z"
     }
