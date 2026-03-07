@@ -1,3 +1,48 @@
-@tailwind base;
+﻿@tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --bite-bg: #0f1218;
+  --bite-surface: #1b1f27;
+  --bite-surface-soft: #232a35;
+  --bite-accent: #f97316;
+  --bite-accent-2: #ef4444;
+  --bite-text: #f8fafc;
+  --bite-muted: #cbd5e1;
+}
+
+html, body, #root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at 10% 8%, rgba(249, 115, 22, 0.12), transparent 35%), var(--bite-bg);
+  color: var(--bite-text);
+}
+
+main {
+  background: transparent;
+}
+
+input,
+select,
+textarea {
+  background: var(--bite-surface);
+  border-color: rgba(255, 255, 255, 0.16);
+  color: var(--bite-text);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--bite-muted);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: rgba(249, 115, 22, 0.7);
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.18);
+}

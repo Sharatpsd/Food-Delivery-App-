@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+﻿import { Link } from "react-router-dom";
 
 const API_BASE =
   import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, "") ||
@@ -33,15 +33,15 @@ export default function RestaurantCard({ item }) {
 
   return (
     <Link to={`/restaurant/${item.id}`}>
-      <article className="group bg-white rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 overflow-hidden border border-gray-100 cursor-pointer">
+      <article className="group h-full cursor-pointer overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-[#1a1d24] to-[#151820] shadow-[0_14px_35px_rgba(0,0,0,0.45)] transition-all duration-300 hover:-translate-y-2 hover:border-orange-400/60 hover:shadow-[0_22px_45px_rgba(249,115,22,0.25)]">
 
         {/* IMAGE */}
-        <div className="h-48 w-full overflow-hidden relative">
+        <div className="relative h-44 w-full overflow-hidden">
 
           <img
             src={`${imgUrl}?w=500&h=300&fit=crop&auto=format`}
             alt={item?.name || "Restaurant"}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
             loading="lazy"
             onError={(e) => {
               e.target.src =
@@ -50,35 +50,35 @@ export default function RestaurantCard({ item }) {
           />
 
           {/* DELIVERY TIME */}
-          <div className="absolute top-3 right-3 bg-white/90 text-xs font-semibold px-3 py-1 rounded-full">
+          <div className="absolute right-3 top-3 rounded-full border border-white/20 bg-black/55 px-3 py-1 text-xs font-semibold text-white backdrop-blur-md">
             {deliveryTime} min
           </div>
 
         </div>
 
         {/* BODY */}
-        <div className="p-5">
+        <div className="flex min-h-[138px] flex-col p-5">
 
-          <h3 className="text-lg font-bold text-gray-900 mb-1 group-hover:text-pink-600 transition-colors">
+          <h3 className="mb-1 line-clamp-2 text-xl font-extrabold leading-tight text-white transition-colors group-hover:text-orange-300">
             {item?.name || "Restaurant"}
           </h3>
 
-          <p className="text-sm text-gray-500 mb-3">
+          <p className="mb-4 text-sm text-gray-300">
             {item?.city || "Near you"}
           </p>
 
-          <div className="flex items-center justify-between">
+          <div className="mt-auto flex items-center justify-between">
 
             {/* rating */}
             <div className="flex items-center gap-1 text-sm">
-              <span className="text-yellow-400">★</span>
-              <span className="font-semibold text-gray-900">
+              <span className="text-yellow-400">{"\u2605"}</span>
+              <span className="font-bold text-white">
                 {item?.rating || "4.5"}
               </span>
             </div>
 
             {/* theme */}
-            <span className="text-xs px-3 py-1 rounded-full bg-pink-50 text-pink-700 font-medium">
+            <span className="rounded-full border border-orange-300/30 bg-orange-500/15 px-3 py-1 text-xs font-semibold text-orange-200">
               {item?.theme || "Restaurant"}
             </span>
 
@@ -90,3 +90,4 @@ export default function RestaurantCard({ item }) {
     </Link>
   );
 }
+

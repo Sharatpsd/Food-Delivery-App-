@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+﻿import { motion } from "framer-motion";
 import { Users, Clock, Truck, Star } from "lucide-react";
 
 const stats = [
@@ -10,7 +10,7 @@ const stats = [
 
 export default function Stats() {
   return (
-    <section className="py-16 bg-gradient-to-r from-orange-50 to-red-50">
+    <section className="py-16 bg-gradient-to-r from-[#12161d] to-[#1a1f28]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12 text-center">
           {stats.map((stat, index) => {
@@ -27,8 +27,8 @@ export default function Stats() {
                   <Icon className="w-8 h-8 text-white" />
                 </div>
                 <div>
-                  <p className="text-2xl md:text-3xl font-bold text-gray-900 mb-1">{stat.value}</p>
-                  <p className="text-sm text-gray-600 font-medium">{stat.label}</p>
+                  <p className="text-2xl md:text-3xl font-bold text-white mb-1">{stat.value}</p>
+                  <p className="text-sm text-gray-300 font-medium">{stat.label}</p>
                 </div>
               </motion.div>
             );
@@ -38,3 +38,4 @@ export default function Stats() {
     </section>
   );
 }
+

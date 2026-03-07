@@ -119,8 +119,6 @@ import { CartProvider } from "./context/CartContext";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
-import Stats from "./components/Stats";
-import Features from "./components/Features";
 // Pages
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -162,8 +160,6 @@ export default function App() {
                 element={
                   <>
                     <Home />
-                    <Stats />
-                    <Features />
                   </>
                 }
               />

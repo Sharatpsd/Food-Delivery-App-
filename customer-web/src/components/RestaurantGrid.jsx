@@ -1,4 +1,4 @@
-// src/components/RestaurantGrid.jsx – ZEN MODE (NO "Not Found" EVER)
+﻿// src/components/RestaurantGrid.jsx â€“ ZEN MODE (NO "Not Found" EVER)
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, MapPin, Clock, Star, Truck, X } from "lucide-react";
 import RestaurantCard from "./RestaurantCard";
@@ -59,7 +59,7 @@ export default function RestaurantGrid({
               >
                 <div className="w-full h-48 bg-gradient-to-br from-orange-100/60 to-red-100/60 rounded-3xl mb-6 shadow-xl" />
                 <div className="h-6 bg-white/50 rounded-xl mb-3 mx-auto w-4/5" />
-                <div className="h-5 bg-white/40 rounded-lg w-3/5 mx-auto" />
+                <div className="h-5 bg-[#1b1f27]/40 rounded-lg w-3/5 mx-auto" />
                 <div className="mt-4 flex gap-2 justify-center">
                   <div className="w-3 h-3 bg-orange-300 rounded-full animate-pulse" />
                   <div className="w-3 h-3 bg-orange-300 rounded-full animate-pulse" />
@@ -87,14 +87,14 @@ export default function RestaurantGrid({
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-16 lg:mb-20"
         >
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-black bg-gradient-to-r from-gray-900 via-gray-800 to-orange-600 bg-clip-text text-transparent mb-6 leading-tight tracking-tight">
+          <h2 className="mb-6 bg-gradient-to-r from-white via-orange-200 to-orange-400 bg-clip-text text-4xl font-black leading-tight tracking-tight text-transparent md:text-6xl lg:text-7xl">
             {title || "Best Restaurants Near You"}
           </h2>
           {category && (
             <motion.div 
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="inline-flex items-center gap-3 bg-gradient-to-r from-orange-500/15 to-red-500/15 backdrop-blur-xl text-orange-800 px-8 py-4 rounded-3xl text-xl font-bold border border-orange-200/60 shadow-lg"
+              className="inline-flex items-center gap-3 rounded-3xl border border-orange-400/40 bg-gradient-to-r from-orange-500/15 to-red-500/15 px-8 py-4 text-xl font-bold text-orange-200 shadow-lg backdrop-blur-xl"
               whileHover={{ scale: 1.05 }}
             >
               <MapPin className="w-6 h-6" />
@@ -108,28 +108,28 @@ export default function RestaurantGrid({
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="mb-16 lg:mb-20 flex flex-col lg:flex-row gap-6 lg:items-center justify-between bg-gradient-to-r from-white/95 via-white/90 to-orange-50/80 backdrop-blur-3xl rounded-3xl p-8 shadow-2xl border border-white/70 shadow-orange-500/20"
+          className="mb-16 flex flex-col justify-between gap-6 rounded-3xl border border-white/10 bg-gradient-to-r from-[#14171c]/95 via-[#171b22]/95 to-[#1b2028]/95 p-8 shadow-2xl shadow-black/40 backdrop-blur-3xl lg:mb-20 lg:flex-row lg:items-center"
         >
           {/* Zen Search */}
           <div className="relative flex-1 max-w-lg group">
             <Search className="w-6 h-6 text-orange-400 absolute left-5 top-1/2 -translate-y-1/2 group-focus-within:text-orange-500 group-hover:text-orange-500 transition-all duration-300" />
             <input
               type="text"
-              placeholder="🔍 Search Restaurants..."
+              placeholder="Search Restaurants..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-14 pr-6 py-5 border-2 border-gray-100 rounded-3xl focus:ring-4 focus:ring-orange-500/30 focus:border-orange-400 transition-all duration-500 bg-white/90 backdrop-blur-2xl shadow-xl hover:shadow-2xl text-xl placeholder-gray-500 font-semibold"
+              className="w-full rounded-3xl border-2 border-white/10 bg-[#0f1115]/90 py-5 pl-14 pr-6 text-xl font-semibold text-white placeholder-gray-400 shadow-xl transition-all duration-500 hover:border-orange-400/60 hover:shadow-2xl focus:border-orange-400 focus:ring-4 focus:ring-orange-500/30"
             />
           </div>
 
           {/* Zen Filter Pills */}
           <div className="flex flex-wrap gap-3">
             {[
-              { label: "All", value: "all", emoji: "🌟" },
-              { label: "Fast Food", value: "fastfood", emoji: "🍔" },
-              { label: "Bengali", value: "bengali", emoji: "🍛" },
-              { label: "Chinese", value: "chinese", emoji: "🥡" },
-              { label: "Pizza", value: "pizza", emoji: "🍕" },
+              { label: "All", value: "all", emoji: "\u{1F31F}" },
+              { label: "Fast Food", value: "fastfood", emoji: "\u{1F354}" },
+              { label: "Bengali", value: "bengali", emoji: "\u{1F35B}" },
+              { label: "Chinese", value: "chinese", emoji: "\u{1F961}" },
+              { label: "Pizza", value: "pizza", emoji: "\u{1F355}" },
             ].map(({ label, value, emoji }) => (
               <motion.button
                 key={value}
@@ -140,13 +140,13 @@ export default function RestaurantGrid({
                   boxShadow: "0 15px 35px rgba(255, 107, 0, 0.4)" 
                 }}
                 whileTap={{ scale: 0.95 }}
-                className={`px-7 py-4 rounded-3xl font-bold text-base transition-all duration-400 flex items-center gap-2.5 backdrop-blur-xl shadow-xl border-2 min-w-[90px] ${
+                className={`flex items-center gap-2 rounded-2xl border-2 px-5 py-3 text-sm font-bold transition-all duration-300 backdrop-blur-xl shadow-lg ${
                   filterType === value
-                    ? "bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-orange-500/50 border-orange-400"
-                    : "bg-white/95 border-gray-200/70 hover:bg-gradient-to-r hover:from-orange-50 hover:to-red-50 hover:border-orange-400 text-gray-800 hover:text-orange-700 hover:shadow-2xl"
+                    ? "border-orange-400 bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-orange-500/45"
+                    : "border-white/10 bg-[#1b1f27]/95 text-gray-200 hover:border-orange-400/70 hover:bg-[#232833] hover:text-orange-200 hover:shadow-xl"
                 }`}
               >
-                <span className="text-lg">{emoji}</span>
+                <span className="text-base">{emoji}</span>
                 <span>{label}</span>
               </motion.button>
             ))}
@@ -191,7 +191,7 @@ export default function RestaurantGrid({
               whileTap={{ scale: 0.98 }}
               className="px-16 py-6 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-3xl font-black text-xl shadow-2xl hover:shadow-3xl transition-all duration-500 border border-orange-400/50 backdrop-blur-xl"
             >
-              Load More Delicious Spots ✨
+              Load More Delicious Spots \u2728
             </motion.button>
           </motion.div>
         )}
@@ -203,8 +203,8 @@ export default function RestaurantGrid({
             animate={{ opacity: 1, scale: 1 }}
             className="text-center mt-16"
           >
-            <div className="inline-flex items-center gap-3 bg-gradient-to-r from-emerald-500/90 to-emerald-600/90 text-white px-10 py-4 rounded-3xl font-bold text-xl shadow-2xl backdrop-blur-xl border border-white/30">
-              ✨ {displayRestaurants.length} perfect matches found!
+            <div className="inline-flex items-center gap-3 bg-gradient-to-r from-orange-500/90 to-red-500/90 text-white px-10 py-4 rounded-3xl font-bold text-xl shadow-2xl backdrop-blur-xl border border-white/30">
+              \u2728 {displayRestaurants.length} perfect matches found!
             </div>
           </motion.div>
         )}
@@ -212,3 +212,6 @@ export default function RestaurantGrid({
     </div>
   );
 }
+
+
+

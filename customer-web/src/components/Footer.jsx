@@ -1,10 +1,10 @@
-import { Mail, Phone, Github, ExternalLink, Heart } from "lucide-react";
+﻿import { Mail, Phone, Github, ExternalLink, Heart } from "lucide-react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-gradient-to-r from-gray-900 to-black text-gray-300 mt-16">
+    <footer className="bg-gradient-to-r from-gray-900 to-black text-gray-300">
       <div className="max-w-7xl mx-auto px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           
@@ -16,7 +16,7 @@ export default function Footer() {
             <p className="text-gray-400 text-sm leading-relaxed mb-6 max-w-xs">
               Bangladesh's fastest food delivery platform
             </p>
-            <div className="flex items-center gap-2 text-xs text-gray-500">
+            <div className="flex items-center gap-2 text-xs text-gray-400">
               <Heart className="w-4 h-4 text-red-500 fill-red-500" />
               <span>Coming 2026</span>
             </div>
@@ -81,9 +81,9 @@ export default function Footer() {
 
       {/* Bottom */}
       <div className="border-t border-gray-800 py-6">
-        <div className="max-w-7xl mx-auto px-6 text-center text-xs text-gray-500">
+        <div className="max-w-7xl mx-auto px-6 text-center text-xs text-gray-400">
           <p>
-            © {currentYear} Bite. All rights reserved. Made with 
+            Â© {currentYear} Bite. All rights reserved. Made with 
             <Heart className="w-4 h-4 text-red-500 fill-red-500 mx-1 inline animate-pulse" /> 
             by Sharat Acharja Mugdho
           </p>
@@ -92,3 +92,5 @@ export default function Footer() {
     </footer>
   );
 }
+
+

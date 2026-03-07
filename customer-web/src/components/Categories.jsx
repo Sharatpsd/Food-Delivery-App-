@@ -1,20 +1,20 @@
-const categories = [
-  { name: "All", icon: "🍽️" },
-  { name: "Pizza", icon: "🍕" },
-  { name: "Burger", icon: "🍔" },
-  { name: "Biryani", icon: "🍛" },
-  { name: "Chinese", icon: "🍜" },
-  { name: "Fast Food", icon: "🌮" },
-  { name: "Grill", icon: "🥩" },
-  { name: "Drinks", icon: "🥤" },
-  { name: "Offers", icon: "🔥" }
+﻿const categories = [
+  { name: "All", icon: "ðŸ½ï¸" },
+  { name: "Pizza", icon: "ðŸ•" },
+  { name: "Burger", icon: "ðŸ”" },
+  { name: "Biryani", icon: "ðŸ›" },
+  { name: "Chinese", icon: "ðŸœ" },
+  { name: "Fast Food", icon: "ðŸŒ®" },
+  { name: "Grill", icon: "ðŸ¥©" },
+  { name: "Drinks", icon: "ðŸ¥¤" },
+  { name: "Offers", icon: "ðŸ”¥" }
 ];
 
 export default function Categories({ selected, onSelect }) {
   return (
-    <section className="px-4 py-16 bg-gradient-to-r from-orange-50 to-red-50">
+    <section className="px-4 py-16 bg-gradient-to-r from-[#12161d] to-[#1a1f28]">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl sm:text-4xl font-black mb-12 text-center text-gray-900 tracking-tight">
+        <h2 className="text-3xl sm:text-4xl font-black mb-12 text-center text-white tracking-tight">
           What are you craving today?
         </h2>
         
@@ -26,7 +26,7 @@ export default function Categories({ selected, onSelect }) {
               className={`group flex items-center gap-3 px-6 py-4 rounded-3xl text-base font-bold transition-all duration-300 shadow-lg hover:shadow-xl border-2 backdrop-blur-sm hover:scale-105 hover:-translate-y-1 ${
                 selected === cat.name || (!selected && cat.name === "All")
                   ? "bg-gradient-to-r from-orange-500 to-red-600 text-white border-orange-500 shadow-orange-500/40"
-                  : "bg-white/80 text-gray-800 border-gray-200 hover:border-orange-400 hover:bg-orange-50/80 hover:text-orange-800"
+                  : "bg-[#1b1f27]/80 text-gray-100 border-white/15 hover:border-orange-400 hover:bg-orange-500/10 hover:text-orange-200"
               }`}
             >
               <span className="text-2xl group-hover:scale-110 transition-transform duration-300">
@@ -40,3 +40,5 @@ export default function Categories({ selected, onSelect }) {
     </section>
   );
 }
+
+

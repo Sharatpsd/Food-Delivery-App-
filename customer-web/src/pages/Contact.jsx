@@ -1,4 +1,4 @@
-// src/pages/Contact.jsx → ULTRA MODERN + MOBILE-FIRST + BEAUTIFUL ANIMATIONS + FULLY RESPONSIVE
+﻿// src/pages/Contact.jsx â†’ ULTRA MODERN + MOBILE-FIRST + BEAUTIFUL ANIMATIONS + FULLY RESPONSIVE
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -11,9 +11,9 @@ export default function Contact() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-orange-50">
+    <div className="min-h-screen bg-gradient-to-br from-[#12161d] via-[#151a22] to-[#1a1f28]">
 
-      {/* HERO – সুন্দর গ্রেডিয়েন্ট + অ্যানিমেশন */}
+      {/* HERO â€“ à¦¸à§à¦¨à§à¦¦à¦° à¦—à§à¦°à§‡à¦¡à¦¿à§Ÿà§‡à¦¨à§à¦Ÿ + à¦…à§à¦¯à¦¾à¦¨à¦¿à¦®à§‡à¦¶à¦¨ */}
       <section className="relative py-24 md:py-32 text-center overflow-hidden">
         <motion.div
           initial={{ scale: 1.1 }}
@@ -30,16 +30,16 @@ export default function Contact() {
           transition={{ duration: 1, type: "spring", stiffness: 80 }}
           className="max-w-4xl mx-auto px-6"
         >
-          <h1 className="text-5xl md:text-7xl font-black text-gray-900 mb-4 leading-tight">
+          <h1 className="text-5xl md:text-7xl font-black text-white mb-4 leading-tight">
             Get in <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-600">Touch</span>
           </h1>
-          <p className="text-xl md:text-2xl text-gray-700 font-medium">
-            We reply <span className="text-orange-600 font-bold">within minutes</span>
+          <p className="text-xl md:text-2xl text-gray-200 font-medium">
+            We reply <span className="text-orange-300 font-bold">within minutes</span>
           </p>
         </motion.div>
       </section>
 
-      {/* CONTACT CARDS – প্রো হোভার + মোবাইলে সুন্দর */}
+      {/* CONTACT CARDS â€“ à¦ªà§à¦°à§‹ à¦¹à§‹à¦­à¦¾à¦° + à¦®à§‹à¦¬à¦¾à¦‡à¦²à§‡ à¦¸à§à¦¨à§à¦¦à¦° */}
       <section className="py-16 px-6 md:py-20">
         <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
@@ -47,21 +47,21 @@ export default function Contact() {
               icon: Phone,
               title: "Call / WhatsApp",
               info: "01783-720914",
-              color: "from-green-500 to-emerald-600",
+              color: "from-orange-500 to-red-600",
               link: "tel:01783720914"
             },
             {
               icon: Mail,
               title: "Email Us",
               info: "sharatacharjee6@gmail.com",
-              color: "from-blue-500 to-indigo-600",
+              color: "from-orange-500 to-red-600",
               link: "mailto:sharatacharjee6@gmail.com"
             },
             {
               icon: MapPin,
               title: "Location",
               info: "Dhaka, Bangladesh",
-              color: "from-purple-500 to-pink-600",
+              color: "from-orange-500 to-red-600",
               link: null
             },
           ].map((item, i) => (
@@ -74,28 +74,28 @@ export default function Contact() {
               viewport={{ once: true }}
               transition={{ delay: i * 0.2 }}
               whileHover={{ y: -12, scale: 1.05 }}
-              className={`block bg-white rounded-3xl p-10 text-center shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-100 group ${item.link ? "cursor-pointer" : ""}`}
+              className={`block bg-[#1b1f27] rounded-3xl p-10 text-center shadow-xl hover:shadow-2xl transition-all duration-500 border border-white/10 group ${item.link ? "cursor-pointer" : ""}`}
               data-aos="fade-up"
               data-aos-delay={i * 150}
             >
               <div className={`w-20 h-20 mx-auto rounded-full bg-gradient-to-br ${item.color} p-5 mb-6 shadow-lg group-hover:scale-110 transition`}>
                 <item.icon className="w-full h-full text-white" />
               </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-3">{item.title}</h3>
-              <p className="text-lg text-gray-600 break-all font-medium">{item.info}</p>
+              <h3 className="text-2xl font-bold text-gray-100 mb-3">{item.title}</h3>
+              <p className="text-lg text-gray-300 break-all font-medium">{item.info}</p>
             </motion.a>
           ))}
         </div>
       </section>
 
-      {/* CONTACT FORM – সুপার মডার্ন + ফোকাস অ্যানিমেশন */}
+      {/* CONTACT FORM â€“ à¦¸à§à¦ªà¦¾à¦° à¦®à¦¡à¦¾à¦°à§à¦¨ + à¦«à§‹à¦•à¦¾à¦¸ à¦…à§à¦¯à¦¾à¦¨à¦¿à¦®à§‡à¦¶à¦¨ */}
       <section className="py-20 px-6 md:py-28">
         <div className="max-w-3xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-200"
+            className="bg-[#1b1f27] rounded-3xl shadow-2xl overflow-hidden border border-white/15"
             data-aos="fade-up"
           >
             <div className="bg-gradient-to-r from-orange-600 to-red-600 p-8 text-center">
@@ -118,7 +118,7 @@ export default function Contact() {
                   name="name"
                   placeholder="Your Name *"
                   required
-                  className="w-full px-6 py-5 rounded-2xl border-2 border-gray-200 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 outline-none text-lg transition-all duration-300"
+                  className="w-full px-6 py-5 rounded-2xl border-2 border-white/15 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/20 outline-none text-lg transition-all duration-300"
                 />
                 <motion.input
                   whileFocus={{ scale: 1.02 }}
@@ -126,7 +126,7 @@ export default function Contact() {
                   name="email"
                   placeholder="Your Email *"
                   required
-                  className="w-full px-6 py-5 rounded-2xl border-2 border-gray-200 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 outline-none text-lg transition-all duration-300"
+                  className="w-full px-6 py-5 rounded-2xl border-2 border-white/15 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/20 outline-none text-lg transition-all duration-300"
                 />
               </div>
 
@@ -135,16 +135,16 @@ export default function Contact() {
                 type="tel"
                 name="phone"
                 placeholder="Phone Number (Optional)"
-                className="w-full px-6 py-5 rounded-2xl border-2 border-gray-200 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 outline-none text-lg transition-all duration-300"
+                className="w-full px-6 py-5 rounded-2xl border-2 border-white/15 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/20 outline-none text-lg transition-all duration-300"
               />
 
               <motion.textarea
                 whileFocus={{ scale: 1.02 }}
                 name="message"
                 rows="6"
-                placeholder="How can we help you today? 😊"
+                placeholder="How can we help you today? ðŸ˜Š"
                 required
-                className="w-full px-6 py-5 rounded-2xl border-2 border-gray-200 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 outline-none text-lg resize-none transition-all duration-300"
+                className="w-full px-6 py-5 rounded-2xl border-2 border-white/15 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/20 outline-none text-lg resize-none transition-all duration-300"
               />
 
               <motion.button
@@ -161,12 +161,14 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* FINAL TOUCH – ছোট ফুটার */}
+      {/* FINAL TOUCH â€“ à¦›à§‹à¦Ÿ à¦«à§à¦Ÿà¦¾à¦° */}
       <footer className="py-12 bg-gray-900 text-white text-center">
         <p className="text-sm md:text-base">
-          © 2025 <span className="text-orange-400 font-bold">Bite</span> • Made with love by Sharat Acharja Mugdho
+          Â© 2025 <span className="text-orange-400 font-bold">Bite</span> â€¢ Made with love by Sharat Acharja Mugdho
         </p>
       </footer>
     </div>
   );
 }
+
+

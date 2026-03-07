@@ -1,4 +1,4 @@
-// src/pages/About.jsx – Professional, Modern, Realistic Animations + Images Added
+﻿// src/pages/About.jsx â€“ Professional, Modern, Realistic Animations + Images Added
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -12,7 +12,7 @@ export default function About() {
 
   return (
     <>
-      {/* HERO SECTION – Added Parallax-like Image + Smoother Animations */}
+      {/* HERO SECTION â€“ Added Parallax-like Image + Smoother Animations */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <motion.img
           src="https://static.themoscowtimes.com/image/article_1360/9c/resizedArabiantable002.jpg?utm_source=chatgpt.com" // Added realistic Dhaka food delivery image
@@ -79,18 +79,18 @@ export default function About() {
         </div>
       </section>
 
-      {/* OUR MISSION – Added Image + Fade Animations */}
-      <section className="py-24 bg-white">
+      {/* OUR MISSION â€“ Added Image + Fade Animations */}
+      <section className="py-24 bg-[#1b1f27]">
         <div className="max-w-6xl mx-auto px-6 text-center">
           <motion.h2
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="text-5xl md:text-6xl font-black text-gray-900 mb-8"
+            className="text-5xl md:text-6xl font-black text-white mb-8"
             data-aos="fade-up"
           >
-            Food Delivery, <span className="text-orange-600">Reimagined for Bangladesh</span>
+            Food Delivery, <span className="text-orange-300">Reimagined for Bangladesh</span>
           </motion.h2>
           {/* <img
             src="https://pressxpress.org/wp-content/uploads/2023/07/food-delivery-revolution-in-Bangladesh-585x307.jpg" // Added realistic delivery scene image
@@ -99,24 +99,24 @@ export default function About() {
             data-aos="zoom-in" data-aos-delay="200"
           /> */}
           <p 
-            className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
+            className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed"
             data-aos="fade-up" data-aos-delay="400"
           >
-            Bite is proudly built in Bangladesh, by Bangladeshis — to solve real problems: 
+            Bite is proudly built in Bangladesh, by Bangladeshis â€” to solve real problems: 
             high commissions killing small restaurants, slow delivery, and complicated apps. 
-            We’re here to change that with <strong>zero commission in beta</strong>, lightning-fast experience, 
+            Weâ€™re here to change that with <strong>zero commission in beta</strong>, lightning-fast experience, 
             and a platform that works for customers, restaurants, and riders alike.
           </p>
         </div>
       </section>
 
-      {/* CORE VALUES – More Hover Animations + Realistic Transitions */}
-      <section className="py-24 bg-gray-50">
+      {/* CORE VALUES â€“ More Hover Animations + Realistic Transitions */}
+      <section className="py-24 bg-[#111214]">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid md:grid-cols-3 gap-10">
             {[
               { icon: Clock, title: "Blazing Fast", desc: "Real-time tracking & instant order updates" },
-              { icon: Store, title: "Restaurant First", desc: "Zero commission in beta — keep 100% of your earnings" },
+              { icon: Store, title: "Restaurant First", desc: "Zero commission in beta â€” keep 100% of your earnings" },
               { icon: Bike, title: "Rider Friendly", desc: "Fair pay, smart routing, and respect for delivery heroes" },
               { icon: Users, title: "Customer Obsessed", desc: "Beautiful UI, easy checkout, and reliable delivery" },
               { icon: ChefHat, title: "Local at Heart", desc: "Made in Bangladesh, for Bangladesh" },
@@ -129,20 +129,20 @@ export default function About() {
                 viewport={{ once: true }}
                 whileHover={{ scale: 1.05, boxShadow: "0 10px 20px rgba(0,0,0,0.1)" }} // Realistic hover lift
                 transition={{ delay: i * 0.1, duration: 0.6, ease: 'easeInOut' }}
-                className="bg-white rounded-3xl p-8 text-center shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-100"
+                className="bg-[#1b1f27] rounded-3xl p-8 text-center shadow-xl hover:shadow-2xl transition-all duration-500 border border-white/10"
                 data-aos="fade-up"
                 data-aos-delay={i * 150}
               >
-                <item.icon className="w-16 h-16 mx-auto text-orange-600 mb-5" />
-                <h3 className="text-2xl font-bold text-gray-900 mb-3">{item.title}</h3>
-                <p className="text-gray-600">{item.desc}</p>
+                <item.icon className="w-16 h-16 mx-auto text-orange-300 mb-5" />
+                <h3 className="text-2xl font-bold text-white mb-3">{item.title}</h3>
+                <p className="text-gray-300">{item.desc}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* DEVELOPER SECTION – Added Realistic Team Image + Smooth Fade */}
+      {/* DEVELOPER SECTION â€“ Added Realistic Team Image + Smooth Fade */}
       <section className="py-24 bg-gradient-to-br from-orange-600 to-red-700 text-white">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h2 
@@ -155,7 +155,7 @@ export default function About() {
             className="text-xl opacity-90 mb-10"
             data-aos="fade-up" data-aos-delay="200"
           >
-            A solo passion project that’s becoming the future of food delivery
+            A solo passion project thatâ€™s becoming the future of food delivery
           </p>
 
           <motion.div
@@ -178,7 +178,7 @@ export default function About() {
             <div className="flex flex-wrap justify-center gap-4 text-sm">
               <a
                 href="mailto:sharatacharjee6@gmail.com"
-                className="bg-white text-orange-600 px-6 py-3 rounded-full font-bold hover:scale-105 transition"
+                className="bg-[#1b1f27] text-orange-300 px-6 py-3 rounded-full font-bold hover:scale-105 transition"
               >
                 Email Me
               </a>
@@ -186,7 +186,7 @@ export default function About() {
                 href="https://mugdho-portfolio.netlify.app"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="border-2 border-white px-6 py-3 rounded-full font-bold hover:bg-white hover:text-orange-600 transition"
+                className="border-2 border-white px-6 py-3 rounded-full font-bold hover:bg-[#1b1f27] hover:text-orange-300 transition"
               >
                 Portfolio
               </a>
@@ -194,7 +194,7 @@ export default function About() {
                 href="https://github.com/Sharatpsd"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="border-2 border-white px-6 py-3 rounded-full font-bold hover:bg-white hover:text-orange-600 transition"
+                className="border-2 border-white px-6 py-3 rounded-full font-bold hover:bg-[#1b1f27] hover:text-orange-300 transition"
               >
                 GitHub @Sharatpsd
               </a>
@@ -203,7 +203,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* FINAL CTA – Added Smooth Button Animation */}
+      {/* FINAL CTA â€“ Added Smooth Button Animation */}
       <section className="py-28 bg-black text-white text-center">
         <div className="max-w-5xl mx-auto px-6">
           <h2 
@@ -245,10 +245,11 @@ export default function About() {
           </div>
 
           <p className="mt-12 text-orange-200 text-lg" data-aos="fade-up" data-aos-delay="800">
-            Built by <strong>Sharat Acharja Mugdho</strong> • Launching Nationwide 2025
+            Built by <strong>Sharat Acharja Mugdho</strong> â€¢ Launching Nationwide 2025
           </p>
         </div>
       </section>
     </>
   );
 }
+

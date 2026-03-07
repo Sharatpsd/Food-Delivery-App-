@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ChefHat, ArrowRight, Eye, EyeOff, User, Phone, Lock } from "lucide-react";
@@ -55,7 +55,7 @@ navigate("/login");
 
 } catch (err) {
 
-console.log("REGISTER ERROR 👉", err.response?.data);
+console.log("REGISTER ERROR ðŸ‘‰", err.response?.data);
 
 alert(
 JSON.stringify(err.response?.data) ||
@@ -76,12 +76,12 @@ return (
 initial={{ scale: 0.9, opacity: 0 }}
 animate={{ scale: 1, opacity: 1 }}
 transition={{ duration: 0.7 }}
-className="bg-white rounded-3xl shadow-2xl p-10 w-full max-w-lg"
+className="bg-[#1b1f27] rounded-3xl shadow-2xl p-10 w-full max-w-lg"
 >
 
 <div className="text-center mb-10">
-<h1 className="text-6xl font-black text-orange-600">Bite</h1>
-<p className="text-gray-600 mt-2">Create your account</p>
+<h1 className="text-6xl font-black text-orange-300">Bite</h1>
+<p className="text-gray-300 mt-2">Create your account</p>
 </div>
 
 <form onSubmit={handleSubmit} className="space-y-6">
@@ -188,3 +188,5 @@ className="w-full bg-orange-600 text-white py-4 rounded-xl font-bold"
 );
 
 }
+
+

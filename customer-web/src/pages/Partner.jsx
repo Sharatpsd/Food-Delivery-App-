@@ -1,4 +1,4 @@
-// src/pages/Partner.jsx – ULTRA COMPACT + MOBILE-FIRST + CLEAN VERSION
+﻿// src/pages/Partner.jsx â€“ ULTRA COMPACT + MOBILE-FIRST + CLEAN VERSION
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -12,7 +12,7 @@ export default function Partner() {
 
   return (
     <>
-      {/* HERO – Compact */}
+      {/* HERO â€“ Compact */}
       <section className="relative py-20 bg-gradient-to-br from-orange-600 to-red-700 overflow-hidden">
         <div className="absolute inset-0 bg-black/40" />
         <img
@@ -35,42 +35,42 @@ export default function Partner() {
         </div>
       </section>
 
-      {/* WHY PARTNER – 3 Cards Compact */}
-      <section className="py-16 bg-gray-50">
+      {/* WHY PARTNER â€“ 3 Cards Compact */}
+      <section className="py-16 bg-[#111214]">
         <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-10 text-gray-900">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-10 text-white">
             Why Partner with Bite?
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               { title: "More Orders", desc: "Reach thousands daily", icon: Users },
-              { title: "Zero Risk", desc: "No fee • Launch in 24h", icon: CheckCircle },
+              { title: "Zero Risk", desc: "No fee â€¢ Launch in 24h", icon: CheckCircle },
               { title: "Best Earnings", desc: "Top commission in BD", icon: Bike },
             ].map((item, i) => (
               <motion.div
                 key={i}
                 whileHover={{ y: -4 }}
-                className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 text-center"
+                className="bg-[#1b1f27] rounded-2xl p-6 shadow-lg border border-white/10 text-center"
                 data-aos="fade-up"
                 data-aos-delay={i * 100}
               >
-                <item.icon className="w-12 h-12 mx-auto text-orange-600 mb-3" />
-                <h3 className="text-xl font-bold text-gray-900">{item.title}</h3>
-                <p className="text-sm text-gray-600 mt-1">{item.desc}</p>
+                <item.icon className="w-12 h-12 mx-auto text-orange-300 mb-3" />
+                <h3 className="text-xl font-bold text-white">{item.title}</h3>
+                <p className="text-sm text-gray-300 mt-1">{item.desc}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* FORM – Super Compact & Fast */}
-      <section className="py-16 bg-white">
+      {/* FORM â€“ Super Compact & Fast */}
+      <section className="py-16 bg-[#1b1f27]">
         <div className="max-w-2xl mx-auto px-4">
-          <div className="bg-gray-50 rounded-2xl p-6 md:p-8 shadow-xl">
+          <div className="bg-[#111214] rounded-2xl p-6 md:p-8 shadow-xl">
             <h2 className="text-2xl md:text-3xl font-bold text-center mb-2">
               Register Your Restaurant
             </h2>
-            <p className="text-center text-gray-600 text-sm mb-8">
+            <p className="text-center text-gray-300 text-sm mb-8">
               We'll call you within 2 hours
             </p>
 
@@ -85,14 +85,14 @@ export default function Partner() {
                   name="restaurant_name"
                   placeholder="Restaurant Name *"
                   required
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none text-sm"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 outline-none text-sm"
                 />
                 <input
                   type="text"
                   name="owner_name"
                   placeholder="Your Name *"
                   required
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none text-sm"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 outline-none text-sm"
                 />
               </div>
 
@@ -102,14 +102,14 @@ export default function Partner() {
                   name="phone"
                   placeholder="Phone Number *"
                   required
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none text-sm"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 outline-none text-sm"
                 />
                 <input
                   type="text"
                   name="location"
                   placeholder="Area/City *"
                   required
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none text-sm"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 outline-none text-sm"
                 />
               </div>
 
@@ -117,7 +117,7 @@ export default function Partner() {
                 name="message"
                 rows="3"
                 placeholder="Cuisine / Special dishes (optional)"
-                className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none text-sm resize-none"
+                className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 outline-none text-sm resize-none"
               />
 
               <button
@@ -129,12 +129,12 @@ export default function Partner() {
             </form>
 
             <div className="mt-6 text-center text-sm">
-              <p className="text-gray-600">Or contact directly:</p>
+              <p className="text-gray-300">Or contact directly:</p>
               <div className="flex justify-center gap-6 mt-3">
-                <a href="tel:01783720914" className="flex items-center gap-2 text-orange-600 font-semibold hover:underline">
+                <a href="tel:01783720914" className="flex items-center gap-2 text-orange-300 font-semibold hover:underline">
                   <Phone className="w-4 h-4" /> 01783-720914
                 </a>
-                <a href="mailto:sharatacharjee6@gmail.com" className="flex items-center gap-2 text-orange-600 font-semibold hover:underline">
+                <a href="mailto:sharatacharjee6@gmail.com" className="flex items-center gap-2 text-orange-300 font-semibold hover:underline">
                   <Mail className="w-4 h-4" /> Email
                 </a>
               </div>
@@ -143,16 +143,17 @@ export default function Partner() {
         </div>
       </section>
 
-      {/* FINAL CTA – Compact */}
+      {/* FINAL CTA â€“ Compact */}
       <section className="py-16 bg-gradient-to-r from-orange-600 to-red-700 text-white text-center">
         <h2 className="text-3xl md:text-5xl font-black mb-4">Ready to Grow?</h2>
         <p className="text-lg md:text-xl mb-8 opacity-90">
-          Join Bangladesh’s fastest-growing platform
+          Join Bangladeshâ€™s fastest-growing platform
         </p>
-        <button className="bg-white text-orange-600 px-12 py-4 rounded-full font-bold text-xl hover:scale-105 transition shadow-xl">
+        <button className="bg-[#1b1f27] text-orange-300 px-12 py-4 rounded-full font-bold text-xl hover:scale-105 transition shadow-xl">
           Start Earning Today
         </button>
       </section>
     </>
   );
 }  
+

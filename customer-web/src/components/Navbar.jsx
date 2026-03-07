@@ -1,7 +1,6 @@
-// src/components/Navbar.jsx – NORMAL STRUCTURE + PERFECT TEXT SIZES
-import { useState } from "react";
-import { Menu, X, ShoppingCart, ChevronDown, User } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+﻿import { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Menu, X, ShoppingCart, ChevronDown, ChefHat, Bike } from "lucide-react";
 import { useCart } from "../context/CartContext";
 
 const navLinks = [
@@ -13,12 +12,14 @@ const navLinks = [
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const { cartCount } = useCart();
   const isLoggedIn = !!localStorage.getItem("access");
 
   const handleLogout = () => {
     localStorage.removeItem("access");
     localStorage.removeItem("refresh");
+    setMobileMenuOpen(false);
     navigate("/login");
   };
 
@@ -30,150 +31,186 @@ export default function Navbar() {
     navigate("/cart");
   };
 
-  const closeMobileMenu = () => {
-    setMobileMenuOpen(false);
-  };
+  const closeMobileMenu = () => setMobileMenuOpen(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100">
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-14 sm:h-16 lg:h-20">
-          
-          {/* Logo - Perfect Sizes */}
-          <Link to="/" className="flex items-center">
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black bg-gradient-to-r from-orange-500 to-red-600 bg-clip-text text-transparent">
-              Bite
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#111214]/80 backdrop-blur-2xl">
+      <nav className="mx-auto max-w-[1500px] px-4 sm:px-8">
+        <div className="flex h-16 items-center justify-between lg:h-20">
+          <Link to="/" className="group flex items-center gap-2">
+            <div className="h-8 w-8 rounded-xl bg-gradient-to-br from-orange-500 to-red-500 shadow-lg shadow-orange-500/30" />
+            <h1 className="text-3xl font-black tracking-tight text-white transition group-hover:text-orange-300">
+              B<span className="text-orange-500">ite</span>
             </h1>
           </Link>
 
-          {/* Desktop Nav - Professional Text Sizes */}
-          <div className="hidden md:flex items-center space-x-1 sm:space-x-2 lg:space-x-6 xl:space-x-8">
-            {navLinks.map((link) => (
-              <Link 
-                key={link.name} 
-                to={link.path} 
-                className="text-gray-700 font-semibold text-sm sm:text-base lg:text-lg xl:text-xl hover:text-orange-600 transition-colors py-2 px-3 lg:px-4"
-              >
-                {link.name}
-              </Link>
-            ))}
-            
-            {/* Partner Dropdown */}
-            <div className="relative group">
-              <button className="flex items-center gap-1 text-gray-700 font-semibold text-sm sm:text-base lg:text-lg xl:text-xl hover:text-orange-600 transition-colors py-2 px-3 lg:px-4">
-                Partner <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 group-hover:rotate-180 transition-transform duration-300" />
-              </button>
-              <div className="absolute right-0 top-full mt-2 w-64 sm:w-72 lg:w-80 bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 py-3">
-                <Link 
-                  to="/restaurant-owner"
-                  className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-orange-50 transition block w-full text-left text-sm sm:text-base"
+          <div className="hidden items-center gap-2 lg:flex">
+            {navLinks.map((link) => {
+              const isActive = location.pathname === link.path;
+              return (
+                <Link
+                  key={link.name}
+                  to={link.path}
+                  className={`rounded-xl px-4 py-2 text-sm font-semibold transition ${
+                    isActive
+                      ? "bg-white/10 text-white"
+                      : "text-gray-300 hover:bg-white/5 hover:text-white"
+                  }`}
                 >
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-orange-500 to-red-600 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <User className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                  {link.name}
+                </Link>
+              );
+            })}
+
+            <div className="group relative">
+              <button className="flex items-center gap-1 rounded-xl px-4 py-2 text-sm font-semibold text-gray-300 transition hover:bg-white/5 hover:text-white">
+                Partner
+                <ChevronDown className="h-4 w-4 transition group-hover:rotate-180" />
+              </button>
+
+              <div className="invisible absolute right-0 top-full mt-3 w-72 translate-y-2 rounded-2xl border border-white/10 bg-[#1a1c20]/95 p-2 opacity-0 shadow-2xl transition-all duration-300 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+                <Link
+                  to="/restaurant-owner"
+                  className="flex items-center gap-3 rounded-xl px-3 py-3 text-gray-200 transition hover:bg-white/5"
+                >
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-500/20 text-orange-300">
+                    <ChefHat className="h-5 w-5" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-gray-900 text-sm sm:text-base">Restaurant Owner</h4>
-                    <p className="text-xs sm:text-sm text-gray-600">Add your menu & start selling</p>
+                    <p className="text-sm font-bold">Restaurant Owner</p>
+                    <p className="text-xs text-gray-400">Add menu & receive orders</p>
                   </div>
                 </Link>
-                <Link 
+
+                <Link
                   to="/delivery-partner"
-                  className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-emerald-50 transition block w-full text-left text-sm sm:text-base"
+                  className="flex items-center gap-3 rounded-xl px-3 py-3 text-gray-200 transition hover:bg-white/5"
                 >
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-500/20 text-orange-300">
+                    <Bike className="h-5 w-5" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-gray-900 text-sm sm:text-base">Delivery Partner</h4>
-                    <p className="text-xs sm:text-sm text-gray-600">Earn money delivering food</p>
+                    <p className="text-sm font-bold">Delivery Partner</p>
+                    <p className="text-xs text-gray-400">Earn by delivering</p>
                   </div>
                 </Link>
               </div>
             </div>
           </div>
 
-          {/* Desktop Right Section */}
-          <div className="hidden md:flex items-center space-x-2 sm:space-x-3 lg:space-x-4">
-            <button onClick={handleCartClick} className="relative p-2 sm:p-3 hover:bg-gray-100 rounded-xl transition group">
-              <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6 text-gray-700 group-hover:text-orange-600 transition-colors" />
+          <div className="hidden items-center gap-2 lg:flex">
+            <button
+              onClick={handleCartClick}
+              className="relative rounded-xl border border-white/10 bg-white/5 p-2.5 text-gray-200 transition hover:bg-white/10"
+            >
+              <ShoppingCart className="h-5 w-5" />
               {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs sm:text-sm rounded-full h-5 w-5 sm:h-6 sm:w-6 flex items-center justify-center font-bold shadow-lg">
-                  {cartCount > 99 ? '99+' : cartCount}
+                <span className="absolute -right-2 -top-2 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-orange-500 px-1 text-[10px] font-black text-white">
+                  {cartCount > 99 ? "99+" : cartCount}
                 </span>
               )}
             </button>
-            
+
             {isLoggedIn ? (
-              <button onClick={handleLogout} className="text-red-600 font-semibold text-sm sm:text-base lg:text-lg hover:text-red-700 transition py-2 px-4">
+              <button
+                onClick={handleLogout}
+                className="rounded-xl px-4 py-2 text-sm font-semibold text-red-300 transition hover:bg-red-500/10 hover:text-red-200"
+              >
                 Logout
               </button>
             ) : (
               <>
-                <Link to="/login" className="text-gray-700 font-semibold text-sm sm:text-base lg:text-lg hover:text-orange-600 py-2 px-3 lg:px-4">
+                <Link
+                  to="/login"
+                  className="rounded-xl px-4 py-2 text-sm font-semibold text-gray-200 transition hover:bg-white/5"
+                >
                   Sign In
                 </Link>
-                <Link to="/register" className="bg-gradient-to-r from-orange-500 to-red-600 text-white font-semibold text-sm sm:text-base lg:text-lg px-5 sm:px-6 lg:px-8 py-2.5 sm:py-3 rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                <Link
+                  to="/register"
+                  className="rounded-xl bg-gradient-to-r from-orange-500 to-red-500 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-orange-500/30 transition hover:scale-[1.03]"
+                >
                   Sign Up
                 </Link>
               </>
             )}
           </div>
 
-          {/* Mobile Menu Button */}
-          <button 
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)} 
-            className="md:hidden p-2 sm:p-3 rounded-lg hover:bg-gray-100 transition"
+          <button
+            onClick={() => setMobileMenuOpen((prev) => !prev)}
+            className="rounded-xl border border-white/10 bg-white/5 p-2 text-white lg:hidden"
           >
-            {mobileMenuOpen ? <X className="w-6 h-6 sm:w-7 sm:h-7" /> : <Menu className="w-6 h-6 sm:w-7 sm:h-7" />}
+            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
 
-        {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-gray-200 bg-white/95 backdrop-blur-md">
-            <div className="px-4 sm:px-6 py-6 lg:py-8 space-y-4">
-              {navLinks.map((link) => (
-                <Link 
-                  key={link.name} 
-                  to={link.path} 
-                  className="block py-4 px-4 text-lg sm:text-xl font-semibold text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-xl transition-all duration-300 border-l-4 border-transparent hover:border-orange-600"
-                  onClick={closeMobileMenu}
-                >
-                  {link.name}
-                </Link>
-              ))}
-              <Link 
+          <div className="border-t border-white/10 py-4 lg:hidden">
+            <div className="space-y-2">
+              {navLinks.map((link) => {
+                const isActive = location.pathname === link.path;
+                return (
+                  <Link
+                    key={link.name}
+                    to={link.path}
+                    onClick={closeMobileMenu}
+                    className={`block rounded-xl px-4 py-3 text-base font-semibold transition ${
+                      isActive
+                        ? "bg-white/10 text-white"
+                        : "text-gray-300 hover:bg-white/5 hover:text-white"
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                );
+              })}
+
+              <Link
                 to="/restaurant-owner"
-                className="block w-full py-4 px-4 text-xl font-bold text-orange-600 border-l-4 border-orange-600 bg-orange-50 rounded-r-xl text-left transition-all duration-300"
                 onClick={closeMobileMenu}
+                className="block rounded-xl px-4 py-3 font-semibold text-orange-300 hover:bg-white/5"
               >
-                👨‍🍳 Join as Restaurant Owner
+                Join as Restaurant Owner
               </Link>
-              <Link 
+              <Link
                 to="/delivery-partner"
-                className="block w-full py-4 px-4 text-xl font-bold text-emerald-600 border-l-4 border-emerald-600 bg-emerald-50 rounded-r-xl text-left transition-all duration-300"
                 onClick={closeMobileMenu}
+                className="block rounded-xl px-4 py-3 font-semibold text-orange-300 hover:bg-white/5"
               >
-                🚚 Join as Delivery Partner
+                Join as Delivery Partner
               </Link>
-              <div className="pt-6 border-t border-gray-200 space-y-3">
+
+              <button
+                onClick={() => {
+                  closeMobileMenu();
+                  handleCartClick();
+                }}
+                className="w-full rounded-xl px-4 py-3 text-left font-semibold text-gray-200 hover:bg-white/5"
+              >
+                Cart ({cartCount})
+              </button>
+
+              <div className="grid grid-cols-2 gap-3 pt-2">
                 {isLoggedIn ? (
-                  <button onClick={handleLogout} className="w-full text-left py-4 px-4 text-xl font-semibold text-red-600 bg-red-50 rounded-xl hover:bg-red-100 transition-all">
+                  <button
+                    onClick={handleLogout}
+                    className="col-span-2 rounded-xl bg-red-500/10 px-4 py-3 font-semibold text-red-300"
+                  >
                     Logout
                   </button>
                 ) : (
                   <>
-                    <Link 
-                      to="/login" 
-                      className="block w-full text-center py-4 px-6 text-lg sm:text-xl font-bold text-orange-600 bg-orange-50 rounded-2xl hover:bg-orange-100 transition-all"
+                    <Link
+                      to="/login"
                       onClick={closeMobileMenu}
+                      className="rounded-xl bg-white/5 px-4 py-3 text-center font-semibold text-gray-200"
                     >
                       Sign In
                     </Link>
-                    <Link 
-                      to="/register" 
-                      className="block w-full text-center py-4 px-6 text-lg sm:text-xl font-bold text-white bg-gradient-to-r from-orange-500 to-red-600 rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all"
+                    <Link
+                      to="/register"
                       onClick={closeMobileMenu}
+                      className="rounded-xl bg-gradient-to-r from-orange-500 to-red-500 px-4 py-3 text-center font-bold text-white"
                     >
                       Sign Up
                     </Link>
@@ -187,3 +224,5 @@ export default function Navbar() {
     </header>
   );
 }
+
+

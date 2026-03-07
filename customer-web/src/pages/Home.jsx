@@ -1,256 +1,198 @@
-// src/pages/Home.jsx – ULTRA MODERN CINEMATIC HOME PAGE (2026 Ready)
-import { useEffect, useState } from "react";
-import AOS from "aos";
-import "aos/dist/aos.css";
+﻿import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { MapPin, ArrowRight, ChefHat, Bike, Star, Clock, Users, Store } from "lucide-react";
+import { ArrowRight, Bike, ChefHat, Store } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import Categories from "../components/Categories";
 import RestaurantGrid from "../components/RestaurantGrid";
 import { getRestaurants } from "../utils/api";
 
 export default function Home() {
   const [restaurants, setRestaurants] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [category, setCategory] = useState("");
+  const [heroImageError, setHeroImageError] = useState(false);
   const navigate = useNavigate();
+  const chefEmoji = "\u{1F468}\u200D\u{1F373}";
+  const burgerEmoji = "\u{1F354}";
 
   useEffect(() => {
-    AOS.init({
-      duration: 1200,
-      once: true,
-      easing: "ease-out-cubic",
-    });
-  }, []);
+    const fetchRestaurants = async () => {
+      try {
+        setLoading(true);
+        const res = await getRestaurants();
+        setRestaurants(res.data || []);
+      } catch (err) {
+        console.error("Failed to load restaurants", err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const fetchRestaurants = async () => {
-    try {
-      setLoading(true);
-      const res = await getRestaurants({ category });
-      setRestaurants(res.data || []);
-    } catch (err) {
-      console.error("Failed to load restaurants", err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
     fetchRestaurants();
-  }, [category]);
+  }, []);
 
   return (
     <>
-      {/* HERO – Cinematic Parallax + Location Only */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        {/* Background Image with Parallax Zoom */}
-        <motion.div
-          className="absolute inset-0"
-          initial={{ scale: 1.15 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 20, ease: "linear", repeat: Infinity, repeatType: "reverse" }}
-        >
-          <img
-            src="https://images.deliveryhero.io/image/fd-bd/LH/lfxp-listing.jpg"
-            alt="Dhaka Night Food Delivery"
-            className="w-full h-full object-cover"
-          />
-        </motion.div>
+      <section className="relative min-h-[92vh] overflow-hidden bg-[#111214]">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(249,115,22,0.2),transparent_35%),radial-gradient(circle_at_85%_80%,rgba(245,158,11,0.16),transparent_40%)]" />
 
-        {/* Dark Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/40" />
-
-        <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-          {/* Main Title - Spring Bounce + Gradient */}
-          <motion.h1
-            initial={{ y: -80, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 1.3, type: "spring", stiffness: 90, damping: 14 }}
-            className="text-7xl sm:text-8xl md:text-9xl font-black tracking-tighter mb-6"
-            style={{
-              background: "linear-gradient(135deg, #FFF3E0, #FFB74D, #FF8A65, #FF5722)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-            }}
-            data-aos="fade-down"
-          >
-            Bite
-          </motion.h1>
-
-          {/* Location Only - No Search */}
+        <div className="relative mx-auto grid min-h-[92vh] max-w-[1600px] items-center gap-4 px-8 py-10 lg:grid-cols-[1.05fr_1fr]">
           <motion.div
-            initial={{ y: 50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.9, duration: 0.8 }}
-            className="w-full max-w-xl mx-auto"
-            data-aos="zoom-in"
-            data-aos-delay="600"
+            initial={{ opacity: 0, x: -24 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.75 }}
+            className="text-white"
           >
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              className="bg-white/95 backdrop-blur-2xl rounded-3xl shadow-2xl p-6 flex items-center gap-4 border border-white/20"
-            >
-              <MapPin className="w-7 h-7 text-orange-600 flex-shrink-0" />
-              <div className="flex-1">
-                <p className="text-sm text-gray-600 mb-1">📍Dhaka Division</p>
-                <p className="text-lg font-semibold text-gray-900">Best restaurants near you</p>
-              </div>
-            </motion.div>
+            <p className="mb-4 inline-flex rounded-full border border-orange-400/40 bg-orange-500/15 px-4 py-1 text-sm font-semibold tracking-wide text-orange-200">
+              DHAKA FOOD DELIVERY
+            </p>
+
+            <h1 className="text-7xl font-black tracking-tight sm:text-8xl xl:text-[9.5rem]">
+              <span className="bg-gradient-to-r from-orange-300 via-orange-500 to-red-500 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(249,115,22,0.45)]">
+                BITE
+              </span>
+            </h1>
+
+            <h2 className="mt-3 text-5xl font-black leading-[1.04] sm:text-6xl xl:text-[4.9rem]">
+            Explore Popular Restaurants in Dhaka
+             
+            </h2>
+
+            <p className="mt-6 max-w-2xl text-2xl text-gray-300">
+              Explore top-rated restaurants in Dhaka, discover delicious meals,
+              and order instantly with fast delivery by Bite.
+            </p>
+
+            <div className="mt-10 flex flex-wrap gap-4">
+              <a
+                href="#restaurants"
+                className="inline-flex items-center gap-2 rounded-2xl bg-orange-500 px-6 py-4 font-bold text-white shadow-2xl transition hover:bg-orange-600"
+              >
+                Explore Restaurants
+                <ArrowRight className="h-5 w-5" />
+              </a>
+
+              <button
+                type="button"
+                onClick={() => navigate("/restaurant-owner")}
+                className="rounded-2xl border border-white/30 bg-white/10 px-6 py-4 font-semibold text-white backdrop-blur-sm transition hover:bg-[#1b1f27]/20"
+              >
+                Join as Partner
+              </button>
+            </div>
           </motion.div>
 
-          {/* Stats - Tight & Emoji */}
           <motion.div
-            initial={{ y: 40, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 1.2, duration: 1 }}
-            className="mt-20 flex flex-col sm:flex-row justify-center items-center gap-8 text-white text-center"
-            data-aos="fade-up"
-            data-aos-delay="800"
+            initial={{ opacity: 0, scale: 0.92 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="relative mx-auto h-[560px] w-full max-w-[760px] sm:h-[700px]"
           >
-            <div>
-              <div className="text-4xl sm:text-5xl font-black text-orange-400 mb-1">⭐ 4.9</div>
-              <p className="text-lg opacity-90">Rating</p>
-            </div>
-            <div className="w-px h-12 bg-white/30 hidden sm:block" />
-            <div>
-              <div className="text-4xl sm:text-5xl font-black text-orange-400 mb-1">⏱️ 15</div>
-              <p className="text-lg opacity-90">Min Delivery</p>
-            </div>
-            <div className="w-px h-12 bg-white/30 hidden sm:block" />
-            <div>
-              <div className="text-4xl sm:text-5xl font-black text-orange-400 mb-1">👥 500+</div>
-              <p className="text-lg opacity-90">Happy Customers</p>
-            </div>
-            <div className="w-px h-12 bg-white/30 hidden sm:block" />
-            <div>
-              <div className="text-4xl sm:text-5xl font-black text-orange-400 mb-1">🏪 100+</div>
-              <p className="text-lg opacity-90">Restaurants</p>
-            </div>
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+              className="absolute inset-8 rounded-full border border-orange-300/25"
+            />
+            <motion.div
+              animate={{ rotate: -360 }}
+              transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
+              className="absolute inset-16 rounded-full border border-orange-300/20"
+            />
+
+            <motion.div
+              animate={{
+                y: [0, -20, 0],
+                boxShadow: [
+                  "0 12px 30px rgba(0,0,0,0.25)",
+                  "0 22px 55px rgba(249,115,22,0.30)",
+                  "0 12px 30px rgba(0,0,0,0.25)",
+                ],
+              }}
+              transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -right-4 top-0 z-10 flex h-[560px] w-[500px] items-center justify-center overflow-visible rounded-none bg-transparent sm:h-[700px] sm:w-[620px]"
+            >
+              {!heroImageError ? (
+                <img
+                  src="/chef-hero.png"
+                  alt="Bite chef hero"
+                  className="h-[110%] w-[110%] object-contain drop-shadow-[0_24px_42px_rgba(0,0,0,0.55)]"
+                  onError={() => setHeroImageError(true)}
+                />
+              ) : (
+                <motion.div
+                  animate={{ y: [0, -10, 0], rotate: [-3, 3, -3], scale: [1, 1.04, 1] }}
+                  transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
+                  className="relative"
+                >
+                  <span className="absolute left-1/2 top-[56%] -z-10 h-52 w-52 -translate-x-1/2 rounded-full bg-black/40 blur-3xl sm:h-72 sm:w-72" />
+                  <span className="absolute left-1/2 top-1/2 -z-10 h-60 w-60 -translate-x-1/2 rounded-full bg-orange-100/45 blur-[90px] sm:h-80 sm:w-80" />
+                  <span className="absolute left-1/2 top-1/2 -z-10 -translate-x-1/2 text-[230px] opacity-35 blur-md sm:text-[300px]">
+                    {chefEmoji}
+                  </span>
+                  <span className="relative text-[230px] leading-none drop-shadow-[0_22px_32px_rgba(0,0,0,0.5)] sm:text-[300px]">
+                    {chefEmoji}
+                  </span>
+                </motion.div>
+              )}
+            </motion.div>
+
+        
+            <motion.div
+              animate={{ y: [0, 14, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute bottom-8 left-0 z-20 flex items-center gap-3 rounded-2xl bg-[#1b1f27]/95 px-5 py-3 shadow-xl"
+            >
+              <span className="text-5xl">{burgerEmoji}</span>
+              <div>
+                <p className="text-base font-bold text-white">Best Delicious Food</p>
+                <p className="text-sm text-gray-400">5000+ happy customers</p>
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       </section>
 
-  
-
-      {/* RESTAURANTS GRID – Tighter Spacing */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="text-5xl font-bold text-center mb-10 text-gray-900"
-            data-aos="fade-up"
-          >
-           
-          </motion.h2>
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            data-aos="fade-up"
-            data-aos-delay="300"
-          >
-            <RestaurantGrid title="" list={restaurants} loading={loading} />
-          </motion.div>
+      <section id="restaurants" className="bg-[#111214] py-14">
+        <div className="mx-auto max-w-7xl px-6">
+          <RestaurantGrid title="Popular Restaurants In Dhaka" list={restaurants} loading={loading} />
         </div>
       </section>
 
-      {/* JOIN PLATFORM – Enhanced with Features */}
-      <section className="py-24 bg-gradient-to-br from-orange-50 via-red-50 to-pink-50">
-        <div className="max-w-6xl mx-auto px-6 text-center">
-          <motion.h2
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="text-5xl font-black mb-6 bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent"
-            data-aos="fade-up"
-          >
-            🚀 Grow With Bite
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
-            className="text-xl text-gray-700 mb-16 max-w-3xl mx-auto"
-            data-aos="fade-up"
-            data-aos-delay="200"
-          >
-            Join 1000+ restaurants & riders. Zero commission, instant payouts, real-time order tracking 📱
-          </motion.p>
+      <section className="bg-[#111214] py-20">
+        <div className="mx-auto max-w-6xl px-6 text-center">
+          <h2 className="mb-4 text-4xl font-black text-white">Grow With Bite</h2>
+          <p className="mx-auto mb-12 max-w-2xl text-lg text-gray-300">
+            Join Bite as a restaurant or rider and scale your business with real-time
+            orders, smart operations, and fast payouts.
+          </p>
 
-          {/* Features Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16 max-w-6xl mx-auto">
-            <motion.div whileHover={{ scale: 1.05 }} className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-orange-100">
-              <Star className="w-12 h-12 text-orange-500 mx-auto mb-4" />
-              <h4 className="text-xl font-bold text-gray-900 mb-2">Zero Commission</h4>
-              <p className="text-gray-600">Keep 100% of your profits 💰</p>
-            </motion.div>
-            <motion.div whileHover={{ scale: 1.05 }} className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-emerald-100">
-              <Clock className="w-12 h-12 text-emerald-500 mx-auto mb-4" />
-              <h4 className="text-xl font-bold text-gray-900 mb-2">Lightning Fast</h4>
-              <p className="text-gray-600">15 min average delivery ⏱️</p>
-            </motion.div>
-            <motion.div whileHover={{ scale: 1.05 }} className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-blue-100">
-              <Users className="w-12 h-12 text-blue-500 mx-auto mb-4" />
-              <h4 className="text-xl font-bold text-gray-900 mb-2">500+ Customers</h4>
-              <p className="text-gray-600">Growing daily 👥</p>
-            </motion.div>
-            <motion.div whileHover={{ scale: 1.05 }} className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-purple-100">
-              <Store className="w-12 h-12 text-purple-500 mx-auto mb-4" />
-              <h4 className="text-xl font-bold text-gray-900 mb-2">Live Tracking</h4>
-              <p className="text-gray-600">Real-time GPS 📍</p>
-            </motion.div>
-          </div>
-
-          {/* Partner Cards */}
-          <div className="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto">
-            {/* Restaurant Owner */}
-            <motion.div
-              whileHover={{ y: -12, scale: 1.03 }}
-              transition={{ type: "spring", stiffness: 300 }}
-              className="bg-white rounded-3xl shadow-xl overflow-hidden border border-orange-100 hover:shadow-2xl transition-all"
-              data-aos="zoom-in"
-              data-aos-delay="400"
-            >
-              <div className="p-10 text-center">
-                <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-orange-500 to-red-600 rounded-3xl flex items-center justify-center shadow-2xl">
-                  <ChefHat className="w-14 h-14 text-white" />
-                </div>
-                <h3 className="text-3xl font-bold mb-4">🍽️ Restaurant Owner?</h3>
-                <p className="text-xl text-gray-600 mb-8">Add menu, get orders, keep 100% profit</p>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => navigate("/restaurant-owner")}
-                  className="bg-gradient-to-r from-orange-500 to-red-600 text-white px-10 py-5 rounded-full font-bold flex items-center gap-3 mx-auto text-lg hover:shadow-2xl transition-all"
-                >
-                  Become Partner <ArrowRight className="group-hover:translate-x-1 transition-transform" />
-                </motion.button>
+          <div className="grid gap-8 md:grid-cols-2">
+            <motion.div whileHover={{ y: -8 }} className="rounded-3xl border border-white/10 bg-[#1b1d21] p-8 shadow-xl">
+              <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-3xl bg-orange-500 text-white">
+                <ChefHat className="h-10 w-10" />
               </div>
+              <h3 className="mb-3 text-2xl font-bold text-white">Restaurant Owner</h3>
+              <p className="mb-6 text-gray-300">Add menu, receive orders, and manage everything from one dashboard.</p>
+              <button
+                onClick={() => navigate("/restaurant-owner")}
+                className="inline-flex items-center gap-2 rounded-xl bg-orange-500 px-5 py-3 font-semibold text-white hover:bg-orange-600"
+              >
+                Start Selling
+                <ArrowRight className="h-4 w-4" />
+              </button>
             </motion.div>
 
-            {/* Delivery Partner */}
-            <motion.div
-              whileHover={{ y: -12, scale: 1.03 }}
-              transition={{ type: "spring", stiffness: 300 }}
-              className="bg-white rounded-3xl shadow-xl overflow-hidden border border-emerald-100 hover:shadow-2xl transition-all"
-              data-aos="zoom-in"
-              data-aos-delay="600"
-            >
-              <div className="p-10 text-center">
-                <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-3xl flex items-center justify-center shadow-2xl">
-                  <Bike className="w-14 h-14 text-white" />
-                </div>
-                <h3 className="text-3xl font-bold mb-4">🚀 Want to Deliver?</h3>
-                <p className="text-xl text-gray-600 mb-8">Earn daily, flexible hours, fast payouts</p>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => navigate("/delivery-partner")}
-                  className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-10 py-5 rounded-full font-bold flex items-center gap-3 mx-auto text-lg hover:shadow-2xl transition-all"
-                >
-                  Join as Rider <ArrowRight className="group-hover:translate-x-1 transition-transform" />
-                </motion.button>
+            <motion.div whileHover={{ y: -8 }} className="rounded-3xl border border-white/10 bg-[#1b1d21] p-8 shadow-xl">
+              <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-3xl bg-orange-600 text-white">
+                <Bike className="h-10 w-10" />
               </div>
+              <h3 className="mb-3 text-2xl font-bold text-white">Delivery Partner</h3>
+              <p className="mb-6 text-gray-300">Work flexible hours, deliver quickly, and earn daily through Bite.</p>
+              <button
+                onClick={() => navigate("/delivery-partner")}
+                className="inline-flex items-center gap-2 rounded-xl bg-orange-600 px-5 py-3 font-semibold text-white hover:bg-orange-700"
+              >
+                Join as Rider
+                <Store className="h-4 w-4" />
+              </button>
             </motion.div>
           </div>
         </div>
@@ -258,3 +200,5 @@ export default function Home() {
     </>
   );
 }
+
+

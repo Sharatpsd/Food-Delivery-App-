@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { useCart } from "../context/CartContext";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -204,20 +204,20 @@ export default function Checkout() {
 
   if (orderSuccess) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-green-50 py-20 px-4">
-        <div className="max-w-2xl mx-auto bg-white/90 rounded-3xl shadow-2xl p-10 text-center">
-          <div className="w-24 h-24 bg-emerald-100 rounded-3xl mx-auto mb-6 flex items-center justify-center">
-            <PackageCheck className="w-12 h-12 text-emerald-600" />
+      <div className="min-h-screen bg-gradient-to-br from-[#12161d] to-[#1a1f28] py-20 px-4">
+        <div className="max-w-2xl mx-auto bg-[#1b1f27]/90 rounded-3xl shadow-2xl p-10 text-center">
+          <div className="w-24 h-24 bg-orange-500/15 rounded-3xl mx-auto mb-6 flex items-center justify-center">
+            <PackageCheck className="w-12 h-12 text-orange-300" />
           </div>
-          <h1 className="text-4xl font-bold mb-4 text-emerald-700">Order Placed!</h1>
-          <p className="text-gray-700 mb-6">
+          <h1 className="text-4xl font-bold mb-4 text-orange-200">Order Placed!</h1>
+          <p className="text-gray-200 mb-6">
             Your order has been placed successfully.
           </p>
           <p className="text-lg font-semibold mb-2">Order ID: #{placedOrderId || "-"}</p>
-          <p className="text-2xl font-bold text-orange-600 mb-8">BDT {totalPrice.toLocaleString()}</p>
+          <p className="text-2xl font-bold text-orange-300 mb-8">BDT {totalPrice.toLocaleString()}</p>
           <button
             onClick={() => navigate("/orders")}
-            className="bg-emerald-600 text-white px-8 py-3 rounded-xl font-bold"
+            className="bg-orange-600 text-white px-8 py-3 rounded-xl font-bold"
           >
             Track My Order
           </button>
@@ -227,11 +227,11 @@ export default function Checkout() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
+    <div className="min-h-screen bg-[#111214] py-8 px-4">
       <div className="max-w-4xl mx-auto">
         <motion.button
           onClick={() => navigate(-1)}
-          className="inline-flex items-center gap-2 text-gray-700 hover:text-gray-900 font-medium mb-6"
+          className="inline-flex items-center gap-2 text-gray-200 hover:text-white font-medium mb-6"
           whileHover={{ scale: 1.03 }}
         >
           <ArrowLeft className="w-5 h-5" />
@@ -239,9 +239,9 @@ export default function Checkout() {
         </motion.button>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="bg-white rounded-3xl shadow-xl p-8 border border-gray-100">
+          <div className="bg-[#1b1f27] rounded-3xl shadow-xl p-8 border border-white/10">
             <h2 className="text-2xl font-bold mb-6">Checkout</h2>
-            <p className="text-sm text-gray-500 mb-6">Step {step} of 3</p>
+            <p className="text-sm text-gray-400 mb-6">Step {step} of 3</p>
 
             {step === 1 && (
               <div className="space-y-4">
@@ -249,35 +249,35 @@ export default function Checkout() {
                   name="fullName"
                   value={formData.fullName}
                   onChange={handleInputChange}
-                  className="w-full p-4 border border-gray-200 rounded-2xl"
+                  className="w-full p-4 border border-white/15 rounded-2xl"
                   placeholder="Full name *"
                 />
                 <input
                   name="phone"
                   value={formData.phone}
                   onChange={handleInputChange}
-                  className="w-full p-4 border border-gray-200 rounded-2xl"
+                  className="w-full p-4 border border-white/15 rounded-2xl"
                   placeholder="Phone *"
                 />
                 <input
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="w-full p-4 border border-gray-200 rounded-2xl"
+                  className="w-full p-4 border border-white/15 rounded-2xl"
                   placeholder="Email"
                 />
                 <input
                   name="address"
                   value={formData.address}
                   onChange={handleInputChange}
-                  className="w-full p-4 border border-gray-200 rounded-2xl"
+                  className="w-full p-4 border border-white/15 rounded-2xl"
                   placeholder="Delivery address *"
                 />
                 <input
                   name="flat"
                   value={formData.flat}
                   onChange={handleInputChange}
-                  className="w-full p-4 border border-gray-200 rounded-2xl"
+                  className="w-full p-4 border border-white/15 rounded-2xl"
                   placeholder="Flat (optional)"
                 />
 
@@ -328,7 +328,7 @@ export default function Checkout() {
                   value={formData.notes}
                   onChange={handleInputChange}
                   rows={3}
-                  className="w-full p-4 border border-gray-200 rounded-2xl"
+                  className="w-full p-4 border border-white/15 rounded-2xl"
                   placeholder="Order notes"
                 />
 
@@ -351,7 +351,7 @@ export default function Checkout() {
 
             {step === 3 && (
               <div className="space-y-4">
-                <div className="p-4 rounded-2xl bg-gray-50">
+                <div className="p-4 rounded-2xl bg-[#111214]">
                   <p><strong>Name:</strong> {formData.fullName || "-"}</p>
                   <p><strong>Phone:</strong> {formData.phone || "-"}</p>
                   <p><strong>Address:</strong> {formData.address || "-"}</p>
@@ -361,7 +361,7 @@ export default function Checkout() {
                 <button
                   onClick={handleOrder}
                   disabled={loading}
-                  className="w-full py-4 bg-emerald-600 text-white rounded-2xl font-bold flex items-center justify-center gap-2"
+                  className="w-full py-4 bg-orange-600 text-white rounded-2xl font-bold flex items-center justify-center gap-2"
                 >
                   {loading && <Loader2 className="w-5 h-5 animate-spin" />}
                   <CreditCard className="w-5 h-5" />
@@ -371,14 +371,14 @@ export default function Checkout() {
             )}
           </div>
 
-          <div className="bg-white rounded-3xl shadow-xl p-8 border border-gray-100 h-fit">
+          <div className="bg-[#1b1f27] rounded-3xl shadow-xl p-8 border border-white/10 h-fit">
             <h3 className="text-2xl font-bold mb-6">Order Summary</h3>
             <div className="space-y-3 mb-6 max-h-72 overflow-y-auto">
               {cart.map((item) => (
                 <div key={item.id} className="flex justify-between items-center border-b pb-2">
                   <div>
                     <p className="font-semibold">{item.title || item.name}</p>
-                    <p className="text-sm text-gray-500">x{item.quantity}</p>
+                    <p className="text-sm text-gray-400">x{item.quantity}</p>
                   </div>
                   <p className="font-bold">BDT {(item.price * item.quantity).toLocaleString()}</p>
                 </div>
@@ -386,11 +386,11 @@ export default function Checkout() {
             </div>
             <div className="flex justify-between text-xl font-bold">
               <span>Total</span>
-              <span className="text-orange-600">BDT {totalPrice.toLocaleString()}</span>
+              <span className="text-orange-300">BDT {totalPrice.toLocaleString()}</span>
             </div>
             <Link
               to="/cart"
-              className="block text-center mt-6 text-orange-600 font-semibold"
+              className="block text-center mt-6 text-orange-300 font-semibold"
             >
               Back to Cart
             </Link>
@@ -400,3 +400,6 @@ export default function Checkout() {
     </div>
   );
 }
+
+
+

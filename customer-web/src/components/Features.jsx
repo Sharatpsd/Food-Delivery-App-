@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+﻿import { motion } from "framer-motion";
 import { Zap, Shield, Package, Smartphone } from "lucide-react";
 
 const features = [
@@ -26,13 +26,13 @@ const features = [
 
 export default function Features() {
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20 bg-[#1b1f27]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent mb-4">
             Why Choose Bite?
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
             Experience the future of food delivery
           </p>
         </div>
@@ -49,10 +49,10 @@ export default function Features() {
                 className="text-center group hover:scale-105 transition-all duration-300 cursor-pointer"
               >
                 <div className="w-20 h-20 bg-orange-100 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-orange-200 transition-colors">
-                  <Icon className="w-10 h-10 text-orange-600" />
+                  <Icon className="w-10 h-10 text-orange-300" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">{feature.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{feature.description}</p>
+                <h3 className="text-xl font-bold text-white mb-3">{feature.title}</h3>
+                <p className="text-gray-300 leading-relaxed">{feature.description}</p>
               </motion.div>
             );
           })}
@@ -61,3 +61,5 @@ export default function Features() {
     </section>
   );
 }
+
+

@@ -1,4 +1,4 @@
-import { useCart } from "../context/CartContext";
+﻿import { useCart } from "../context/CartContext";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
@@ -37,15 +37,15 @@ export default function Cart() {
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="max-w-md mx-auto text-center p-8 bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/50"
+          className="max-w-md mx-auto text-center p-8 bg-[#1b1f27]/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/50"
         >
           <div className="w-24 h-24 bg-orange-100 rounded-3xl mx-auto mb-6 flex items-center justify-center">
             <ShoppingCart className="w-12 h-12 text-orange-500" />
           </div>
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-            Your cart is empty 😔
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
+            Your cart is empty ðŸ˜”
           </h2>
-          <p className="text-gray-600 mb-8 text-lg">
+          <p className="text-gray-300 mb-8 text-lg">
             Start exploring delicious food from your favorite restaurants!
           </p>
           <Link
@@ -59,7 +59,7 @@ export default function Cart() {
     );
 
   return (
-    <div className="min-h-screen bg-gray-50 py-6 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#111214] py-6 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <motion.div
@@ -70,7 +70,7 @@ export default function Cart() {
           <motion.button
             type="button"
             onClick={handleBack}
-            className="mb-4 inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm transition hover:bg-gray-50"
+            className="mb-4 inline-flex items-center gap-2 rounded-xl border border-white/15 bg-[#1b1f27] px-4 py-2 text-sm font-semibold text-gray-200 shadow-sm transition hover:bg-[#111214]"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
           >
@@ -82,7 +82,7 @@ export default function Cart() {
               <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
                 Your Cart
               </h1>
-              <p className="text-gray-600 mt-2">
+              <p className="text-gray-300 mt-2">
                 Review your items and proceed to checkout
               </p>
             </div>
@@ -109,7 +109,7 @@ export default function Cart() {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -50, scale: 0.95 }}
                   transition={{ duration: 0.3, delay: index * 0.05 }}
-                  className="bg-white rounded-3xl shadow-xl p-7 md:p-8 mb-7 border border-gray-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
+                  className="bg-[#1b1f27] rounded-3xl shadow-xl p-7 md:p-8 mb-7 border border-white/10 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
                 >
                   <div className="flex items-center gap-5 md:gap-6">
                     {/* Item Image */}
@@ -123,16 +123,16 @@ export default function Cart() {
                         className="w-32 h-32 md:w-40 md:h-40 rounded-2xl object-cover shadow-lg border-4 border-white/50"
                       />
                       <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-sm px-2 py-1 rounded-full font-bold">
-                        ৳{item.price}
+                        à§³{item.price}
                       </span>
                     </motion.div>
 
                     {/* Item Details */}
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-bold text-2xl md:text-3xl text-gray-900 mb-1 line-clamp-2">
+                      <h3 className="font-bold text-2xl md:text-3xl text-white mb-1 line-clamp-2">
                         {item.title || item.name}
                       </h3>
-                      <p className="text-base text-gray-600 mb-4">
+                      <p className="text-base text-gray-300 mb-4">
                         {item.restaurant || "Local Restaurant"}
                       </p>
                       
@@ -145,10 +145,10 @@ export default function Cart() {
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
                         >
-                          <Minus className="w-4 h-4 text-gray-700" />
+                          <Minus className="w-4 h-4 text-gray-200" />
                         </motion.button>
                         
-                        <span className="font-bold text-3xl text-gray-900 w-14 text-center">
+                        <span className="font-bold text-3xl text-white w-14 text-center">
                           {item.quantity}
                         </span>
                         
@@ -162,8 +162,8 @@ export default function Cart() {
                         </motion.button>
                       </div>
 
-                      <p className="text-3xl font-bold text-orange-600 mt-3">
-                        ৳{(item.price * item.quantity).toLocaleString()}
+                      <p className="text-3xl font-bold text-orange-300 mt-3">
+                        à§³{(item.price * item.quantity).toLocaleString()}
                       </p>
                     </div>
 
@@ -185,43 +185,43 @@ export default function Cart() {
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
-            className="lg:sticky lg:top-24 h-fit bg-white rounded-3xl shadow-2xl p-8 border border-gray-100"
+            className="lg:sticky lg:top-24 h-fit bg-[#1b1f27] rounded-3xl shadow-2xl p-8 border border-white/10"
           >
-            <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+            <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
               <Package className="w-8 h-8 text-orange-500" />
               Order Summary
             </h3>
             
             <div className="space-y-4 mb-8">
               <div className="flex justify-between text-lg">
-                <span className="text-gray-700">Subtotal:</span>
-                <span className="font-bold">৳{totalPrice.toLocaleString()}</span>
+                <span className="text-gray-200">Subtotal:</span>
+                <span className="font-bold">à§³{totalPrice.toLocaleString()}</span>
               </div>
               <div className="flex justify-between text-lg">
-                <span className="text-gray-700">Delivery Fee:</span>
-                <span className="text-green-600 font-bold">FREE</span>
+                <span className="text-gray-200">Delivery Fee:</span>
+                <span className="text-orange-300 font-bold">FREE</span>
               </div>
               <div className="h-px bg-gray-200" />
-              <div className="flex justify-between text-2xl md:text-3xl font-bold text-gray-900">
+              <div className="flex justify-between text-2xl md:text-3xl font-bold text-white">
                 <span>Total:</span>
-                <span className="text-orange-600">৳{totalPrice.toLocaleString()}</span>
+                <span className="text-orange-300">à§³{totalPrice.toLocaleString()}</span>
               </div>
             </div>
 
             {/* Delivery Address Preview */}
-            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-2xl mb-6">
+            <div className="bg-gradient-to-r from-[#1a1f28] to-[#12161d] p-6 rounded-2xl mb-6">
               <div className="flex items-center gap-3 mb-3">
-                <MapPin className="w-5 h-5 text-blue-500" />
-                <h4 className="font-semibold text-gray-900">Delivery Address</h4>
+                <MapPin className="w-5 h-5 text-orange-400" />
+                <h4 className="font-semibold text-white">Delivery Address</h4>
               </div>
-              <p className="text-sm text-gray-600">
-                Char Bhadrāsan, Dhaka Division, BD
+              <p className="text-sm text-gray-300">
+                Char BhadrÄsan, Dhaka Division, BD
               </p>
               <Link
                 to="/checkout"
-                className="text-blue-600 hover:text-blue-700 text-sm font-medium mt-2 inline-block"
+                className="text-orange-300 hover:text-orange-200 text-sm font-medium mt-2 inline-block"
               >
-                Change Address →
+                Change Address â†’
               </Link>
             </div>
 
@@ -234,31 +234,31 @@ export default function Cart() {
                   whileTap={{ scale: 0.98 }}
                 >
                   <CreditCard className="w-5 h-5" />
-                  Proceed to Checkout ৳{totalPrice.toLocaleString()}
+                  Proceed to Checkout à§³{totalPrice.toLocaleString()}
                 </motion.button>
               </Link>
               <Link
                 to="/"
-                className="w-full block text-center py-3 text-orange-600 hover:text-orange-700 font-semibold border border-orange-200 rounded-xl hover:bg-orange-50 transition-all duration-200"
+                className="w-full block text-center py-3 text-orange-300 hover:text-orange-200 font-semibold border border-orange-400/30 rounded-xl hover:bg-orange-500/10 transition-all duration-200"
               >
-                ← Continue Shopping
+                â† Continue Shopping
               </Link>
             </div>
 
             {/* Trust Badges */}
-            <div className="mt-8 pt-6 border-t border-gray-200">
-              <p className="text-xs text-gray-500 text-center mb-2">
-                Secure Checkout • Fast Delivery • ৳0 Delivery Fee
+            <div className="mt-8 pt-6 border-t border-white/15">
+              <p className="text-xs text-gray-400 text-center mb-2">
+                Secure Checkout â€¢ Fast Delivery â€¢ à§³0 Delivery Fee
               </p>
               <div className="flex justify-center items-center gap-4">
-                <div className="w-12 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                  <span className="text-xs font-bold text-green-700">SSL</span>
+                <div className="w-12 h-8 bg-orange-500/15 rounded-lg flex items-center justify-center">
+                  <span className="text-xs font-bold text-orange-200">SSL</span>
                 </div>
-                <div className="w-12 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <span className="text-xs font-bold text-blue-700">bKash</span>
+                <div className="w-12 h-8 bg-orange-500/15 rounded-lg flex items-center justify-center">
+                  <span className="text-xs font-bold text-orange-200">bKash</span>
                 </div>
-                <div className="w-12 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
-                  <span className="text-xs font-bold text-purple-700">Nagad</span>
+                <div className="w-12 h-8 bg-white/10 rounded-lg flex items-center justify-center">
+                  <span className="text-xs font-bold text-gray-200">Nagad</span>
                 </div>
               </div>
             </div>
@@ -268,3 +268,7 @@ export default function Cart() {
     </div>
   );
 }
+
+
+
+

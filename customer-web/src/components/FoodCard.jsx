@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+﻿import { motion } from "framer-motion";
 import { 
   ShoppingCart, 
   Star, 
@@ -68,7 +68,7 @@ export default function FoodCard({ food }) {
       initial={{ opacity: 0, y: 30 }}
       whileHover={{ y: -10 }}
       whileTap={{ scale: 0.98 }}
-      className="group relative bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl hover:shadow-2xl border border-white/50 overflow-hidden transition-all duration-500 hover:border-orange-200"
+      className="group relative bg-[#1b1f27]/80 backdrop-blur-sm rounded-3xl shadow-xl hover:shadow-2xl border border-white/50 overflow-hidden transition-all duration-500 hover:border-orange-400/30"
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
     >
@@ -82,7 +82,7 @@ export default function FoodCard({ food }) {
         
         {/* Price Badge */}
         <div className="absolute top-3 right-3 bg-gradient-to-r from-orange-500 to-red-500 text-white px-3 py-2 rounded-2xl font-bold text-sm shadow-lg">
-          ৳{food.price}
+          à§³{food.price}
         </div>
 
         {/* Discount Badge (if available) */}
@@ -90,7 +90,7 @@ export default function FoodCard({ food }) {
           <motion.div 
             initial={{ scale: 0, rotate: -10 }}
             animate={{ scale: 1, rotate: 0 }}
-            className="absolute top-3 left-3 bg-gradient-to-r from-emerald-500 to-green-600 text-white px-3 py-2 rounded-2xl font-bold text-sm shadow-lg flex items-center gap-1"
+            className="absolute top-3 left-3 bg-gradient-to-r from-orange-500 to-red-600 text-white px-3 py-2 rounded-2xl font-bold text-sm shadow-lg flex items-center gap-1"
           >
             <Flame className="w-3 h-3" />
             {food.discount}% OFF
@@ -102,7 +102,7 @@ export default function FoodCard({ food }) {
           initial={{ opacity: 0, scale: 0.8 }}
           whileHover={{ scale: 1.1 }}
           animate={isHovered ? { opacity: 1, scale: 1 } : { opacity: 0 }}
-          className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-sm px-6 py-3 rounded-2xl font-bold text-orange-600 shadow-2xl border border-orange-200 hover:bg-orange-50 transition-all duration-300"
+          className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-[#1b1f27]/90 backdrop-blur-sm px-6 py-3 rounded-2xl font-bold text-orange-300 shadow-2xl border border-orange-400/30 hover:bg-orange-500/10 transition-all duration-300"
           onClick={handleAddToCart}
           disabled={isLoading}
         >
@@ -122,15 +122,15 @@ export default function FoodCard({ food }) {
         {/* Title & Rating */}
         <div className="flex items-start justify-between mb-3">
           <div className="flex-1 min-w-0">
-            <h3 className="font-bold text-xl text-gray-900 leading-tight line-clamp-2 mb-2 group-hover:text-orange-600 transition-colors">
+            <h3 className="font-bold text-xl text-white leading-tight line-clamp-2 mb-2 group-hover:text-orange-300 transition-colors">
               {food.title}
             </h3>
             <div className="flex items-center gap-2 text-sm">
               <div className="flex items-center gap-1">
                 <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
-                <span className="font-semibold text-gray-900">{food.rating || 4.5}</span>
+                <span className="font-semibold text-white">{food.rating || 4.5}</span>
               </div>
-              <span className="text-gray-500">({food.reviews || 23}+)</span>
+              <span className="text-gray-400">({food.reviews || 23}+)</span>
             </div>
           </div>
 
@@ -140,12 +140,12 @@ export default function FoodCard({ food }) {
             whileTap={{ scale: 0.9 }}
             whileHover={{ scale: 1.1 }}
           >
-            <Heart className="w-5 h-5 text-gray-500 group-hover/fav:text-red-500 fill-transparent group-hover/fav:fill-red-500 transition-all duration-300" />
+            <Heart className="w-5 h-5 text-gray-400 group-hover/fav:text-red-500 fill-transparent group-hover/fav:fill-red-500 transition-all duration-300" />
           </motion.button>
         </div>
 
         {/* Cuisine & Time */}
-        <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 mb-4">
+        <div className="flex flex-wrap items-center gap-4 text-sm text-gray-300 mb-4">
           <div className="flex items-center gap-1">
             <Clock className="w-4 h-4" />
             <span>{food.prepTime || "15-20"} mins</span>
@@ -156,7 +156,7 @@ export default function FoodCard({ food }) {
             </span>
           )}
           {food.popular && (
-            <span className="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-medium">
+            <span className="px-3 py-1 bg-orange-500/15 text-orange-200 rounded-full text-xs font-medium">
               Popular
             </span>
           )}
@@ -164,18 +164,18 @@ export default function FoodCard({ food }) {
 
         {/* Cart Controls */}
         <div className={`transition-all duration-300 ${
-          isInCart ? 'p-4 bg-emerald-50/50 rounded-2xl border-2 border-emerald-200' : 'p-0'
+          isInCart ? 'p-4 bg-orange-500/10 rounded-2xl border-2 border-orange-400/30' : 'p-0'
         }`}>
           {isInCart ? (
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="flex items-center bg-white px-4 py-2 rounded-2xl border shadow-sm">
+                <div className="flex items-center bg-[#1b1f27] px-4 py-2 rounded-2xl border shadow-sm">
                   <motion.button
                     onClick={() => handleQuantityChange('decrease')}
                     className="p-2 hover:bg-gray-100 rounded-xl transition-colors"
                     whileTap={{ scale: 0.9 }}
                   >
-                    <Minus className="w-4 h-4 text-gray-600" />
+                    <Minus className="w-4 h-4 text-gray-300" />
                   </motion.button>
                   
                   <span className="font-bold text-lg mx-4 min-w-[2rem] text-center">
@@ -187,17 +187,17 @@ export default function FoodCard({ food }) {
                     className="p-2 hover:bg-orange-100 rounded-xl transition-colors"
                     whileTap={{ scale: 0.9 }}
                   >
-                    <Plus className="w-4 h-4 text-orange-600" />
+                    <Plus className="w-4 h-4 text-orange-300" />
                   </motion.button>
                 </div>
-                <span className="font-bold text-xl text-emerald-600">
-                  ৳{(food.price * quantity).toLocaleString()}
+                <span className="font-bold text-xl text-orange-300">
+                  à§³{(food.price * quantity).toLocaleString()}
                 </span>
               </div>
               
               <motion.button
                 onClick={handleAddToCart}
-                className="bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-3 rounded-2xl font-bold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
+                className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-2xl font-bold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -234,3 +234,7 @@ export default function FoodCard({ food }) {
     </motion.div>
   );
 }
+
+
+
+
