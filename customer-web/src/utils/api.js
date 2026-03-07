@@ -16,12 +16,15 @@ const normalizeApiBase = (baseUrl) => {
     : trimmed;
 };
 
-const API_BASE = normalizeApiBase(import.meta.env.VITE_API_BASE_URL);
 const LOCAL_BASE = "http://127.0.0.1:8000";
 const RENDER_BASE = "https://food-delivery-app-1-ihcm.onrender.com";
+const DEFAULT_BASE = import.meta.env.PROD ? RENDER_BASE : LOCAL_BASE;
+const API_BASE = normalizeApiBase(import.meta.env.VITE_API_BASE_URL || DEFAULT_BASE);
 
 const buildApiBaseCandidates = () => {
-  const ordered = [API_BASE, LOCAL_BASE, RENDER_BASE];
+  const ordered = import.meta.env.PROD
+    ? [API_BASE, RENDER_BASE]
+    : [API_BASE, LOCAL_BASE, RENDER_BASE];
   return [...new Set(ordered.map(normalizeApiBase))];
 };
 

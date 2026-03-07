@@ -7,6 +7,19 @@ import dj_database_url
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+def _to_bool(value, default=False):
+    if isinstance(value, bool):
+        return value
+    if value is None:
+        return default
+    text = str(value).strip().lower()
+    if text in {"1", "true", "t", "yes", "y", "on", "debug"}:
+        return True
+    if text in {"0", "false", "f", "no", "n", "off", "prod", "production", "release"}:
+        return False
+    return default
+
+
 # ================================================================
 # SECURITY
 # ================================================================
@@ -24,7 +37,7 @@ GOOGLE_CLIENT_IDS = [
     if cid.strip()
 ]
 
-DEBUG = True
+DEBUG = _to_bool(config("DEBUG", default="False"), default=False)
 
 ALLOWED_HOSTS = [
     "127.0.0.1",
@@ -186,6 +199,11 @@ CORS_ALLOWED_ORIGINS = [
 
 CORS_ALLOW_CREDENTIALS = True
 
+if DEBUG:
+    CORS_ALLOW_ALL_ORIGINS = True
+
+ENABLE_MEDIA_SERVE = _to_bool(config("ENABLE_MEDIA_SERVE", default=str(DEBUG)), default=DEBUG)
+
 
 # ================================================================
 # DJANGO REST FRAMEWORK
@@ -207,6 +225,14 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
 }
+
+
+# ================================================================
+# PRODUCTION SECURITY (Render)
+# ================================================================
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
 
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

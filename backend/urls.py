@@ -64,7 +64,7 @@ urlpatterns = [
 # ======================================================
 # MEDIA FILE SUPPORT (for ImageField / FileField)
 # ======================================================
-if settings.DEBUG:
+if settings.DEBUG or getattr(settings, "ENABLE_MEDIA_SERVE", False):
     urlpatterns += static(
         settings.MEDIA_URL,
         document_root=settings.MEDIA_ROOT

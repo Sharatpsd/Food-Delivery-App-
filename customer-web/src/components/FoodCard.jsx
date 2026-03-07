@@ -11,6 +11,11 @@ import {
 import { useCart } from "../context/CartContext";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import {
+  buildImageSources,
+  getImageFromSources,
+  getLocalFoodFallback,
+} from "../utils/image";
 
 export default function FoodCard({ food }) {
   const { addToCart, cart } = useCart();
@@ -20,6 +25,10 @@ export default function FoodCard({ food }) {
   const [quantity, setQuantity] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const foodImageSources = buildImageSources(
+    [food.image_url, food.image_final, food.image],
+    getLocalFoodFallback(food?.title || food?.name, food?.id)
+  );
 
   // Check if already in cart
   useEffect(() => {
@@ -75,9 +84,16 @@ export default function FoodCard({ food }) {
       {/* Image & Badges */}
       <div className="relative overflow-hidden rounded-t-3xl">
         <img 
-          src={food.image || "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400&fit=crop&crop=entropy&auto=format"}
+          src={getImageFromSources(foodImageSources)}
           alt={food.title}
           className="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-700"
+          onError={(e) => {
+            const currentIndex = Number(e.currentTarget.dataset.idx || 0);
+            const nextSrc = foodImageSources[currentIndex + 1];
+            if (!nextSrc) return;
+            e.currentTarget.dataset.idx = String(currentIndex + 1);
+            e.currentTarget.src = nextSrc;
+          }}
         />
         
         {/* Price Badge */}

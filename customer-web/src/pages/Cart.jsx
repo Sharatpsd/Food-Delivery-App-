@@ -132,6 +132,16 @@ export default function Cart() {
                         src={item.image || "/api/placeholder/120/120"}
                         alt={item.title || item.name || "Food item"}
                         className="w-32 h-32 md:w-40 md:h-40 rounded-2xl object-cover shadow-lg border-4 border-white/50"
+                        onError={(e) => {
+                          const sources = Array.isArray(item.imageSources)
+                            ? item.imageSources
+                            : [];
+                          const currentIndex = Number(e.currentTarget.dataset.idx || 0);
+                          const nextSrc = sources[currentIndex + 1];
+                          if (!nextSrc) return;
+                          e.currentTarget.dataset.idx = String(currentIndex + 1);
+                          e.currentTarget.src = nextSrc;
+                        }}
                       />
                       <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-sm px-2 py-1 rounded-full font-bold">
                       {item.price}
@@ -152,11 +162,11 @@ export default function Cart() {
                         <motion.button
                           onClick={() => decreaseQty(item.id)}
                           disabled={item.quantity <= 1}
-                          className="p-2.5 bg-gray-100 hover:bg-gray-200 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                          className="p-2.5 rounded-xl bg-white/10 text-white hover:bg-white/20 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200 border border-white/15"
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
                         >
-                          <Minus className="w-4 h-4 text-gray-200" />
+                          <Minus className="w-4 h-4 text-white" />
                         </motion.button>
                         
                         <span className="font-bold text-3xl text-white w-14 text-center">

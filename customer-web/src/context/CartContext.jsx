@@ -1,33 +1,25 @@
 import { createContext, useContext, useState, useEffect, useCallback } from "react";
+import {
+  buildImageSources,
+  getImageFromSources,
+  getLocalFoodFallback,
+} from "../utils/image";
 
 export const CartContext = createContext();
 
-const normalizeApiBase = (baseUrl) => {
-  if (!baseUrl) return "http://localhost:8000";
-  const trimmed = baseUrl.replace(/\/$/, "");
-  return trimmed.endsWith("/api")
-    ? trimmed.slice(0, -"/api".length)
-    : trimmed;
+const normalizeCartItem = (item) => {
+  const imageSources = buildImageSources(
+    [item.image_url, item.image_final, item.image],
+    getLocalFoodFallback(item.title || item.name, item.id)
+  );
+  return {
+    ...item,
+    title: item.title || item.name || "Food item",
+    imageSources,
+    image: getImageFromSources(imageSources),
+    quantity: Number(item.quantity) > 0 ? Number(item.quantity) : 1,
+  };
 };
-
-const API_BASE = normalizeApiBase(import.meta.env.VITE_API_BASE_URL);
-
-const toAbsoluteMediaUrl = (value) => {
-  if (!value) return null;
-  const source = String(value);
-  if (source.startsWith("http")) return source;
-  if (source.startsWith("/")) return `${API_BASE}${source}`;
-  return `${API_BASE}/${source}`;
-};
-
-const normalizeCartItem = (item) => ({
-  ...item,
-  title: item.title || item.name || "Food item",
-  image:
-    toAbsoluteMediaUrl(item.image || item.image_final || item.image_url) ||
-    "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400&fit=crop&crop=entropy&auto=format",
-  quantity: Number(item.quantity) > 0 ? Number(item.quantity) : 1,
-});
 
 export function CartProvider({ children }) {
   const [cart, setCart] = useState(() => {

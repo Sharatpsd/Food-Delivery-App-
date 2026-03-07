@@ -1,7 +1,7 @@
 ﻿import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Bike, ChefHat, Store } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { ArrowRight, Bike, ChefHat, MessageCircle, Store } from "lucide-react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import RestaurantGrid from "../components/RestaurantGrid";
 import { getRestaurants } from "../utils/api";
 
@@ -10,6 +10,8 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [heroImageError, setHeroImageError] = useState(false);
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const globalQuery = searchParams.get("q") || "";
   const chefEmoji = "\u{1F468}\u200D\u{1F373}";
   const burgerEmoji = "\u{1F354}";
   const floatingFood = ["\u{1F354}", "\u{1F355}", "\u{1F35F}", "\u{1F964}"];
@@ -18,7 +20,7 @@ export default function Home() {
     const fetchRestaurants = async () => {
       try {
         setLoading(true);
-        const res = await getRestaurants();
+        const res = await getRestaurants({ search: globalQuery });
         setRestaurants(res.data || []);
       } catch (err) {
         console.error("Failed to load restaurants", err);
@@ -28,7 +30,7 @@ export default function Home() {
     };
 
     fetchRestaurants();
-  }, []);
+  }, [globalQuery]);
 
   return (
     <>
@@ -46,16 +48,24 @@ export default function Home() {
               DHAKA FOOD DELIVERY
             </p>
 
-            <h1 className="text-5xl font-black tracking-tight sm:text-7xl xl:text-[9.5rem]">
-              <span className="bg-gradient-to-r from-orange-300 via-orange-500 to-red-500 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(249,115,22,0.45)]">
+            <h1 className="text-4xl font-black tracking-tight sm:text-6xl xl:text-[7rem]">
+              <motion.span
+                className="inline-block bg-gradient-to-r from-orange-300 via-orange-500 to-red-500 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(249,115,22,0.45)]"
+                animate={{ scale: [1, 1.03, 1], opacity: [0.96, 1, 0.96] }}
+                transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut" }}
+              >
                 BITE
-              </span>
+              </motion.span>
             </h1>
 
-            <h2 className="mt-3 text-3xl font-black leading-[1.08] sm:text-5xl xl:text-[4.9rem]">
-            Explore Popular Restaurants in Dhaka
+            <motion.h2
+              className="mt-3 text-2xl font-black leading-[1.1] sm:text-4xl xl:text-[3.2rem]"
+              animate={{ y: [0, -3, 0] }}
+              transition={{ duration: 3.6, repeat: Infinity, ease: "easeInOut" }}
+            >
+            Explore Popular Foods Item Restaurants in Dhaka
              
-            </h2>
+            </motion.h2>
 
             <p className="mt-5 max-w-2xl text-base text-gray-300 sm:text-xl">
               Explore top-rated restaurants in Dhaka, discover delicious meals,
@@ -175,7 +185,12 @@ export default function Home() {
 
       <section id="restaurants" className="bg-[#111214] py-14">
         <div className="mx-auto max-w-7xl px-6">
-          <RestaurantGrid title="Popular Restaurants In Dhaka" list={restaurants} loading={loading} />
+          <RestaurantGrid
+            title="Popular Restaurants In Dhaka"
+            list={restaurants}
+            loading={loading}
+            initialSearch={globalQuery}
+          />
         </div>
       </section>
 
@@ -220,6 +235,19 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <a
+        href="https://wa.me/8801783720914?text=Hello%20Bite%2C%20I%20need%20help."
+        target="_blank"
+        rel="noreferrer"
+        aria-label="Chat on WhatsApp"
+        className="group fixed bottom-6 right-5 z-[80] inline-flex items-center gap-2 rounded-full border border-white/20 bg-[#25D366] px-5 py-3 font-bold text-white shadow-[0_0_25px_rgba(37,211,102,0.65)] transition hover:scale-105 hover:shadow-[0_0_35px_rgba(37,211,102,0.85)]"
+      >
+        <span className="absolute inset-0 -z-10 rounded-full bg-[#25D366] opacity-70 blur-md" />
+        <span className="absolute inset-0 -z-20 animate-ping rounded-full bg-[#25D366]/45" />
+        <MessageCircle className="h-5 w-5" />
+        WhatsApp
+      </a>
     </>
   );
 }

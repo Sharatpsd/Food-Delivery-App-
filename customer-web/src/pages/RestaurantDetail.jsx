@@ -3,23 +3,12 @@ import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { ArrowLeft, Star, ShoppingCart, CheckCircle2 } from "lucide-react";
 import { getRestaurantDetail, getRestaurantFoods } from "../utils/api";
-
-const normalizeApiBase = (baseUrl) => {
-  if (!baseUrl) return "http://localhost:8000";
-  const trimmed = baseUrl.replace(/\/$/, "");
-  return trimmed.endsWith("/api")
-    ? trimmed.slice(0, -"/api".length)
-    : trimmed;
-};
-
-const API_BASE = normalizeApiBase(import.meta.env.VITE_API_BASE_URL);
-
-const toAbsoluteMediaUrl = (value) => {
-  if (!value) return null;
-  if (value.startsWith("http")) return value;
-  if (value.startsWith("/")) return `${API_BASE}${value}`;
-  return `${API_BASE}/${value}`;
-};
+import {
+  buildImageSources,
+  getImageFromSources,
+  getLocalFoodFallback,
+  getLocalRestaurantFallback,
+} from "../utils/image";
 
 const toSafeNumber = (value, fallback = 0) => {
   const parsed = Number(value);
@@ -27,7 +16,6 @@ const toSafeNumber = (value, fallback = 0) => {
 };
 
 const formatMoney = (amount) => `BDT ${Math.round(amount).toLocaleString()}`;
-
 export default function RestaurantDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -120,8 +108,9 @@ export default function RestaurantDetail() {
     );
   }
 
-  const imageUrl = toAbsoluteMediaUrl(
-    restaurant.logo_final || restaurant.logo_url || restaurant.logo
+  const restaurantImageSources = buildImageSources(
+    [restaurant.logo_url, restaurant.logo_final, restaurant.logo],
+    getLocalRestaurantFallback(restaurant.name, restaurant.id)
   );
 
   return (
@@ -167,12 +156,16 @@ export default function RestaurantDetail() {
       <div className="max-w-6xl mx-auto px-4 py-12">
         <div className="bg-[#1b1f27] rounded-3xl shadow-xl overflow-hidden mb-10">
           <img
-            src={
-              imageUrl ||
-              "https://images.unsplash.com/photo-1504674900247-0877df9cc836"
-            }
+            src={getImageFromSources(restaurantImageSources)}
             alt={restaurant.name}
             className="w-full h-80 object-cover"
+            onError={(e) => {
+              const currentIndex = Number(e.currentTarget.dataset.idx || 0);
+              const nextSrc = restaurantImageSources[currentIndex + 1];
+              if (!nextSrc) return;
+              e.currentTarget.dataset.idx = String(currentIndex + 1);
+              e.currentTarget.src = nextSrc;
+            }}
           />
 
           <div className="p-8">
@@ -194,9 +187,10 @@ export default function RestaurantDetail() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {foods.map((item) => {
-            const foodImage =
-              toAbsoluteMediaUrl(item.image_final || item.image_url || item.image) ||
-              "https://images.unsplash.com/photo-1606755962773-d324e0a13086";
+            const foodImageSources = buildImageSources(
+              [item.image_url, item.image_final, item.image],
+              getLocalFoodFallback(item.name, item.id)
+            );
             const currentPrice = toSafeNumber(item.price, 0);
             const fallbackDiscount = item.id % 3 === 0 ? 20 : 10;
             const discountPercent = Math.max(
@@ -218,9 +212,16 @@ export default function RestaurantDetail() {
               <div key={item.id} className="bg-[#1b1f27] rounded-2xl shadow-lg p-6">
                 <div className="relative mb-4">
                   <img
-                    src={foodImage}
+                    src={getImageFromSources(foodImageSources)}
                     alt={item.name}
                     className="w-full h-44 object-cover rounded-xl"
+                    onError={(e) => {
+                      const currentIndex = Number(e.currentTarget.dataset.idx || 0);
+                      const nextSrc = foodImageSources[currentIndex + 1];
+                      if (!nextSrc) return;
+                      e.currentTarget.dataset.idx = String(currentIndex + 1);
+                      e.currentTarget.src = nextSrc;
+                    }}
                   />
                   <span className="absolute left-3 top-3 rounded-full bg-red-500 px-3 py-1 text-xs font-bold text-white">
                     -{discountPercent}%

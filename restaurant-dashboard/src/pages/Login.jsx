@@ -1,86 +1,85 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../utils/api";
 
 export default function Login() {
-const [username, setUsername] = useState("");
-const [password, setPassword] = useState("");
-const [error, setError] = useState("");
-const [loading, setLoading] = useState(false);
-const navigate = useNavigate();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-const handleLogin = async (e) => {
-e.preventDefault();
-setError("");
-setLoading(true);
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
 
-```
-try {
-  const res = await api.post("/auth/token/", {
-    username,
-    password,
-  });
+    try {
+      const res = await api.post("/auth/token/", {
+        username,
+        password,
+      });
 
-  localStorage.setItem("access", res.data.access);
-  localStorage.setItem("refresh", res.data.refresh);
+      localStorage.setItem("access", res.data.access);
+      localStorage.setItem("refresh", res.data.refresh);
+      navigate("/", { replace: true });
+    } catch (err) {
+      if (err.response?.status === 401) {
+        setError("Wrong username or password");
+      } else {
+        setError("Server error. Try again later.");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  navigate("/", { replace: true });
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#12161d] to-[#1a1f28] px-4">
+      <div className="w-full max-w-md rounded-3xl border border-white/10 bg-[#1b1f27] p-10 shadow-2xl">
+        <div className="mb-8 text-center">
+          <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-500">
+            Restaurant Login
+          </h1>
+          <p className="mt-3 text-gray-300">Manage your restaurant like a pro</p>
+        </div>
 
-} catch (err) {
-  if (err.response?.status === 401) {
-    setError("Wrong username or password");
-  } else {
-    setError("Server error. Try again later.");
-  }
-} finally {
-  setLoading(false);
-}
-```
+        {error && (
+          <div className="mb-6 rounded-xl border border-red-400/20 bg-red-500/10 p-3 text-center text-sm font-medium text-red-300">
+            {error}
+          </div>
+        )}
 
-};
+        <form onSubmit={handleLogin} className="space-y-5">
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="w-full rounded-2xl border border-white/15 bg-[#11161d] p-4 text-base text-white placeholder-gray-400 focus:border-orange-400"
+            required
+            disabled={loading}
+          />
 
-return ( <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-400 via-red-500 to-pink-500"> <div className="bg-white p-12 rounded-3xl shadow-2xl w-full max-w-md"> <div className="text-center mb-10"> <h1 className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-600">
-Restaurant Login </h1> <p className="text-gray-600 mt-4">Manage your restaurant like a pro</p> </div>
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full rounded-2xl border border-white/15 bg-[#11161d] p-4 text-base text-white placeholder-gray-400 focus:border-orange-400"
+            required
+            disabled={loading}
+          />
 
-```
-    {error && (
-      <div className="bg-red-100 text-red-700 p-4 rounded-xl mb-6 text-center font-medium">
-        {error}
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full rounded-2xl bg-gradient-to-r from-orange-500 to-red-500 py-3 text-base font-bold text-white transition hover:from-orange-600 hover:to-red-600 disabled:opacity-70"
+          >
+            {loading ? "Logging in..." : "Login as Restaurant"}
+          </button>
+        </form>
       </div>
-    )}
-
-    <form onSubmit={handleLogin} className="space-y-6">
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        className="w-full p-5 border-2 border-gray-200 rounded-2xl focus:border-orange-500 focus:outline-none text-lg"
-        required
-        disabled={loading}
-      />
-
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        className="w-full p-5 border-2 border-gray-200 rounded-2xl focus:border-orange-500 focus:outline-none text-lg"
-        required
-        disabled={loading}
-      />
-
-      <button
-        type="submit"
-        disabled={loading}
-        className="w-full bg-gradient-to-r from-orange-600 to-red-600 text-white py-5 rounded-2xl text-xl font-bold hover:from-orange-700 hover:to-red-700 transition duration-300 disabled:opacity-70"
-      >
-        {loading ? "Logging in..." : "Login as Restaurant"}
-      </button>
-    </form>
-  </div>
-</div>
-```
-
-);
+    </div>
+  );
 }

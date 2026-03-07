@@ -2,23 +2,30 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, MapPin, Clock, Star, Truck, X } from "lucide-react";
 import RestaurantCard from "./RestaurantCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function RestaurantGrid({ 
   list = [], 
   loading = false, 
   title = "Restaurants",
-  category 
+  category,
+  initialSearch = "",
 }) {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState(initialSearch);
   const [filterType, setFilterType] = useState("all");
+
+  useEffect(() => {
+    setSearchTerm(initialSearch || "");
+  }, [initialSearch]);
 
   // ZEN FILTER LOGIC - ALWAYS SHOWS RESULTS
   const filteredRestaurants = list.filter((restaurant) => {
     // Always match search (fallback to show all if no exact match)
     const matchesSearch = !searchTerm || 
       restaurant.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      restaurant.cuisine?.toLowerCase().includes(searchTerm.toLowerCase());
+      restaurant.cuisine?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      restaurant.theme?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      restaurant.must_try?.toLowerCase().includes(searchTerm.toLowerCase());
     
     const matchesFilter = filterType === "all" || 
       restaurant.type?.toLowerCase() === filterType.toLowerCase() ||
@@ -79,7 +86,7 @@ export default function RestaurantGrid({
 
   return (
     <div className="py-12 lg:py-20">
-      <div className="mx-auto max-w-[1680px] px-4 sm:px-6 lg:px-10">
+      <div className="mx-auto max-w-[1500px] px-4 sm:px-6 lg:px-8">
         
         {/* Premium Header */}
         <motion.div
@@ -87,7 +94,7 @@ export default function RestaurantGrid({
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-16 lg:mb-20"
         >
-          <h2 className="mb-6 bg-gradient-to-r from-white via-orange-200 to-orange-400 bg-clip-text text-4xl font-black leading-tight tracking-tight text-transparent md:text-6xl lg:text-7xl">
+          <h2 className="mb-6 bg-gradient-to-r from-white via-orange-200 to-orange-400 bg-clip-text text-3xl font-black leading-tight tracking-tight text-transparent md:text-5xl lg:text-6xl">
             {title || "Best Restaurants Near You"}
           </h2>
           {category && (
@@ -156,7 +163,7 @@ export default function RestaurantGrid({
 
         {/* ZEN RESTAURANT GRID - NEVER EMPTY */}
         <AnimatePresence mode="popLayout">
-          <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 lg:gap-9">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 lg:gap-7">
             {displayRestaurants.map((item, index) => (
               <motion.div
                 key={`${item.id}-${searchTerm}-${filterType}-${index}`}
