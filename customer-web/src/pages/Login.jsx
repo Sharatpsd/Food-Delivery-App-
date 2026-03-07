@@ -67,13 +67,15 @@ alert(err.response?.data?.error || "Google login failed");
 
 return (
 
-<div className="min-h-screen bg-gradient-to-br from-orange-600 via-red-600 to-orange-700 flex items-center justify-center">
+<div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-[#0f1218] via-[#141922] to-[#1b222d] px-4">
+<div className="pointer-events-none absolute -left-28 top-10 h-72 w-72 rounded-full bg-orange-500/20 blur-3xl" />
+<div className="pointer-events-none absolute -right-24 bottom-12 h-72 w-72 rounded-full bg-red-500/20 blur-3xl" />
 
 <motion.div
 initial={{ y: 100, opacity: 0 }}
 animate={{ y: 0, opacity: 1 }}
 transition={{ duration: 0.7 }}
-className="bg-[#1b1f27] p-10 rounded-3xl shadow-2xl w-full max-w-md"
+className="relative z-10 w-full max-w-md rounded-3xl border border-white/10 bg-[#1b1f27]/95 p-7 shadow-2xl backdrop-blur-xl sm:p-10"
 >
 
 <div className="text-center mb-10">
@@ -89,7 +91,7 @@ placeholder="Username"
 value={username}
 onChange={(e) => setUsername(e.target.value)}
 required
-className="w-full p-4 border rounded-xl"
+className="w-full rounded-xl border border-white/15 bg-[#11161d] p-4 text-white placeholder-gray-400 focus:border-orange-400"
 />
 
 <div className="relative">
@@ -100,13 +102,13 @@ placeholder="Password"
 value={password}
 onChange={(e) => setPassword(e.target.value)}
 required
-className="w-full p-4 border rounded-xl"
+className="w-full rounded-xl border border-white/15 bg-[#11161d] p-4 text-white placeholder-gray-400 focus:border-orange-400"
 />
 
 <button
 type="button"
 onClick={() => setShowPassword(!showPassword)}
-className="absolute right-4 top-4"
+className="absolute right-4 top-4 text-gray-300 transition hover:text-orange-300"
 >
 {showPassword ? <EyeOff /> : <Eye />}
 </button>
@@ -126,9 +128,9 @@ className="w-full bg-orange-600 text-white py-4 rounded-xl font-bold"
 </form>
 
 <div className="my-6 flex items-center gap-3">
-<div className="h-px flex-1 bg-gray-200" />
+<div className="h-px flex-1 bg-white/15" />
 <span className="text-sm text-gray-400">OR</span>
-<div className="h-px flex-1 bg-gray-200" />
+<div className="h-px flex-1 bg-white/15" />
 </div>
 
 <div className="flex justify-center">

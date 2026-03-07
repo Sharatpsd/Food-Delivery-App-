@@ -33,15 +33,26 @@ export default function Cart() {
 
   if (cart.length === 0)
     return (
-      <div className="min-h-screen bg-gradient-to-br from-orange-50 to-yellow-50 py-20 px-4">
+      <div className="min-h-screen bg-gradient-to-br from-[#12161d] to-[#1a1f28] py-20 px-4">
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="max-w-md mx-auto text-center p-8 bg-[#1b1f27]/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/50"
+          className="max-w-md mx-auto text-center p-8 bg-[#1b1f27]/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20"
         >
-          <div className="w-24 h-24 bg-orange-100 rounded-3xl mx-auto mb-6 flex items-center justify-center">
-            <ShoppingCart className="w-12 h-12 text-orange-500" />
-          </div>
+          <motion.div
+            className="relative mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-3xl bg-orange-500/15"
+            animate={{ y: [0, -10, 0] }}
+            transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <ShoppingCart className="h-12 w-12 text-orange-400" />
+            <motion.span
+              className="absolute -top-6 -right-3 text-2xl"
+              animate={{ rotate: [0, 16, -16, 0], y: [0, -4, 0] }}
+              transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+            >
+              {"\u{1F368}"}
+            </motion.span>
+          </motion.div>
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
             Your cart is empty ðŸ˜”
           </h2>
@@ -123,7 +134,7 @@ export default function Cart() {
                         className="w-32 h-32 md:w-40 md:h-40 rounded-2xl object-cover shadow-lg border-4 border-white/50"
                       />
                       <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-sm px-2 py-1 rounded-full font-bold">
-                        à§³{item.price}
+                      {item.price}
                       </span>
                     </motion.div>
 
@@ -163,7 +174,7 @@ export default function Cart() {
                       </div>
 
                       <p className="text-3xl font-bold text-orange-300 mt-3">
-                        à§³{(item.price * item.quantity).toLocaleString()}
+                        {(item.price * item.quantity).toLocaleString()}
                       </p>
                     </div>
 
@@ -195,7 +206,7 @@ export default function Cart() {
             <div className="space-y-4 mb-8">
               <div className="flex justify-between text-lg">
                 <span className="text-gray-200">Subtotal:</span>
-                <span className="font-bold">à§³{totalPrice.toLocaleString()}</span>
+                <span className="font-bold">{totalPrice.toLocaleString()}</span>
               </div>
               <div className="flex justify-between text-lg">
                 <span className="text-gray-200">Delivery Fee:</span>
@@ -204,7 +215,7 @@ export default function Cart() {
               <div className="h-px bg-gray-200" />
               <div className="flex justify-between text-2xl md:text-3xl font-bold text-white">
                 <span>Total:</span>
-                <span className="text-orange-300">à§³{totalPrice.toLocaleString()}</span>
+                <span className="text-orange-300">{totalPrice.toLocaleString()}</span>
               </div>
             </div>
 
@@ -234,21 +245,21 @@ export default function Cart() {
                   whileTap={{ scale: 0.98 }}
                 >
                   <CreditCard className="w-5 h-5" />
-                  Proceed to Checkout à§³{totalPrice.toLocaleString()}
+                  Proceed to Checkout {totalPrice.toLocaleString()}
                 </motion.button>
               </Link>
               <Link
                 to="/"
                 className="w-full block text-center py-3 text-orange-300 hover:text-orange-200 font-semibold border border-orange-400/30 rounded-xl hover:bg-orange-500/10 transition-all duration-200"
               >
-                â† Continue Shopping
+                 Continue Shopping
               </Link>
             </div>
 
             {/* Trust Badges */}
             <div className="mt-8 pt-6 border-t border-white/15">
               <p className="text-xs text-gray-400 text-center mb-2">
-                Secure Checkout â€¢ Fast Delivery â€¢ à§³0 Delivery Fee
+                Secure Checkout â€¢ Fast Delivery â€¢ 0 Delivery Fee
               </p>
               <div className="flex justify-center items-center gap-4">
                 <div className="w-12 h-8 bg-orange-500/15 rounded-lg flex items-center justify-center">

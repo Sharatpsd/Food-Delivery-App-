@@ -142,7 +142,7 @@ export default function Contact() {
                 whileFocus={{ scale: 1.02 }}
                 name="message"
                 rows="6"
-                placeholder="How can we help you today? ðŸ˜Š"
+                placeholder="How can we help you today? "
                 required
                 className="w-full px-6 py-5 rounded-2xl border-2 border-white/15 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/20 outline-none text-lg resize-none transition-all duration-300"
               />

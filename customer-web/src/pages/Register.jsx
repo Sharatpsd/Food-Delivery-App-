@@ -70,13 +70,15 @@ setLoading(false);
 
 return (
 
-<div className="min-h-screen bg-gradient-to-br from-orange-600 via-red-600 to-orange-700 flex items-center justify-center px-6">
+<div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-[#0f1218] via-[#141922] to-[#1b222d] px-4 sm:px-6">
+<div className="pointer-events-none absolute -left-28 top-12 h-72 w-72 rounded-full bg-orange-500/20 blur-3xl" />
+<div className="pointer-events-none absolute -right-24 bottom-12 h-72 w-72 rounded-full bg-red-500/20 blur-3xl" />
 
 <motion.div
 initial={{ scale: 0.9, opacity: 0 }}
 animate={{ scale: 1, opacity: 1 }}
 transition={{ duration: 0.7 }}
-className="bg-[#1b1f27] rounded-3xl shadow-2xl p-10 w-full max-w-lg"
+className="relative z-10 w-full max-w-lg rounded-3xl border border-white/10 bg-[#1b1f27]/95 p-7 shadow-2xl backdrop-blur-xl sm:p-10"
 >
 
 <div className="text-center mb-10">
@@ -95,7 +97,7 @@ placeholder="Full Name"
 value={formData.name}
 onChange={handleChange}
 required
-className="w-full pl-12 py-4 border rounded-xl"
+className="w-full rounded-xl border border-white/15 bg-[#11161d] py-4 pl-12 text-white placeholder-gray-400 focus:border-orange-400"
 />
 </div>
 
@@ -108,7 +110,7 @@ placeholder="Username"
 value={formData.username}
 onChange={handleChange}
 required
-className="w-full pl-12 py-4 border rounded-xl"
+className="w-full rounded-xl border border-white/15 bg-[#11161d] py-4 pl-12 text-white placeholder-gray-400 focus:border-orange-400"
 />
 </div>
 
@@ -121,7 +123,7 @@ placeholder="Phone"
 value={formData.phone}
 onChange={handleChange}
 required
-className="w-full pl-12 py-4 border rounded-xl"
+className="w-full rounded-xl border border-white/15 bg-[#11161d] py-4 pl-12 text-white placeholder-gray-400 focus:border-orange-400"
 />
 </div>
 
@@ -134,13 +136,13 @@ placeholder="Password"
 value={formData.password}
 onChange={handleChange}
 required
-className="w-full pl-12 pr-12 py-4 border rounded-xl"
+className="w-full rounded-xl border border-white/15 bg-[#11161d] py-4 pl-12 pr-12 text-white placeholder-gray-400 focus:border-orange-400"
 />
 
 <button
 type="button"
 onClick={() => setShowPassword(!showPassword)}
-className="absolute right-4 top-4"
+className="absolute right-4 top-4 text-gray-300 transition hover:text-orange-300"
 >
 {showPassword ? <EyeOff /> : <Eye />}
 </button>
@@ -156,13 +158,13 @@ placeholder="Confirm Password"
 value={formData.password2}
 onChange={handleChange}
 required
-className="w-full pl-12 pr-12 py-4 border rounded-xl"
+className="w-full rounded-xl border border-white/15 bg-[#11161d] py-4 pl-12 pr-12 text-white placeholder-gray-400 focus:border-orange-400"
 />
 
 <button
 type="button"
 onClick={() => setShowConfirm(!showConfirm)}
-className="absolute right-4 top-4"
+className="absolute right-4 top-4 text-gray-300 transition hover:text-orange-300"
 >
 {showConfirm ? <EyeOff /> : <Eye />}
 </button>

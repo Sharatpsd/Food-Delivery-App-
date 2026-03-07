@@ -82,7 +82,7 @@ export default function FoodCard({ food }) {
         
         {/* Price Badge */}
         <div className="absolute top-3 right-3 bg-gradient-to-r from-orange-500 to-red-500 text-white px-3 py-2 rounded-2xl font-bold text-sm shadow-lg">
-          à§³{food.price}
+          {food.price}
         </div>
 
         {/* Discount Badge (if available) */}
@@ -191,7 +191,7 @@ export default function FoodCard({ food }) {
                   </motion.button>
                 </div>
                 <span className="font-bold text-xl text-orange-300">
-                  à§³{(food.price * quantity).toLocaleString()}
+                {(food.price * quantity).toLocaleString()}
                 </span>
               </div>
               

@@ -79,7 +79,7 @@ export default function RestaurantGrid({
 
   return (
     <div className="py-12 lg:py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-[1680px] px-4 sm:px-6 lg:px-10">
         
         {/* Premium Header */}
         <motion.div
@@ -156,7 +156,7 @@ export default function RestaurantGrid({
 
         {/* ZEN RESTAURANT GRID - NEVER EMPTY */}
         <AnimatePresence mode="popLayout">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 lg:gap-9">
             {displayRestaurants.map((item, index) => (
               <motion.div
                 key={`${item.id}-${searchTerm}-${filterType}-${index}`}
