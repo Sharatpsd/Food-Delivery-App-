@@ -6,10 +6,11 @@ import sampleRestaurants from "./sampleRestaurants.json";
  * Render / Local — both supported
  */
 const normalizeApiBase = (baseUrl) => {
-  if (!baseUrl) return "http://:8000";
-  return baseUrl.endsWith("/api")
-    ? baseUrl.slice(0, -"/api".length)
-    : baseUrl;
+  if (!baseUrl) return "http://localhost:8000";
+  const trimmed = baseUrl.replace(/\/$/, "");
+  return trimmed.endsWith("/api")
+    ? trimmed.slice(0, -"/api".length)
+    : trimmed;
 };
 
 const API_BASE = normalizeApiBase(import.meta.env.VITE_API_BASE_URL);
@@ -33,6 +34,77 @@ API.interceptors.request.use(
     return config;
   },
   (error) => Promise.reject(error)
+);
+
+let refreshPromise = null;
+
+const clearSessionAndRedirect = () => {
+  localStorage.removeItem("access");
+  localStorage.removeItem("refresh");
+  if (window.location.pathname !== "/login") {
+    window.location.href = "/login";
+  }
+};
+
+const shouldSkipRefresh = (url = "") =>
+  url.includes("/auth/token/") ||
+  url.includes("/auth/token/refresh/") ||
+  url.includes("/auth/register/") ||
+  url.includes("/auth/google/");
+
+const refreshAccessToken = async () => {
+  if (!refreshPromise) {
+    const refresh = localStorage.getItem("refresh");
+    if (!refresh) {
+      throw new Error("Refresh token missing");
+    }
+
+    refreshPromise = axios
+      .post(`${API_BASE}/api/auth/token/refresh/`, { refresh })
+      .then((res) => {
+        const nextAccess = res.data?.access;
+        if (!nextAccess) {
+          throw new Error("Access token missing in refresh response");
+        }
+        localStorage.setItem("access", nextAccess);
+        return nextAccess;
+      })
+      .finally(() => {
+        refreshPromise = null;
+      });
+  }
+
+  return refreshPromise;
+};
+
+API.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+    const status = error.response?.status;
+    const requestUrl = originalRequest?.url || "";
+
+    if (
+      status !== 401 ||
+      !originalRequest ||
+      originalRequest._retry ||
+      shouldSkipRefresh(requestUrl)
+    ) {
+      return Promise.reject(error);
+    }
+
+    originalRequest._retry = true;
+
+    try {
+      const nextAccess = await refreshAccessToken();
+      originalRequest.headers = originalRequest.headers || {};
+      originalRequest.headers.Authorization = `Bearer ${nextAccess}`;
+      return API(originalRequest);
+    } catch (refreshError) {
+      clearSessionAndRedirect();
+      return Promise.reject(refreshError);
+    }
+  }
 );
 
 export default API;

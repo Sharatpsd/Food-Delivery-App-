@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../utils/api";
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);
@@ -12,11 +12,8 @@ export default function Orders() {
   }, []);
 
   const fetchOrders = () => {
-    const token = localStorage.getItem("access");
-    axios
-      .get("http://:8000/api/orders/restaurant-orders/", {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+    api
+      .get("/orders/restaurant-orders/")
       .then((res) => {
         setOrders(res.data);
         setLoading(false);
@@ -25,13 +22,8 @@ export default function Orders() {
   };
 
   const updateStatus = async (orderId, status) => {
-    const token = localStorage.getItem("access");
     try {
-      await axios.patch(
-        `http://:8000/api/orders/${orderId}/update-status/`,
-        { status },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      await api.patch(`/orders/${orderId}/update-status/`, { status });
       setOrders((prev) =>
         prev.map((o) => (o.id === orderId ? { ...o, status } : o))
       );

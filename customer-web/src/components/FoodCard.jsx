@@ -9,18 +9,20 @@ import {
   Heart 
 } from "lucide-react";
 import { useCart } from "../context/CartContext";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function FoodCard({ food }) {
   const { addToCart, cart } = useCart();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [isInCart, setIsInCart] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
   // Check if already in cart
-  React.useEffect(() => {
+  useEffect(() => {
     const existingItem = cart.find(item => item.id === food.id);
     if (existingItem) {
       setIsInCart(true);
@@ -29,6 +31,11 @@ export default function FoodCard({ food }) {
   }, [cart, food.id]);
 
   const handleAddToCart = async () => {
+    if (!localStorage.getItem("access")) {
+      navigate(`/login?next=${encodeURIComponent(location.pathname)}`);
+      return;
+    }
+
     setIsLoading(true);
     
     try {

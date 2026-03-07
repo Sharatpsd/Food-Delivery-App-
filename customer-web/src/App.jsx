@@ -121,9 +121,7 @@ import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 import Stats from "./components/Stats";
 import Features from "./components/Features";
-console.log(import.meta.env.VITE_GOOGLE_CLIENT_ID);
 // Pages
-console.log("CLIENT ID 👉", import.meta.env.VITE_GOOGLE_CLIENT_ID);
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";

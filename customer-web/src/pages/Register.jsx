@@ -1,8 +1,8 @@
 import { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ChefHat, ArrowRight, Eye, EyeOff, User, Phone, Lock } from "lucide-react";
+import api from "../utils/api";
 
 export default function Register() {
 
@@ -48,10 +48,7 @@ role: "customer",
 address: "",
 };
 
-await axios.post(
-"http://127.0.0.1:8000/api/auth/register/",
-payload
-);
+await api.post("/auth/register/", payload);
 
 alert("Account created successfully");
 navigate("/login");

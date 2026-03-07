@@ -1,15 +1,12 @@
 // src/pages/Orders.jsx
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../utils/api";
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    axios.get("http://:8000/api/orders/my-orders/", {
-      headers: { Authorization: `Bearer ${localStorage.getItem("access")}` }
-    })
-    .then(res => setOrders(res.data));
+    api.get("/orders/my-orders/").then((res) => setOrders(res.data));
   }, []);
 
   return (

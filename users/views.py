@@ -10,8 +10,6 @@ from django.conf import settings
 from .serializers import RegisterSerializer, UserSerializer
 from .models import User
 
-GOOGLE_CLIENT_ID = "1006519805776-5ad2l5opvc771c0smn7vpmh0iui8u102.apps.googleusercontent.com"
-
 
 # ============================
 # USER REGISTER
@@ -40,21 +38,44 @@ class GoogleLoginView(APIView):
 
     def post(self, request):
         token = request.data.get("token")
+        google_client_ids = getattr(settings, "GOOGLE_CLIENT_IDS", None) or []
+        if not google_client_ids:
+            single_client = getattr(settings, "GOOGLE_CLIENT_ID", None)
+            if single_client:
+                google_client_ids = [single_client]
 
         if not token:
             return Response({"error": "Token missing"}, status=400)
+        if not google_client_ids:
+            return Response({"error": "Google client not configured"}, status=500)
+
+        google_user = None
+        verify_error = None
 
         try:
-            google_user = id_token.verify_oauth2_token(
-                token,
-                requests.Request(),
-                GOOGLE_CLIENT_ID
-            )
+            for client_id in google_client_ids:
+                try:
+                    google_user = id_token.verify_oauth2_token(
+                        token,
+                        requests.Request(),
+                        client_id
+                    )
+                    break
+                except Exception as exc:
+                    verify_error = exc
+
+            if not google_user:
+                raise verify_error or Exception("No matching Google client ID")
 
             email = google_user["email"]
             name = google_user.get("name", "")
 
-        except Exception:
+        except Exception as exc:
+            if settings.DEBUG:
+                return Response(
+                    {"error": f"Invalid Google Token: {str(exc)}"},
+                    status=400
+                )
             return Response({"error": "Invalid Google Token"}, status=400)
 
         # Create or Get User

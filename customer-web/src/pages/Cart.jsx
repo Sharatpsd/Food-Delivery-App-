@@ -1,5 +1,5 @@
 import { useCart } from "../context/CartContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   ShoppingCart, 
@@ -8,10 +8,12 @@ import {
   Trash2, 
   Package, 
   MapPin,
-  CreditCard 
+  CreditCard,
+  ArrowLeft 
 } from "lucide-react";
 
 export default function Cart() {
+  const navigate = useNavigate();
   const {
     cart,
     increaseQty,
@@ -20,6 +22,14 @@ export default function Cart() {
     totalPrice,
     clearCart,
   } = useCart();
+
+  const handleBack = () => {
+    if (window.history.length > 1) {
+      navigate(-1);
+      return;
+    }
+    navigate("/");
+  };
 
   if (cart.length === 0)
     return (
@@ -57,6 +67,16 @@ export default function Cart() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
+          <motion.button
+            type="button"
+            onClick={handleBack}
+            className="mb-4 inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm transition hover:bg-gray-50"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back
+          </motion.button>
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
               <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
@@ -89,9 +109,9 @@ export default function Cart() {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -50, scale: 0.95 }}
                   transition={{ duration: 0.3, delay: index * 0.05 }}
-                  className="bg-white rounded-3xl shadow-xl p-6 mb-6 border border-gray-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
+                  className="bg-white rounded-3xl shadow-xl p-7 md:p-8 mb-7 border border-gray-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
                 >
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-5 md:gap-6">
                     {/* Item Image */}
                     <motion.div
                       whileHover={{ scale: 1.05 }}
@@ -99,20 +119,20 @@ export default function Cart() {
                     >
                       <img
                         src={item.image || "/api/placeholder/120/120"}
-                        alt={item.title}
-                        className="w-24 h-24 rounded-2xl object-cover shadow-lg border-4 border-white/50"
+                        alt={item.title || item.name || "Food item"}
+                        className="w-32 h-32 md:w-40 md:h-40 rounded-2xl object-cover shadow-lg border-4 border-white/50"
                       />
-                      <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs px-2 py-1 rounded-full font-bold">
+                      <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-sm px-2 py-1 rounded-full font-bold">
                         ৳{item.price}
                       </span>
                     </motion.div>
 
                     {/* Item Details */}
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-bold text-xl text-gray-900 mb-1 line-clamp-2">
-                        {item.title}
+                      <h3 className="font-bold text-2xl md:text-3xl text-gray-900 mb-1 line-clamp-2">
+                        {item.title || item.name}
                       </h3>
-                      <p className="text-sm text-gray-600 mb-4">
+                      <p className="text-base text-gray-600 mb-4">
                         {item.restaurant || "Local Restaurant"}
                       </p>
                       
@@ -121,20 +141,20 @@ export default function Cart() {
                         <motion.button
                           onClick={() => decreaseQty(item.id)}
                           disabled={item.quantity <= 1}
-                          className="p-2 bg-gray-100 hover:bg-gray-200 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                          className="p-2.5 bg-gray-100 hover:bg-gray-200 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
                         >
                           <Minus className="w-4 h-4 text-gray-700" />
                         </motion.button>
                         
-                        <span className="font-bold text-2xl text-gray-900 w-12 text-center">
+                        <span className="font-bold text-3xl text-gray-900 w-14 text-center">
                           {item.quantity}
                         </span>
                         
                         <motion.button
                           onClick={() => increaseQty(item.id)}
-                          className="p-2 bg-orange-500 hover:bg-orange-600 text-white rounded-xl transition-all duration-200"
+                          className="p-2.5 bg-orange-500 hover:bg-orange-600 text-white rounded-xl transition-all duration-200"
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
                         >
@@ -142,7 +162,7 @@ export default function Cart() {
                         </motion.button>
                       </div>
 
-                      <p className="text-2xl font-bold text-orange-600 mt-3">
+                      <p className="text-3xl font-bold text-orange-600 mt-3">
                         ৳{(item.price * item.quantity).toLocaleString()}
                       </p>
                     </div>

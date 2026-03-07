@@ -1,8 +1,9 @@
 import { useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ChefHat, Eye, EyeOff } from "lucide-react";
+import { GoogleLogin } from "@react-oauth/google";
+import api from "../utils/api";
 
 export default function Login() {
 
@@ -12,6 +13,15 @@ const [showPassword, setShowPassword] = useState(false);
 const [loading, setLoading] = useState(false);
 
 const navigate = useNavigate();
+const location = useLocation();
+
+const finishLogin = (access, refresh) => {
+localStorage.setItem("access", access);
+localStorage.setItem("refresh", refresh);
+const nextPath = new URLSearchParams(location.search).get("next") || "/";
+navigate(nextPath);
+window.location.reload();
+};
 
 const handleSubmit = async (e) => {
 
@@ -20,19 +30,12 @@ setLoading(true);
 
 try {
 
-const res = await axios.post(
-"http://127.0.0.1:8000/api/auth/token/",
-{
+const res = await api.post("/auth/token/", {
 username: username,
 password: password,
-}
-);
+});
 
-localStorage.setItem("access", res.data.access);
-localStorage.setItem("refresh", res.data.refresh);
-
-navigate("/");
-window.location.reload();
+finishLogin(res.data.access, res.data.refresh);
 
 } catch (err) {
 
@@ -43,6 +46,23 @@ alert("Wrong username or password");
 setLoading(false);
 }
 
+};
+
+const handleGoogleSuccess = async (credentialResponse) => {
+const token = credentialResponse?.credential;
+
+if (!token) {
+alert("Google token missing");
+return;
+}
+
+try {
+const res = await api.post("/auth/google/", { token });
+finishLogin(res.data.access, res.data.refresh);
+} catch (err) {
+console.log("GOOGLE LOGIN ERROR 👉", err.response?.data);
+alert(err.response?.data?.error || "Google login failed");
+}
 };
 
 return (
@@ -104,6 +124,20 @@ className="w-full bg-orange-600 text-white py-4 rounded-xl font-bold"
 </button>
 
 </form>
+
+<div className="my-6 flex items-center gap-3">
+<div className="h-px flex-1 bg-gray-200" />
+<span className="text-sm text-gray-500">OR</span>
+<div className="h-px flex-1 bg-gray-200" />
+</div>
+
+<div className="flex justify-center">
+<GoogleLogin
+onSuccess={handleGoogleSuccess}
+onError={() => alert("Google login failed")}
+useOneTap={false}
+/>
+</div>
 
 <div className="text-center mt-6 text-gray-600">
 Don't have an account?{" "}

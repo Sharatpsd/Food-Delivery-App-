@@ -11,6 +11,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY
 # ================================================================
 SECRET_KEY = config("SECRET_KEY", default="test-secret")
+GOOGLE_CLIENT_ID = config(
+    "GOOGLE_CLIENT_ID",
+    default="1006519805776-5ad2l5opvc771c0smn7vpmh0iui8u102.apps.googleusercontent.com",
+)
+GOOGLE_CLIENT_IDS = [
+    cid.strip()
+    for cid in config(
+        "GOOGLE_CLIENT_IDS",
+        default=f"{GOOGLE_CLIENT_ID},374279373492-apflc0pvsma478fiua7tkqgm54ir7r4a.apps.googleusercontent.com",
+    ).split(",")
+    if cid.strip()
+]
 
 DEBUG = True
 
@@ -25,6 +37,8 @@ ALLOWED_HOSTS = [
 # CSRF trusted origins (VERY IMPORTANT)
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
+    "http://localhost:5174",
+    "http://127.0.0.1:5174",
     "https://food-delivery-frontend-mktt.onrender.com",
     "https://food-delivery-app-1-ihcm.onrender.com",
 ]
@@ -165,6 +179,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # ================================================================
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
+    "http://localhost:5174",
+    "http://127.0.0.1:5174",
     "https://food-delivery-frontend-mktt.onrender.com",
 ]
 
@@ -194,3 +210,21 @@ SIMPLE_JWT = {
 
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+# ================================================================
+# PAYMENT (SSLCOMMERZ)
+# ================================================================
+FRONTEND_BASE_URL = config("FRONTEND_BASE_URL", default="http://localhost:5173")
+SSLCOMMERZ_STORE_ID = config(
+    "SSLCOMMERZ_STORE_ID",
+    default=config("SSLCZ_STORE_ID", default=config("STORE_ID", default="")),
+)
+SSLCOMMERZ_STORE_PASSWORD = config(
+    "SSLCOMMERZ_STORE_PASSWORD",
+    default=config(
+        "SSLCZ_STORE_PASSWORD",
+        default=config("SSLCZ_STORE_PASSWD", default=config("STORE_PASSWORD", default="")),
+    ),
+)
+SSLCOMMERZ_IS_SANDBOX = config("SSLCOMMERZ_IS_SANDBOX", cast=bool, default=True)

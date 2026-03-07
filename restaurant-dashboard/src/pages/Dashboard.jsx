@@ -1,6 +1,16 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
+import api from "../utils/api";
+
+const normalizeMediaBase = (baseUrl) => {
+  if (!baseUrl) return "http://localhost:8000";
+  const trimmed = baseUrl.replace(/\/$/, "");
+  return trimmed.endsWith("/api")
+    ? trimmed.slice(0, -"/api".length)
+    : trimmed;
+};
+
+const MEDIA_BASE = normalizeMediaBase(import.meta.env.VITE_API_BASE_URL);
 
 export default function Dashboard() {
   const [restaurant, setRestaurant] = useState(null);
@@ -13,10 +23,8 @@ export default function Dashboard() {
       return;
     }
 
-    axios
-      .get("http://127.0.0.1:8000/api/restaurants/my/", {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+    api
+      .get("/restaurants/my/")
       .then((res) => {
         setRestaurant(res.data);
         setLoading(false);
@@ -98,7 +106,7 @@ export default function Dashboard() {
         {/* Restaurant Card */}
         <div className="bg-white rounded-3xl shadow-2xl p-12 flex flex-col md:flex-row items-center gap-12">
           <img
-            src={`http://127.0.0.1:8000${restaurant.logo}`}
+            src={`${MEDIA_BASE}${restaurant.logo}`}
             alt={restaurant.name}
             className="w-64 h-64 rounded-full object-cover border-8 border-orange-100 shadow-2xl"
             onError={(e) => e.target.src = "https://via.placeholder.com/300?text=No+Logo"}

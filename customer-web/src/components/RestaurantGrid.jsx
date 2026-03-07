@@ -115,7 +115,7 @@ export default function RestaurantGrid({
             <Search className="w-6 h-6 text-orange-400 absolute left-5 top-1/2 -translate-y-1/2 group-focus-within:text-orange-500 group-hover:text-orange-500 transition-all duration-300" />
             <input
               type="text"
-              placeholder="🔍 Search biryani, pizza, burgers..."
+              placeholder="🔍 Search Restaurants..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full pl-14 pr-6 py-5 border-2 border-gray-100 rounded-3xl focus:ring-4 focus:ring-orange-500/30 focus:border-orange-400 transition-all duration-500 bg-white/90 backdrop-blur-2xl shadow-xl hover:shadow-2xl text-xl placeholder-gray-500 font-semibold"

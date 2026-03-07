@@ -29,8 +29,10 @@ class RestaurantSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
     def get_logo_final(self, obj):
+        request = self.context.get("request")
         if obj.logo:
-            return obj.logo.url
+            logo_url = obj.logo.url
+            return request.build_absolute_uri(logo_url) if request else logo_url
         if obj.logo_url:
             return obj.logo_url
         return None
@@ -52,8 +54,10 @@ class FoodSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
     def get_image_final(self, obj):
+        request = self.context.get("request")
         if obj.image:
-            return obj.image.url
+            image_url = obj.image.url
+            return request.build_absolute_uri(image_url) if request else image_url
         if obj.image_url:
             return obj.image_url
         return None
