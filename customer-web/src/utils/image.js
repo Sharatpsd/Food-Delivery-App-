@@ -13,7 +13,10 @@ const normalizeApiBase = (baseUrl) => {
 const API_BASE = normalizeApiBase(import.meta.env.VITE_API_BASE_URL);
 const localFoodFiles = [
   "bbq.jpg",
+  "human-hand-holding-tray-with-roasted-ham.jpg",
+  "bbq lamp chops.jpg",
   "Panshi Chicken Fried Rice.jpg",
+  "Hakka nodels.jpg",
   "Chicken-Kacchi-Biryani.jpg",
   "Sultan's Chicken Biryani.jpg",
   "cheese-loaded-pizza-photo.jpeg",
@@ -63,7 +66,21 @@ const pickFromPool = (pool, seedValue) => {
 };
 
 const keywordFoodMap = [
+  {
+    keys: ["bbq full chicken", "full chicken"],
+    file: "human-hand-holding-tray-with-roasted-ham.jpg",
+  },
+  {
+    keys: ["bbq beef ribs", "bbq ribs", "beef ribs", "bq ribs"],
+    file: "human-hand-holding-tray-with-roasted-ham.jpg",
+  },
+  { keys: ["bbq lamb chops", "lamb chops"], file: "bbq lamp chops.jpg" },
   { keys: ["bbq"], file: "bbq.jpg" },
+  {
+    keys: ["panshi chicken fried rice"],
+    file: "Panshi Chicken Fried Rice.jpg",
+  },
+  { keys: ["hakka noodles", "hakka noodle"], file: "Hakka nodels.jpg" },
   { keys: ["panshi", "fried rice"], file: "Panshi Chicken Fried Rice.jpg" },
   { keys: ["kacchi", "biryani"], file: "Chicken-Kacchi-Biryani.jpg" },
   { keys: ["sultan"], file: "Sultan's Chicken Biryani.jpg" },

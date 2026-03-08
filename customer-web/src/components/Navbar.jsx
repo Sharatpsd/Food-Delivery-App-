@@ -1,6 +1,6 @@
 ﻿import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Menu, X, ShoppingCart, ChevronDown, ChefHat, Bike, Search } from "lucide-react";
+import { Menu, X, ShoppingCart, ChevronDown, ChefHat, Bike } from "lucide-react";
 import { useCart } from "../context/CartContext";
 
 const navLinks = [
@@ -11,7 +11,6 @@ const navLinks = [
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [searchText, setSearchText] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
   const { cartCount } = useCart();
@@ -33,15 +32,6 @@ export default function Navbar() {
   };
 
   const closeMobileMenu = () => setMobileMenuOpen(false);
-
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    const q = searchText.trim();
-    const params = new URLSearchParams();
-    if (q) params.set("q", q);
-    navigate(`/?${params.toString()}`);
-    setMobileMenuOpen(false);
-  };
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-[#111214]/80 backdrop-blur-2xl">
@@ -109,26 +99,6 @@ export default function Navbar() {
           </div>
 
           <div className="hidden items-center gap-2 lg:flex">
-            <form onSubmit={handleSearchSubmit} className="flex items-center gap-1">
-              <div className="relative w-[170px] xl:w-[220px]">
-                <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-                <input
-                  value={searchText}
-                  onChange={(e) => setSearchText(e.target.value)}
-                  placeholder="Search..."
-                  className="w-full rounded-xl border border-white/10 bg-white/5 py-2 pl-10 pr-3 text-sm text-white placeholder-gray-400 transition focus:border-orange-400"
-                />
-              </div>
-              <button
-                type="submit"
-                className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-lg transition hover:scale-[1.03]"
-                aria-label="Search"
-                title="Search"
-              >
-                <Search className="h-4 w-4" />
-              </button>
-            </form>
-
             <button
               onClick={handleCartClick}
               className="relative rounded-xl border border-white/10 bg-white/5 p-2.5 text-gray-200 transition hover:bg-white/10"
@@ -177,24 +147,6 @@ export default function Navbar() {
         {mobileMenuOpen && (
           <div className="border-t border-white/10 py-4 lg:hidden">
             <div className="space-y-2">
-              <form onSubmit={handleSearchSubmit} className="mb-2">
-                <div className="relative mb-2">
-                  <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-                  <input
-                    value={searchText}
-                    onChange={(e) => setSearchText(e.target.value)}
-                    placeholder="Search food or restaurant..."
-                    className="w-full rounded-xl border border-white/10 bg-white/5 py-3 pl-10 pr-3 text-sm text-white placeholder-gray-400 transition focus:border-orange-400"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="w-full rounded-xl bg-gradient-to-r from-orange-500 to-red-500 px-4 py-2.5 text-sm font-bold text-white"
-                >
-                  Search
-                </button>
-              </form>
-
               {navLinks.map((link) => {
                 const isActive = location.pathname === link.path;
                 return (
