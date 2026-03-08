@@ -20,7 +20,8 @@ class RestaurantRequest(models.Model):
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name="restaurant_requests"
+        null=True,
+        blank=True
     )
 
     name = models.CharField(max_length=255)
@@ -95,19 +96,19 @@ class Restaurant(models.Model):
 
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
     )
 
     name = models.CharField(max_length=255)
 
-    # uploaded image
     logo = models.ImageField(
         upload_to="restaurants/logos/",
         blank=True,
         null=True
     )
 
-    # external image
     logo_url = models.URLField(blank=True, null=True)
 
     address = models.TextField(blank=True)

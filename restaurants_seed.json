@@ -3,7 +3,7 @@
     "model": "restaurants.restaurant",
     "pk": 1,
     "fields": {
-      "owner": 1,
+      "owner": null,
       "name": "Star Kabab & Restaurant",
       "address": "Nazira Bazar",
       "city": "Dhaka",
@@ -18,7 +18,7 @@
     "model": "restaurants.restaurant",
     "pk": 2,
     "fields": {
-      "owner": 1,
+      "owner": null,
       "name": "Haji Biriyani",
       "address": "Nazira Bazar",
       "city": "Dhaka",
@@ -33,7 +33,7 @@
     "model": "restaurants.restaurant",
     "pk": 3,
     "fields": {
-      "owner": 1,
+      "owner": null,
       "name": "Sultan's Dine",
       "address": "Dhanmondi",
       "city": "Dhaka",
@@ -48,7 +48,7 @@
     "model": "restaurants.restaurant",
     "pk": 4,
     "fields": {
-      "owner": 1,
+      "owner": null,
       "name": "Kacchi Bhai",
       "address": "Uttara",
       "city": "Dhaka",
@@ -63,7 +63,7 @@
     "model": "restaurants.restaurant",
     "pk": 5,
     "fields": {
-      "owner": 1,
+      "owner": null,
       "name": "Madchef",
       "address": "Gulshan",
       "city": "Dhaka",
@@ -78,7 +78,7 @@
     "model": "restaurants.restaurant",
     "pk": 6,
     "fields": {
-      "owner": 1,
+      "owner": null,
       "name": "Takeout",
       "address": "Banani",
       "city": "Dhaka",
@@ -93,7 +93,7 @@
     "model": "restaurants.restaurant",
     "pk": 7,
     "fields": {
-      "owner": 1,
+      "owner": null,
       "name": "North End Coffee Roasters",
       "address": "Banani",
       "city": "Dhaka",
@@ -108,7 +108,7 @@
     "model": "restaurants.restaurant",
     "pk": 8,
     "fields": {
-      "owner": 1,
+      "owner": null,
       "name": "Izumi",
       "address": "Gulshan",
       "city": "Dhaka",
@@ -123,7 +123,7 @@
     "model": "restaurants.restaurant",
     "pk": 9,
     "fields": {
-      "owner": 1,
+      "owner": null,
       "name": "Bhooter Adda",
       "address": "Dhanmondi",
       "city": "Dhaka",
@@ -138,7 +138,7 @@
     "model": "restaurants.restaurant",
     "pk": 10,
     "fields": {
-      "owner": 1,
+      "owner": null,
       "name": "Gloria Jean's Coffees",
       "address": "Gulshan",
       "city": "Dhaka",
@@ -153,7 +153,7 @@
     "model": "restaurants.restaurant",
     "pk": 11,
     "fields": {
-      "owner": 1,
+      "owner": null,
       "name": "Chef's Table",
       "address": "Gulshan",
       "city": "Dhaka",
@@ -168,7 +168,7 @@
     "model": "restaurants.restaurant",
     "pk": 12,
     "fields": {
-      "owner": 1,
+      "owner": null,
       "name": "Panshi Restaurant",
       "address": "Uttara",
       "city": "Dhaka",
@@ -183,7 +183,7 @@
     "model": "restaurants.restaurant",
     "pk": 13,
     "fields": {
-      "owner": 1,
+      "owner": null,
       "name": "Handi",
       "address": "Dhanmondi",
       "city": "Dhaka",
@@ -198,7 +198,7 @@
     "model": "restaurants.restaurant",
     "pk": 14,
     "fields": {
-      "owner": 1,
+      "owner": null,
       "name": "Cafe Rio",
       "address": "Dhanmondi",
       "city": "Dhaka",
@@ -213,7 +213,7 @@
     "model": "restaurants.restaurant",
     "pk": 15,
     "fields": {
-      "owner": 1,
+      "owner": null,
       "name": "The Manhattan Fish Market",
       "address": "Banani",
       "city": "Dhaka",
@@ -228,7 +228,7 @@
     "model": "restaurants.restaurant",
     "pk": 16,
     "fields": {
-      "owner": 1,
+      "owner": null,
       "name": "Spicy Ramna",
       "address": "Ramna",
       "city": "Dhaka",
