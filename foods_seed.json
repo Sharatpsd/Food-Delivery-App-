@@ -8,7 +8,7 @@
       "name": "Chillox Classic Burger",
       "description": "Juicy beef patty with cheddar cheese, lettuce, tomato and special Chillox sauce",
       "price": 350,
-      "image_url": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&fit=crop",
+      "image_url": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&auto=format&fit=crop&q=60",
       "is_available": true,
       "created_at": "2026-03-05T12:00:00Z"
     }
@@ -22,7 +22,7 @@
       "name": "Crispy Chicken Wings",
       "description": "12 pieces spicy buffalo wings with blue cheese dip and celery sticks",
       "price": 420,
-      "image_url": "https://images.unsplash.com/photo-1577612486785-865f4e0f848f?w=800&fit=crop",
+      "image_url": "https://images.unsplash.com/photo-1608039829572-78524f79c4c7?w=800&auto=format&fit=crop&q=60",
       "is_available": true,
       "created_at": "2026-03-05T12:05:00Z"
     }
@@ -36,7 +36,7 @@
       "name": "Loaded Cheese Fries",
       "description": "Crispy fries topped with melted cheddar, bacon bits and gravy",
       "price": 280,
-      "image_url": "https://images.unsplash.com/photo-1487934873825-808948b346b9?w=800&fit=crop",
+      "image_url": "https://images.unsplash.com/photo-1541592106381-b31e9674c0e5?w=800&auto=format&fit=crop&q=60",
       "is_available": true,
       "created_at": "2026-03-05T12:10:00Z"
     }
@@ -50,7 +50,7 @@
       "name": "Star Special Seekh Kebab",
       "description": "Juicy minced beef seekh kebabs grilled to perfection with spices",
       "price": 320,
-      "image_url": "https://images.unsplash.com/photo-1603048297194-8f7d9e7f8d3e?w=800&fit=crop",
+      "image_url": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=800&auto=format&fit=crop&q=60",
       "is_available": true,
       "created_at": "2026-03-05T12:15:00Z"
     }
@@ -64,7 +64,7 @@
       "name": "Chicken Tikka Roll",
       "description": "Grilled chicken tikka pieces wrapped in paratha with mint yogurt sauce",
       "price": 220,
-      "image_url": "https://images.unsplash.com/photo-1615484478152-b49737c39917?w=800&fit=crop",
+      "image_url": "https://images.unsplash.com/photo-1628294895950-8c1b4fddc8f5?w=800&auto=format&fit=crop&q=60",
       "is_available": true,
       "created_at": "2026-03-05T12:20:00Z"
     }
@@ -78,7 +78,7 @@
       "name": "Beef Chapli Kebab",
       "description": "Spicy minced beef chapli kebab served with naan and chutney",
       "price": 380,
-      "image_url": "https://images.unsplash.com/photo-1636149113548-951b74e16bd8?w=800&fit=crop",
+      "image_url": "https://images.unsplash.com/photo-1627308594171-16a16825d806?w=800&auto=format&fit=crop&q=60",
       "is_available": true,
       "created_at": "2026-03-05T12:25:00Z"
     }
@@ -92,7 +92,7 @@
       "name": "Sultan's Chicken Biryani",
       "description": "Aromatic basmati rice cooked with tender chicken and saffron",
       "price": 290,
-      "image_url": "https://images.unsplash.com/photo-1632399598709-42b7a9e196c9?w=800&fit=crop",
+      "image_url": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=800&auto=format&fit=crop&q=60",
       "is_available": true,
       "created_at": "2026-03-05T12:30:00Z"
     }
@@ -106,9 +106,11 @@
       "name": "Mutton Rezala",
       "description": "Slow-cooked mutton in creamy white gravy with cashew and yogurt",
       "price": 420,
-      "image_url": "https://images.unsplash.com/photo-1604464562068-caee7c4ef48c?w=800&fit=crop",
+      "image_url": "https://images.unsplash.com/photo-1630409351198-83f8e5c01b3c?w=800&auto=format&fit=crop&q=60",
       "is_available": true,
       "created_at": "2026-03-05T12:35:00Z"
+    }
+  },
   {
     "model": "restaurants.food",
     "pk": 9,
@@ -118,7 +120,7 @@
       "name": "Chicken Tikka Masala",
       "description": "Grilled chicken in rich tomato and butter gravy",
       "price": 340,
-      "image_url": "https://images.unsplash.com/photo-1594188192345-52e9f26b1d66?w=800&fit=crop",
+      "image_url": "https://images.unsplash.com/photo-1565557621836-094a8e607b95?w=800&auto=format&fit=crop&q=60",
       "is_available": true,
       "created_at": "2026-03-05T12:40:00Z"
     }
@@ -132,7 +134,7 @@
       "name": "Madchef Beef Burger",
       "description": "House special beef patty with caramelized onions and truffle mayo",
       "price": 420,
-      "image_url": "https://images.unsplash.com/photo-1571091711937-23a2f40c95d2?w=800&fit=crop",
+      "image_url": "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=800&auto=format&fit=crop&q=60",
       "is_available": true,
       "created_at": "2026-03-05T12:45:00Z"
     }
@@ -146,7 +148,7 @@
       "name": "Truffle Pasta",
       "description": "Creamy mushroom truffle pasta with parmesan and fresh herbs",
       "price": 480,
-      "image_url": "https://images.unsplash.com/photo-1621996346565-e3ddc09ecad7?w=800&fit=crop",
+      "image_url": "https://images.unsplash.com/photo-1551183053-bf91a1d8c6c8?w=800&auto=format&fit=crop&q=60",
       "is_available": true,
       "created_at": "2026-03-05T12:50:00Z"
     }
@@ -160,7 +162,7 @@
       "name": "BBQ Ribs Platter",
       "description": "Slow-cooked pork ribs with house BBQ sauce and coleslaw",
       "price": 580,
-      "image_url": "https://images.unsplash.com/photo-1551218808-94e220e084d1?w=800&fit=crop",
+      "image_url": "https://images.unsplash.com/photo-1544025162-d76694265933?w=800&auto=format&fit=crop&q=60",
       "is_available": true,
       "created_at": "2026-03-05T12:55:00Z"
     }
@@ -174,7 +176,7 @@
       "name": "Kacchi Biryani",
       "description": "Traditional Kolkata kacchi biryani with mutton and special spices",
       "price": 380,
-      "image_url": "https://images.unsplash.com/photo-1603484779267-64e7a2a37f3b?w=800&fit=crop",
+      "image_url": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=800&auto=format&fit=crop&q=60",
       "is_available": true,
       "created_at": "2026-03-05T13:00:00Z"
     }
@@ -188,7 +190,7 @@
       "name": "Mutton Tehari",
       "description": "Fragrant mutton tehari rice with aromatic spices",
       "price": 320,
-      "image_url": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&fit=crop",
+      "image_url": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=800&auto=format&fit=crop&q=60",
       "is_available": true,
       "created_at": "2026-03-05T13:05:00Z"
     }
@@ -202,7 +204,7 @@
       "name": "Chicken Polao",
       "description": "Steamed chicken polao with mild spices and ghee",
       "price": 260,
-      "image_url": "https://images.unsplash.com/photo-1603484779267-64e7a2a37f3b?w=800&fit=crop",
+      "image_url": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=800&auto=format&fit=crop&q=60",
       "is_available": true,
       "created_at": "2026-03-05T13:10:00Z"
     }
@@ -216,7 +218,7 @@
       "name": "California Roll",
       "description": "Crab stick, avocado, cucumber with sesame and soy sauce",
       "price": 450,
-      "image_url": "https://images.unsplash.com/photo-1579586140626-462c9293197e?w=800&fit=crop",
+      "image_url": "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=800&auto=format&fit=crop&q=60",
       "is_available": true,
       "created_at": "2026-03-05T13:15:00Z"
     }
@@ -230,7 +232,7 @@
       "name": "Salmon Nigiri",
       "description": "Fresh salmon slices on vinegared rice balls",
       "price": 520,
-      "image_url": "https://images.unsplash.com/photo-1579586140626-462c9293197e?w=800&fit=crop",
+      "image_url": "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=800&auto=format&fit=crop&q=60",
       "is_available": true,
       "created_at": "2026-03-05T13:20:00Z"
     }
@@ -244,7 +246,7 @@
       "name": "Tempura Prawns",
       "description": "Crispy tempura fried prawns with tentsuyu dipping sauce",
       "price": 380,
-      "image_url": "https://images.unsplash.com/photo-1551218808-94e220e084d1?w=800&fit=crop",
+      "image_url": "https://images.unsplash.com/photo-1615361200164-c8b10c574a8e?w=800&auto=format&fit=crop&q=60",
       "is_available": true,
       "created_at": "2026-03-05T13:25:00Z"
     }
@@ -258,7 +260,7 @@
       "name": "Handi Chicken Biryani",
       "description": "Clay pot cooked chicken biryani with layered spices",
       "price": 340,
-      "image_url": "https://images.unsplash.com/photo-1603484779267-64e7a2a37f3b?w=800&fit=crop",
+      "image_url": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=800&auto=format&fit=crop&q=60",
       "is_available": true,
       "created_at": "2026-03-05T13:30:00Z"
     }
@@ -272,7 +274,7 @@
       "name": "Chicken Handi",
       "description": "Tender chicken pieces cooked in traditional handi with yogurt",
       "price": 360,
-      "image_url": "https://images.unsplash.com/photo-1594188192345-52e9f26b1d66?w=800&fit=crop",
+      "image_url": "https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=800&auto=format&fit=crop&q=60",
       "is_available": true,
       "created_at": "2026-03-05T13:35:00Z"
     }
@@ -286,7 +288,7 @@
       "name": "Mutton Korma",
       "description": "Rich mutton korma slow cooked with nuts and cream",
       "price": 440,
-      "image_url": "https://images.unsplash.com/photo-1604464562068-caee7c4ef48c?w=800&fit=crop",
+      "image_url": "https://images.unsplash.com/photo-1630409351198-83f8e5c01b3c?w=800&auto=format&fit=crop&q=60",
       "is_available": true,
       "created_at": "2026-03-05T13:40:00Z"
     }
@@ -300,7 +302,7 @@
       "name": "Cheez Loaded Pizza",
       "description": "Double cheese pizza with mozzarella, cheddar and parmesan",
       "price": 520,
-      "image_url": "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&fit=crop",
+      "image_url": "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&auto=format&fit=crop&q=60",
       "is_available": true,
       "created_at": "2026-03-05T13:45:00Z"
     }
@@ -314,7 +316,7 @@
       "name": "Pepperoni Pizza",
       "description": "Classic pepperoni pizza with extra cheese and oregano",
       "price": 480,
-      "image_url": "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&fit=crop",
+      "image_url": "https://images.unsplash.com/photo-1628840042765-356cdaad9fcc?w=800&auto=format&fit=crop&q=60",
       "is_available": true,
       "created_at": "2026-03-05T13:50:00Z"
     }
@@ -328,7 +330,7 @@
       "name": "Garlic Breadsticks",
       "description": "Crispy garlic butter breadsticks with marinara dip",
       "price": 220,
-      "image_url": "https://images.unsplash.com/photo-1528137878563-812b5ba6f89f?w=800&fit=crop",
+      "image_url": "https://images.unsplash.com/photo-1619096252214-ef06c45683e3?w=800&auto=format&fit=crop&q=60",
       "is_available": true,
       "created_at": "2026-03-05T13:55:00Z"
     }
@@ -342,7 +344,7 @@
       "name": "Panshi Chicken Fried Rice",
       "description": "Fragrant jasmine rice stir-fried with chicken and vegetables",
       "price": 320,
-      "image_url": "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=800&fit=crop",
+      "image_url": "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=800&auto=format&fit=crop&q=60",
       "is_available": true,
       "created_at": "2026-03-05T14:00:00Z"
     }
@@ -356,7 +358,7 @@
       "name": "Hakka Noodles",
       "description": "Stir-fried noodles with cabbage, carrot and soy sauce",
       "price": 280,
-      "image_url": "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=800&fit=crop",
+      "image_url": "https://images.unsplash.com/photo-1626800478097-9e0c9e63b0d5?w=800&auto=format&fit=crop&q=60",
       "is_available": true,
       "created_at": "2026-03-05T14:05:00Z"
     }
@@ -370,7 +372,7 @@
       "name": "Chicken Chilli",
       "description": "Spicy Indo-Chinese style chicken chilli with green peppers",
       "price": 380,
-      "image_url": "https://images.unsplash.com/photo-1604464562068-caee7c4ef48c?w=800&fit=crop",
+      "image_url": "https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=800&auto=format&fit=crop&q=60",
       "is_available": true,
       "created_at": "2026-03-05T14:10:00Z"
     }
@@ -384,7 +386,7 @@
       "name": "BBQ Full Chicken",
       "description": "Whole BBQ chicken marinated with special spices and grilled",
       "price": 650,
-      "image_url": "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=800&fit=crop",
+      "image_url": "https://images.unsplash.com/photo-1599921841143-819496fe0466?w=800&auto=format&fit=crop&q=60",
       "is_available": true,
       "created_at": "2026-03-05T14:15:00Z"
     }
@@ -398,7 +400,7 @@
       "name": "BBQ Beef Ribs",
       "description": "Tender beef ribs slow cooked with smoky BBQ sauce",
       "price": 580,
-      "image_url": "https://images.unsplash.com/photo-1551218808-94e220e084d1?w=800&fit=crop",
+      "image_url": "https://images.unsplash.com/photo-1544025162-d76694265933?w=800&auto=format&fit=crop&q=60",
       "is_available": true,
       "created_at": "2026-03-05T14:20:00Z"
     }
@@ -412,7 +414,7 @@
       "name": "BBQ Lamb Chops",
       "description": "Juicy lamb chops marinated and grilled with BBQ spices",
       "price": 720,
-      "image_url": "https://images.unsplash.com/photo-1603048297194-8f7d9e7f8d3e?w=800&fit=crop",
+      "image_url": "https://images.unsplash.com/photo-1553350019-6b1d0703a0e8?w=800&auto=format&fit=crop&q=60",
       "is_available": true,
       "created_at": "2026-03-05T14:25:00Z"
     }
@@ -426,7 +428,7 @@
       "name": "Takeout Sushi Combo",
       "description": "8 pieces mixed sushi rolls with salmon, tuna and avocado",
       "price": 620,
-      "image_url": "https://images.unsplash.com/photo-1579586140626-462c9293197e?w=800&fit=crop",
+      "image_url": "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=800&auto=format&fit=crop&q=60",
       "is_available": true,
       "created_at": "2026-03-05T14:30:00Z"
     }
