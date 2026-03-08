@@ -41,6 +41,7 @@
       "created_at": "2026-03-05T12:10:00Z"
     }
   },
+
   {
     "model": "restaurants.food",
     "pk": 4,
@@ -55,6 +56,7 @@
       "created_at": "2026-03-05T12:15:00Z"
     }
   },
+
   {
     "model": "restaurants.food",
     "pk": 5,
@@ -69,6 +71,7 @@
       "created_at": "2026-03-05T12:20:00Z"
     }
   },
+
   {
     "model": "restaurants.food",
     "pk": 6,
@@ -83,6 +86,7 @@
       "created_at": "2026-03-05T12:25:00Z"
     }
   },
+
   {
     "model": "restaurants.food",
     "pk": 7,
@@ -97,6 +101,7 @@
       "created_at": "2026-03-05T12:30:00Z"
     }
   },
+
   {
     "model": "restaurants.food",
     "pk": 8,
@@ -111,6 +116,7 @@
       "created_at": "2026-03-05T12:35:00Z"
     }
   },
+
   {
     "model": "restaurants.food",
     "pk": 9,
@@ -125,6 +131,7 @@
       "created_at": "2026-03-05T12:40:00Z"
     }
   },
+
   {
     "model": "restaurants.food",
     "pk": 10,
@@ -139,165 +146,12 @@
       "created_at": "2026-03-05T12:45:00Z"
     }
   },
-  {
-    "model": "restaurants.food",
-    "pk": 11,
-    "fields": {
-      "restaurant": 9,
-      "category": 4,
-      "name": "Truffle Pasta",
-      "description": "Creamy mushroom truffle pasta with parmesan and fresh herbs",
-      "price": 480,
-      "image_url": "https://images.unsplash.com/photo-1551183053-bf91a1d8c6c8?w=800&auto=format&fit=crop&q=60",
-      "is_available": true,
-      "created_at": "2026-03-05T12:50:00Z"
-    }
-  },
-  {
-    "model": "restaurants.food",
-    "pk": 12,
-    "fields": {
-      "restaurant": 9,
-      "category": 4,
-      "name": "BBQ Ribs Platter",
-      "description": "Slow-cooked pork ribs with house BBQ sauce and coleslaw",
-      "price": 580,
-      "image_url": "https://images.unsplash.com/photo-1544025162-d76694265933?w=800&auto=format&fit=crop&q=60",
-      "is_available": true,
-      "created_at": "2026-03-05T12:55:00Z"
-    }
-  },
-  {
-    "model": "restaurants.food",
-    "pk": 13,
-    "fields": {
-      "restaurant": 10,
-      "category": 3,
-      "name": "Kacchi Biryani",
-      "description": "Traditional Kolkata kacchi biryani with mutton and special spices",
-      "price": 380,
-      "image_url": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=800&auto=format&fit=crop&q=60",
-      "is_available": true,
-      "created_at": "2026-03-05T13:00:00Z"
-    }
-  },
-  {
-    "model": "restaurants.food",
-    "pk": 14,
-    "fields": {
-      "restaurant": 10,
-      "category": 3,
-      "name": "Mutton Tehari",
-      "description": "Fragrant mutton tehari rice with aromatic spices",
-      "price": 320,
-      "image_url": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=800&auto=format&fit=crop&q=60",
-      "is_available": true,
-      "created_at": "2026-03-05T13:05:00Z"
-    }
-  },
-  {
-    "model": "restaurants.food",
-    "pk": 15,
-    "fields": {
-      "restaurant": 10,
-      "category": 3,
-      "name": "Chicken Polao",
-      "description": "Steamed chicken polao with mild spices and ghee",
-      "price": 260,
-      "image_url": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=800&auto=format&fit=crop&q=60",
-      "is_available": true,
-      "created_at": "2026-03-05T13:10:00Z"
-    }
-  },
-  {
-    "model": "restaurants.food",
-    "pk": 16,
-    "fields": {
-      "restaurant": 12,
-      "category": 5,
-      "name": "California Roll",
-      "description": "Crab stick, avocado, cucumber with sesame and soy sauce",
-      "price": 450,
-      "image_url": "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=800&auto=format&fit=crop&q=60",
-      "is_available": true,
-      "created_at": "2026-03-05T13:15:00Z"
-    }
-  },
-  {
-    "model": "restaurants.food",
-    "pk": 17,
-    "fields": {
-      "restaurant": 12,
-      "category": 5,
-      "name": "Salmon Nigiri",
-      "description": "Fresh salmon slices on vinegared rice balls",
-      "price": 520,
-      "image_url": "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=800&auto=format&fit=crop&q=60",
-      "is_available": true,
-      "created_at": "2026-03-05T13:20:00Z"
-    }
-  },
-  {
-    "model": "restaurants.food",
-    "pk": 18,
-    "fields": {
-      "restaurant": 12,
-      "category": 5,
-      "name": "Tempura Prawns",
-      "description": "Crispy tempura fried prawns with tentsuyu dipping sauce",
-      "price": 380,
-      "image_url": "https://images.unsplash.com/photo-1615361200164-c8b10c574a8e?w=800&auto=format&fit=crop&q=60",
-      "is_available": true,
-      "created_at": "2026-03-05T13:25:00Z"
-    }
-  },
-  {
-    "model": "restaurants.food",
-    "pk": 19,
-    "fields": {
-      "restaurant": 15,
-      "category": 3,
-      "name": "Handi Chicken Biryani",
-      "description": "Clay pot cooked chicken biryani with layered spices",
-      "price": 340,
-      "image_url": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=800&auto=format&fit=crop&q=60",
-      "is_available": true,
-      "created_at": "2026-03-05T13:30:00Z"
-    }
-  },
-  {
-    "model": "restaurants.food",
-    "pk": 20,
-    "fields": {
-      "restaurant": 15,
-      "category": 3,
-      "name": "Chicken Handi",
-      "description": "Tender chicken pieces cooked in traditional handi with yogurt",
-      "price": 360,
-      "image_url": "https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=800&auto=format&fit=crop&q=60",
-      "is_available": true,
-      "created_at": "2026-03-05T13:35:00Z"
-    }
-  },
-  {
-    "model": "restaurants.food",
-    "pk": 21,
-    "fields": {
-      "restaurant": 15,
-      "category": 3,
-      "name": "Mutton Korma",
-      "description": "Rich mutton korma slow cooked with nuts and cream",
-      "price": 440,
-      "image_url": "https://images.unsplash.com/photo-1630409351198-83f8e5c01b3c?w=800&auto=format&fit=crop&q=60",
-      "is_available": true,
-      "created_at": "2026-03-05T13:40:00Z"
-    }
-  },
+
   {
     "model": "restaurants.food",
     "pk": 22,
     "fields": {
-      "restaurant": 17,
+      "restaurant": 7,
       "category": 1,
       "name": "Cheez Loaded Pizza",
       "description": "Double cheese pizza with mozzarella, cheddar and parmesan",
@@ -307,11 +161,12 @@
       "created_at": "2026-03-05T13:45:00Z"
     }
   },
+
   {
     "model": "restaurants.food",
     "pk": 23,
     "fields": {
-      "restaurant": 17,
+      "restaurant": 7,
       "category": 1,
       "name": "Pepperoni Pizza",
       "description": "Classic pepperoni pizza with extra cheese and oregano",
@@ -321,11 +176,12 @@
       "created_at": "2026-03-05T13:50:00Z"
     }
   },
+
   {
     "model": "restaurants.food",
     "pk": 24,
     "fields": {
-      "restaurant": 17,
+      "restaurant": 7,
       "category": 1,
       "name": "Garlic Breadsticks",
       "description": "Crispy garlic butter breadsticks with marinara dip",
@@ -333,104 +189,6 @@
       "image_url": "https://images.unsplash.com/photo-1619096252214-ef06c45683e3?w=800&auto=format&fit=crop&q=60",
       "is_available": true,
       "created_at": "2026-03-05T13:55:00Z"
-    }
-  },
-  {
-    "model": "restaurants.food",
-    "pk": 25,
-    "fields": {
-      "restaurant": 18,
-      "category": 6,
-      "name": "Panshi Chicken Fried Rice",
-      "description": "Fragrant jasmine rice stir-fried with chicken and vegetables",
-      "price": 320,
-      "image_url": "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=800&auto=format&fit=crop&q=60",
-      "is_available": true,
-      "created_at": "2026-03-05T14:00:00Z"
-    }
-  },
-  {
-    "model": "restaurants.food",
-    "pk": 26,
-    "fields": {
-      "restaurant": 18,
-      "category": 6,
-      "name": "Hakka Noodles",
-      "description": "Stir-fried noodles with cabbage, carrot and soy sauce",
-      "price": 280,
-      "image_url": "https://images.unsplash.com/photo-1626800478097-9e0c9e63b0d5?w=800&auto=format&fit=crop&q=60",
-      "is_available": true,
-      "created_at": "2026-03-05T14:05:00Z"
-    }
-  },
-  {
-    "model": "restaurants.food",
-    "pk": 27,
-    "fields": {
-      "restaurant": 18,
-      "category": 6,
-      "name": "Chicken Chilli",
-      "description": "Spicy Indo-Chinese style chicken chilli with green peppers",
-      "price": 380,
-      "image_url": "https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=800&auto=format&fit=crop&q=60",
-      "is_available": true,
-      "created_at": "2026-03-05T14:10:00Z"
-    }
-  },
-  {
-    "model": "restaurants.food",
-    "pk": 28,
-    "fields": {
-      "restaurant": 21,
-      "category": 7,
-      "name": "BBQ Full Chicken",
-      "description": "Whole BBQ chicken marinated with special spices and grilled",
-      "price": 650,
-      "image_url": "https://images.unsplash.com/photo-1599921841143-819496fe0466?w=800&auto=format&fit=crop&q=60",
-      "is_available": true,
-      "created_at": "2026-03-05T14:15:00Z"
-    }
-  },
-  {
-    "model": "restaurants.food",
-    "pk": 29,
-    "fields": {
-      "restaurant": 21,
-      "category": 7,
-      "name": "BBQ Beef Ribs",
-      "description": "Tender beef ribs slow cooked with smoky BBQ sauce",
-      "price": 580,
-      "image_url": "https://images.unsplash.com/photo-1544025162-d76694265933?w=800&auto=format&fit=crop&q=60",
-      "is_available": true,
-      "created_at": "2026-03-05T14:20:00Z"
-    }
-  },
-  {
-    "model": "restaurants.food",
-    "pk": 30,
-    "fields": {
-      "restaurant": 21,
-      "category": 7,
-      "name": "BBQ Lamb Chops",
-      "description": "Juicy lamb chops marinated and grilled with BBQ spices",
-      "price": 720,
-      "image_url": "https://images.unsplash.com/photo-1553350019-6b1d0703a0e8?w=800&auto=format&fit=crop&q=60",
-      "is_available": true,
-      "created_at": "2026-03-05T14:25:00Z"
-    }
-  },
-  {
-    "model": "restaurants.food",
-    "pk": 31,
-    "fields": {
-      "restaurant": 12,
-      "category": 5,
-      "name": "Takeout Sushi Combo",
-      "description": "8 pieces mixed sushi rolls with salmon, tuna and avocado",
-      "price": 620,
-      "image_url": "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=800&auto=format&fit=crop&q=60",
-      "is_available": true,
-      "created_at": "2026-03-05T14:30:00Z"
     }
   }
 ]
