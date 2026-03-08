@@ -254,3 +254,15 @@ SSLCOMMERZ_STORE_PASSWORD = config(
     ),
 )
 SSLCOMMERZ_IS_SANDBOX = config("SSLCOMMERZ_IS_SANDBOX", cast=bool, default=True)
+
+import os
+from django.contrib.auth import get_user_model
+
+if os.environ.get("RESET_ADMIN") == "1":
+    User = get_user_model()
+    if not User.objects.filter(username="admin").exists():
+        User.objects.create_superuser(
+            "admin",
+            "admin@gmail.com",
+            "admin123"
+        )
