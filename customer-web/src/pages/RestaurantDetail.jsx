@@ -108,10 +108,10 @@ export default function RestaurantDetail() {
     );
   }
 
-  const restaurantImageSources = buildImageSources(
-    [restaurant.logo_url, restaurant.logo_final, restaurant.logo],
-    getLocalRestaurantFallback(restaurant.name, restaurant.id)
-  );
+ const restaurantImageSources = buildImageSources(
+  [restaurant.logo_final, restaurant.logo_url, restaurant.logo],
+  getLocalRestaurantFallback(restaurant.name, restaurant.id)
+);
 
   return (
     <div className="min-h-screen bg-[#111214]">
@@ -174,7 +174,7 @@ export default function RestaurantDetail() {
 
             <div className="flex items-center gap-2">
               <Star className="text-yellow-400" fill="currentColor" />
-              <span className="font-semibold">{restaurant.rating}</span>
+              <span className="font-semibold">{restaurant.rating || "4.5"}</span>
             </div>
 
             <p className="mt-3 text-gray-300">{restaurant.theme}</p>
@@ -188,7 +188,7 @@ export default function RestaurantDetail() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {foods.map((item) => {
             const foodImageSources = buildImageSources(
-              [item.image_url, item.image_final, item.image],
+             [item.image_final, item.image_url, item.image],
               getLocalFoodFallback(item.name, item.id)
             );
             const currentPrice = toSafeNumber(item.price, 0);

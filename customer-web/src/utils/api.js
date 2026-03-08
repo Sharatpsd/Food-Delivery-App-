@@ -184,9 +184,10 @@ export const getRestaurantDetail = async (id) => {
 };
 
 export const getRestaurantFoods = async (restaurantId) => {
-  const res = await requestPublicWithFallback(
-    `/restaurants/foods/?restaurant=${restaurantId}`
-  );
+  const res = await requestPublicWithFallback(`/restaurants/foods/`, {
+    params: { restaurant: restaurantId },
+  });
+
   return { data: res.data };
 };
 
