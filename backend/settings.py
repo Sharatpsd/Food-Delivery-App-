@@ -5,7 +5,7 @@ import os
 import dj_database_url
 import cloudinary
 
-BASE_DIR = Path(**file**).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 def _to_bool(value, default=False):
 if isinstance(value, bool):
