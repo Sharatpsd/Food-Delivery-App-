@@ -1,97 +1,163 @@
-# 🍔 Bite – Full-Stack Food Delivery Platform
+# 🍔 Bite – Full Stack Food Delivery Platform
 
-Modern, scalable food delivery system tailored for the Bangladesh market.
+Modern **Food Delivery Web Application** built to simulate a real-world food delivery system similar to Foodpanda or Uber Eats for the Bangladesh market.
 
-**Frontend Live** → https://food-delivery-frontend-mktt.onrender.com  
-**Backend API**   → https://food-delivery-app-1-ihcm.onrender.com
-
-![Hero / Landing Page](assets/bite-landing.png)
-*Clean, mobile-first interface built for fast food discovery & ordering*
+This project demonstrates **full-stack architecture, REST API design, authentication, cart logic, checkout flow, and restaurant onboarding system.**
 
 ---
 
-## 🌟 Project Highlights
+# 🚀 Live Project
 
-Bite connects hungry customers with local restaurants through a production-grade full-stack application.
+🌐 **Frontend Live:**  
+https://food-delivery-frontend-mktt.onrender.com
 
-Key capabilities:
+⚙ **Backend API:**  
+https://food-delivery-app-1-ihcm.onrender.com
 
-- Seamless customer ordering experience
-- Restaurant partner onboarding & menu management
-- Secure JWT-based authentication
-- Real-time cart & order calculations
-- RESTful API architecture
-- Ready for cloud deployment (Render + Cloudinary)
-
-Demonstrates clean separation of concerns, modern frontend tooling and production-ready backend practices.
+💻 **GitHub Repository:**  
+https://github.com/Sharatpsd/Food-Delivery-App-.git
 
 ---
 
-## 📸 Screenshots
+# 📸 Project Screenshots
 
-| Section                  | Preview                              |
-|--------------------------|--------------------------------------|
-| **Landing Page**         | ![Landing](assets/bite-landing.png)   |
-| **Categories & Filters** | ![Category](assets/category.png)      |
-| **Login / Auth**         | ![Sign In](assets/signin.png)         |
-| **Become a Partner**     | ![Partner](assets/partner.png)        |
-| **Contact Section**      | ![Contact](assets/contact.png)        |
+## Landing Page
+![Landing](screenshoot/Bite%202.png)
 
----
+## Restaurant Listing
+![Restaurants](screenshoot/Bite%203.png)
 
-## ✨ Features
+## Menu Section
+![Menu](screenshoot/bite_4.png)
 
-### 👤 Customer Experience
-- Browse restaurants by category & cuisine
-- Real-time cart with dynamic pricing & quantity controls
-- Secure login/signup with **JWT**
-- Order placement & history view
-- Fully responsive — mobile-first design
+## Food Items
+![Food](screenshoot/Bite%205.png)
 
-### 🏪 Restaurant Partner Dashboard
-- Easy restaurant registration flow
-- Menu & item management (extendable)
-- View and manage incoming orders
-- Zero-commission beta model support
+## Cart System
+![Cart](screenshoot/bite%206.png)
 
-### 🔐 Security & Foundation
-- JWT token authentication
-- Role-based access (customer / restaurant / future: delivery)
-- Input validation & proper error handling
+## Checkout Process
+![Checkout](screenshoot/Bie%207.png)
+
+## User Login
+![Login](screenshoot/Bite%208.png)
+
+## User Registration
+![Register](screenshoot/Bite%209.png)
+
+## Restaurant Partner Application
+![Partner](screenshoot/Bite_1%20copy.png)
 
 ---
 
-## 🛠 Tech Stack
+# 🌟 Project Overview
 
-| Layer          | Technology                          | Purpose / Notes                              |
-|----------------|-------------------------------------|----------------------------------------------|
-| **Frontend**   | React 18 • Vite                     | Fast development & build tool                |
-| **Styling**    | Tailwind CSS                        | Utility-first, highly customizable           |
-| **HTTP Client**| Axios                               | API communication                            |
-| **Icons**      | Lucide React                        | Clean, modern icon set                       |
-| **Backend**    | Django 5+ • Django REST Framework   | Robust API & ORM                             |
-| **Auth**       | djangorestframework-simplejwt       | Secure token-based auth                      |
-| **Database**   | PostgreSQL (prod) • SQLite (dev)    | Reliable & easy local setup                  |
-| **Media**      | Cloudinary                          | Image upload & optimization                  |
-| **Deployment** | Render                              | Frontend + Backend + Gunicorn                |
+**Bite** is a modern **food delivery platform prototype** designed to simulate the workflow of real-world food delivery services.
+
+Users can:
+
+• Browse restaurants  
+• Explore menus  
+• Add food items to cart  
+• Complete checkout process  
+• View order summary  
+
+Restaurant owners can:
+
+• Apply to join the platform  
+• Submit restaurant details  
+• Upload business information  
+
+This project demonstrates **clean frontend-backend architecture and scalable API design.**
 
 ---
 
-## 🚀 Quick Start (Local Development)
+# ✨ Core Features
 
-### Backend
+## 👤 Customer Features
+
+- User Registration & Login
+- Google Authentication Integration
+- Browse Restaurants
+- Restaurant Menu System
+- Add to Cart Functionality
+- Quantity Control (+ / -)
+- Real-time Price Calculation
+- Multi-Step Checkout System
+- Order Summary Page
+- Responsive UI Design
+
+---
+
+## 🏪 Restaurant Partner System
+
+Restaurant owners can apply to become partners by submitting:
+
+- Restaurant Name
+- Phone Number
+- Email Address
+- Restaurant Address
+- Restaurant Logo
+- Business License
+
+This simulates **real-world restaurant onboarding systems used in delivery platforms.**
+
+---
+
+# 🛠 Tech Stack
+
+## Frontend
+
+- React
+- Vite
+- Tailwind CSS
+- Axios
+- Lucide React Icons
+
+Purpose:
+Fast UI development with modern responsive design.
+
+---
+
+## Backend
+
+- Django
+- Django REST Framework
+- JWT Authentication
+
+Purpose:
+Secure and scalable REST API architecture.
+
+---
+
+## Database
+
+- PostgreSQL (Production)
+- SQLite (Development)
+
+---
+
+## Media Management
+
+- Cloudinary
+
+Used for:
+- Image upload
+- Restaurant logos
+- Media optimization
+
+---
+
+## Deployment
+
+- Render (Frontend + Backend hosting)
+
+---
+
+# ⚙ Local Development Setup
+
+## 1️⃣ Clone Repository
 
 ```bash
 git clone https://github.com/Sharatpsd/Food-Delivery-App-.git
-cd Food-Delivery-App-/backend
-
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate    # Linux/macOS
-# or venv\Scripts\activate   # Windows
-
-pip install -r requirements.txt
-
-# Apply migrations & start server
-python manage.py migrate
-python manage.py runserver
+cd Food-Delivery-App-
