@@ -18,37 +18,40 @@ https://food-delivery-app-1-ihcm.onrender.com
 https://github.com/Sharatpsd/Food-Delivery-App-.git
 
 ---
-
 # 📸 Project Screenshots
 
-## Landing Page
+## 1️⃣ Landing / Hero Section
 ![Landing](screenshoot/Bite%202.png)
 
-## Restaurant Listing
+## 2️⃣ Restaurant Listing
 ![Restaurants](screenshoot/Bite%203.png)
 
-## Menu Section
+## 3️⃣ Menu Section
 ![Menu](screenshoot/bite_4.png)
 
-## Food Items
+## 4️⃣ Menu Items View
 ![Food](screenshoot/Bite%205.png)
 
-## Cart System
+## 5️⃣ Cart System
 ![Cart](screenshoot/bite%206.png)
 
-## Checkout Process
+## 6️⃣ Checkout Page
 ![Checkout](screenshoot/Bie%207.png)
 
-## User Login
+## 7️⃣ Login Page
 ![Login](screenshoot/Bite%208.png)
 
-## User Registration
-![Register](screenshoot/Bite%209.png)
+## 8️⃣ Signup Page
+![Signup](screenshoot/Bite%209.png)
 
-## Restaurant Partner Application
+## 9️⃣ Restaurant Partner Application
 ![Partner](screenshoot/Bite_1%20copy.png)
 
----
+## 🔟 Additional UI Screen
+![Extra](screenshoot/bite_1.png)
+
+## 1️⃣1️⃣ UI Component Preview
+![Extra](screenshoot/bite_8.png)
 
 # 🌟 Project Overview
 
