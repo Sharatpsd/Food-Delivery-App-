@@ -21,7 +21,7 @@ https://github.com/Sharatpsd/Food-Delivery-App-.git
 # 📸 Project Screenshots
 
 ## 1️⃣ Landing / Hero Section
-![Landing](screenshoot/Bite%202.png)
+![Landing](screenshoot/Bite_1%20copy.png)
 
 ## 2️⃣ Restaurant Listing
 ![Restaurants](screenshoot/Bite%203.png)
