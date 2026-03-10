@@ -27,7 +27,7 @@ https://github.com/Sharatpsd/Food-Delivery-App-
 
 | | | |
 |---|---|---|
-| ![](screenshoot/Bite_1%20copy.png) | ![](screenshoot/Bite%202.png) | ![](screenshoot/Bite%203.png) |
+| ![](screenshoot/bite_1.png) | ![](screenshoot/Bite%202.png) | ![](screenshoot/Bite%203.png) |
 | ![](screenshoot/bite_4.png) | ![](screenshoot/Bite%205.png) | ![](screenshoot/bite%206.png) |
 | ![](screenshoot/Bie%207.png) | ![](screenshoot/Bite%208.png) | ![](screenshoot/Bite%209.png) |
 | ![](screenshoot/bite_1.png) | ![](screenshoot/bite_8.png) |  |
