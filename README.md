@@ -1,6 +1,6 @@
 # 🍔 Bite – Full Stack Food Delivery Platform
 
-Modern **Food Delivery Web Application** built to simulate a real-world food delivery system like Foodpanda or Uber Eats, tailored for the Bangladesh market.
+Modern **Food Delivery Web Application** built to simulate a real-world food delivery system like **Foodpanda or Uber Eats**, tailored for the Bangladesh market.
 
 This project showcases **full-stack architecture**, **REST API design**, **JWT authentication**, **cart & checkout logic**, and **restaurant onboarding system**.
 
@@ -10,75 +10,138 @@ This project showcases **full-stack architecture**, **REST API design**, **JWT a
 
 ---
 
-## 🚀 Live Project
+# 🚀 Live Project
 
-🌐 **Frontend Live:** [https://food-delivery-frontend-mktt.onrender.com](https://food-delivery-frontend-mktt.onrender.com)  
-⚙ **Backend API:** [https://food-delivery-app-1-ihcm.onrender.com](https://food-delivery-app-1-ihcm.onrender.com)  
-💻 **GitHub Repository:** [https://github.com/Sharatpsd/Food-Delivery-App-](https://github.com/Sharatpsd/Food-Delivery-App-)  
+🌐 **Frontend Live:**  
+https://food-delivery-frontend-mktt.onrender.com  
+
+⚙ **Backend API:**  
+https://food-delivery-app-1-ihcm.onrender.com  
+
+💻 **GitHub Repository:**  
+https://github.com/Sharatpsd/Food-Delivery-App-
 
 ---
 
-## 📸 Project Screenshots
+# 📸 Project Screenshots
 
-| Home & Restaurants | Menu & Cart | Checkout Flow |
+| | | |
 |---|---|---|
-| ![Home](screenshoot/Bite_1%20copy.png) | ![Menu](screenshoot/Bite%203.png) | ![Checkout](screenshoot/bite_4.png) |
-
-| Order Summary | Restaurant Onboarding | Mobile Responsive |
-|---|---|---|
-| ![Summary](screenshoot/Bite%205.png) | ![Onboarding](screenshoot/bite%206.png) | ![Mobile](screenshoot/Bite%208.png) |
-
-*(Add more screenshots as needed)*
+| ![](screenshoot/Bite_1%20copy.png) | ![](screenshoot/Bite%202.png) | ![](screenshoot/Bite%203.png) |
+| ![](screenshoot/bite_4.png) | ![](screenshoot/Bite%205.png) | ![](screenshoot/bite%206.png) |
+| ![](screenshoot/Bie%207.png) | ![](screenshoot/Bite%208.png) | ![](screenshoot/Bite%209.png) |
+| ![](screenshoot/bite_1.png) | ![](screenshoot/bite_8.png) |  |
 
 ---
 
-## 🌟 Project Overview
+# 🌟 Project Overview
 
-**Bite** is a production-ready **food delivery platform prototype** that simulates complete workflows of services like Foodpanda.
+**Bite** is a modern **food delivery platform prototype** designed to simulate the workflow of real-world delivery platforms.
 
-**Customer Journey:**
-- Browse restaurants by location/category
-- Explore detailed menus with images
-- Add items to cart with quantity controls
-- Multi-step checkout with real-time pricing
-- Order tracking & summary
+The system allows users to browse restaurants, explore menus, add food to cart, and complete a checkout process.
 
-**Restaurant Partners:**
-- Self-service onboarding application
-- Document submission (logo, license, details)
-- Admin approval workflow
+Restaurant owners can also apply to become partners through a dedicated onboarding system.
 
-Built with **clean separation of concerns**, **responsive design**, and **scalable APIs**. [web:11]
+The architecture follows a **clean separation between frontend and backend**, making the platform scalable and maintainable.
 
 ---
 
-## ✨ Core Features
+# ✨ Core Features
 
 ### 👤 Customer Features
-- ✅ User Registration/Login with JWT
-- ✅ Google OAuth Integration
-- ✅ Restaurant Discovery & Search
-- ✅ Dynamic Menu Browsing
-- ✅ Shopping Cart (Add/Remove/Quantity)
-- ✅ Real-time Subtotal Calculation
-- ✅ Multi-Step Checkout (Address + Payment)
-- ✅ Order History & Status
-- ✅ Fully Responsive (Mobile-First)
 
-### 🏪 Restaurant Onboarding
-- ✅ Partner Registration Form
-- ✅ File Uploads (Logo, License via Cloudinary)
-- ✅ Address & Contact Validation
-- ✅ Admin Approval Dashboard (Future)
-
-### 🔐 Security & Auth
-- JWT Token-based Authentication
-- Password Hashing (Django)
-- Google Social Login
-- Input Validation & Sanitization
+- User Registration & Login
+- Google Authentication Integration
+- Browse Restaurants
+- Dynamic Menu Browsing
+- Add to Cart Functionality
+- Quantity Control (+ / −)
+- Real-time Price Calculation
+- Multi-Step Checkout System
+- Order Summary Page
+- Fully Responsive UI
 
 ---
 
-## 🛠 Tech Stack
+### 🏪 Restaurant Partner System
+
+Restaurant owners can apply to join the platform by submitting:
+
+- Restaurant Name
+- Phone Number
+- Email Address
+- Restaurant Address
+- Restaurant Logo
+- Business License
+
+This simulates the **restaurant onboarding workflow used by real delivery platforms**.
+
+---
+
+### 🔐 Security
+
+- JWT Token Authentication
+- Secure Password Hashing
+- Google OAuth Login
+- Input Validation
+
+---
+
+# 🛠 Tech Stack
 
 ### Frontend
+
+- React
+- Vite
+- Tailwind CSS
+- Axios
+- Lucide React Icons
+
+Purpose:  
+Fast and modern UI with responsive design.
+
+---
+
+### Backend
+
+- Django
+- Django REST Framework
+- JWT Authentication
+
+Purpose:  
+Secure REST API architecture.
+
+---
+
+### Database
+
+- PostgreSQL (Production)
+- SQLite (Development)
+
+---
+
+### Media Management
+
+- Cloudinary
+
+Used for:
+
+- Image upload
+- Restaurant logos
+- Media optimization
+
+---
+
+### Deployment
+
+- Render (Frontend + Backend hosting)
+
+---
+
+# ⚙ Local Development Setup
+
+### Clone Repository
+
+```bash
+git clone https://github.com/Sharatpsd/Food-Delivery-App-.git
+cd Food-Delivery-App-
