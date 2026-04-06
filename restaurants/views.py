@@ -29,7 +29,7 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
 # Restaurant Join Request API
 # -----------------------------
 class RestaurantRequestViewSet(viewsets.ModelViewSet):
-    queryset = RestaurantRequest.objects.all().order_by("-created_at")
+    queryset = RestaurantRequest.objects.select_related('owner').order_by("-created_at")
     serializer_class = RestaurantRequestSerializer
     permission_classes = [permissions.IsAuthenticated]
     parser_classes = [MultiPartParser, FormParser]
@@ -64,12 +64,15 @@ class RestaurantRequestViewSet(viewsets.ModelViewSet):
 # Delivery Partner Request API
 # -----------------------------
 class DeliveryRequestViewSet(viewsets.ModelViewSet):
-    queryset = DeliveryRequest.objects.all().order_by("-created_at")
+    queryset = DeliveryRequest.objects.select_related('user').order_by("-created_at")
     serializer_class = DeliveryRequestSerializer
     permission_classes = [permissions.IsAuthenticated]
     parser_classes = [MultiPartParser, FormParser]
 
     def perform_create(self, serializer):
+        from rest_framework.exceptions import PermissionDenied
+        if self.request.user.role != 'customer':
+            raise PermissionDenied("Only customers can submit delivery requests.")
         serializer.save(user=self.request.user)
 
 
@@ -77,7 +80,7 @@ class DeliveryRequestViewSet(viewsets.ModelViewSet):
 # Public Restaurants API
 # -----------------------------
 class RestaurantViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Restaurant.objects.filter(is_active=True).order_by("-created_at")
+    queryset = Restaurant.objects.filter(is_active=True).select_related('owner').order_by("-created_at")
     serializer_class = RestaurantSerializer
     permission_classes = [permissions.AllowAny]
 
@@ -85,15 +88,15 @@ class RestaurantViewSet(viewsets.ReadOnlyModelViewSet):
 # -----------------------------
 # Food API
 # -----------------------------
-class FoodViewSet(viewsets.ModelViewSet):
-    queryset = Food.objects.all().order_by("-created_at")
+class FoodViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Food.objects.select_related('restaurant').order_by("-created_at")
     serializer_class = FoodSerializer
     permission_classes = [permissions.AllowAny]
     parser_classes = [MultiPartParser, FormParser]
 
     def get_queryset(self):
 
-        queryset = Food.objects.filter(is_available=True)
+        queryset = Food.objects.filter(is_available=True).select_related('restaurant')
 
         restaurant_id = self.request.query_params.get("restaurant")
 

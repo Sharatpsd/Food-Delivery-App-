@@ -27,7 +27,12 @@ class CustomerOrderListView(generics.ListAPIView):
     serializer_class = OrderSerializer
 
     def get_queryset(self):
-        return Order.objects.filter(customer=self.request.user).order_by("-created_at")
+        from django.db.models import Prefetch
+        return Order.objects.filter(customer=self.request.user).select_related(
+            'customer', 'restaurant', 'assigned_delivery_boy'
+        ).prefetch_related(
+            'order_items__food'
+        ).order_by("-created_at")
 
 
 # -------------------------
@@ -38,7 +43,11 @@ class RestaurantOrderListView(generics.ListAPIView):
     serializer_class = OrderSerializer
 
     def get_queryset(self):
-        return Order.objects.filter(restaurant__owner=self.request.user).order_by("-created_at")
+        return Order.objects.filter(restaurant__owner=self.request.user).select_related(
+            'customer', 'restaurant', 'assigned_delivery_boy'
+        ).prefetch_related(
+            'order_items__food'
+        ).order_by("-created_at")
 
 
 # -------------------------

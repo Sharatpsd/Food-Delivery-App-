@@ -1,4 +1,5 @@
 import axios from "axios";
+import { logout, getToken } from "./auth";
 
 /*
 ===============================
@@ -65,7 +66,7 @@ AUTO JWT TOKEN ATTACH
 
 API.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("access");
+    const token = getToken();
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -79,14 +80,7 @@ API.interceptors.request.use(
 let refreshPromise = null;
 
 const clearSessionAndRedirect = () => {
-  localStorage.removeItem("access");
-  localStorage.removeItem("refresh");
-  if (
-    window.location.pathname !== "/login" &&
-    window.location.pathname !== "/register"
-  ) {
-    window.location.href = "/login";
-  }
+  logout();
 };
 
 const shouldSkipRefresh = (url = "") =>
@@ -112,6 +106,11 @@ const refreshAccessToken = async () => {
         localStorage.setItem("access", nextAccess);
         return nextAccess;
       })
+      .catch((err) => {
+        // Refresh token is also expired or invalid
+        clearSessionAndRedirect();
+        throw err;
+      })
       .finally(() => {
         refreshPromise = null;
       });
@@ -127,26 +126,31 @@ API.interceptors.response.use(
     const status = error.response?.status;
     const requestUrl = originalRequest?.url || "";
 
+    // Handle 401 with token refresh attempt
     if (
-      status !== 401 ||
-      !originalRequest ||
-      originalRequest._retry ||
-      shouldSkipRefresh(requestUrl)
+      status === 401 &&
+      originalRequest &&
+      !originalRequest._retry &&
+      !shouldSkipRefresh(requestUrl)
     ) {
-      return Promise.reject(error);
+      originalRequest._retry = true;
+
+      try {
+        const nextAccess = await refreshAccessToken();
+        originalRequest.headers = originalRequest.headers || {};
+        originalRequest.headers.Authorization = `Bearer ${nextAccess}`;
+        return API(originalRequest);
+      } catch (refreshError) {
+        return Promise.reject(refreshError);
+      }
     }
 
-    originalRequest._retry = true;
-
-    try {
-      const nextAccess = await refreshAccessToken();
-      originalRequest.headers = originalRequest.headers || {};
-      originalRequest.headers.Authorization = `Bearer ${nextAccess}`;
-      return API(originalRequest);
-    } catch (refreshError) {
+    // Handle other 401 or no refresh needed
+    if (status === 401) {
       clearSessionAndRedirect();
-      return Promise.reject(refreshError);
     }
+
+    return Promise.reject(error);
   }
 );
 
@@ -210,3 +214,4 @@ export const submitDeliveryPartnerRequest = async (formData) => {
 console.log("Bite API Connected ->", `${API_BASE}/api`);
 
 export default API;
+
