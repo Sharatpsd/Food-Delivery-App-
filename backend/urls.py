@@ -4,10 +4,8 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-)
+from rest_framework_simplejwt.views import TokenRefreshView
+from users.views import TokenObtainPairThrottledView
 
 urlpatterns = [
 
@@ -21,7 +19,7 @@ urlpatterns = [
     # =========================
     path(
         "api/auth/token/",
-        TokenObtainPairView.as_view(),
+        TokenObtainPairThrottledView.as_view(),
         name="token_obtain_pair"
     ),
 

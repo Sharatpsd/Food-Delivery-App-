@@ -238,6 +238,29 @@ if DEBUG:
 
 
 # ================================================================
+# CACHING (for throttling)
+# ================================================================
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "LOCATION": "unique-snowflake",
+    }
+}
+
+if not DEBUG:
+    CACHES = {
+        "default": {
+            "BACKEND": "django_redis.cache.RedisCache",
+            "LOCATION": config("REDIS_URL", default="redis://127.0.0.1:6379/1"),
+            "OPTIONS": {
+                "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            }
+        }
+    }
+
+
+# ================================================================
 # DJANGO REST FRAMEWORK
 # ================================================================
 
@@ -250,6 +273,20 @@ REST_FRAMEWORK = {
     ),
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 10,
+    "DEFAULT_THROTTLE_CLASSES": (
+        "rest_framework.throttling.AnonRateThrottle",
+        "rest_framework.throttling.UserRateThrottle",
+        "rest_framework.throttling.ScopedRateThrottle",
+    ),
+    "DEFAULT_THROTTLE_RATES": {
+        "anon": "30/hour",
+        "user": "100/hour",
+        "login": "5/hour",
+        "register": "10/hour",
+        "token_refresh": "30/hour",
+        "orders": "50/hour",
+        "restaurants": "100/hour",
+    }
 }
 
 

@@ -13,18 +13,18 @@ from .models import User
 from .throttling import RegisterThrottle, LoginThrottle
 
 
-# ============================"
+# ===========================
 # USER REGISTER
-# ============================"
+# ===========================
 class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
     permission_classes = [permissions.AllowAny]
     throttle_classes = [RegisterThrottle]
 
 
-# ============================
+# ===========================
 # GET LOGGED-IN USER
-# ============================
+# ===========================
 class UserView(generics.RetrieveAPIView):
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -33,19 +33,20 @@ class UserView(generics.RetrieveAPIView):
         return self.request.user
 
 
-# ============================
+# ===========================
 # TOKEN OBTAIN (LOGIN) WITH THROTTLING
-# ============================"
+# ===========================
 class TokenObtainPairThrottledView(TokenObtainPairView):
     throttle_classes = [LoginThrottle]
 
 
-# ============================"
+# ===========================
 # GOOGLE LOGIN API
-# ============================"
+# ===========================
 class GoogleLoginView(APIView):
     permission_classes = [permissions.AllowAny]
     throttle_classes = [RegisterThrottle]
+
     def post(self, request):
         token = request.data.get("token")
         google_client_ids = getattr(settings, "GOOGLE_CLIENT_IDS", None) or []

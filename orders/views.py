@@ -4,6 +4,7 @@ from django.db import transaction
 from .models import Order
 from .serializers import OrderSerializer
 from users.permissions import IsCustomer, IsRestaurantOwner, IsDeliveryBoy
+from users.throttling import OrdersThrottle
 
 # -------------------------
 # 1️⃣ Customer creates order
@@ -11,6 +12,7 @@ from users.permissions import IsCustomer, IsRestaurantOwner, IsDeliveryBoy
 class OrderCreateView(generics.CreateAPIView):
     serializer_class = OrderSerializer
     permission_classes = [permissions.IsAuthenticated, IsCustomer]
+    throttle_classes = [OrdersThrottle]
 
     def get_serializer_context(self):
         return {"request": self.request}
@@ -25,6 +27,7 @@ class OrderCreateView(generics.CreateAPIView):
 class CustomerOrderListView(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated, IsCustomer]
     serializer_class = OrderSerializer
+    throttle_classes = [OrdersThrottle]
 
     def get_queryset(self):
         from django.db.models import Prefetch
@@ -41,6 +44,7 @@ class CustomerOrderListView(generics.ListAPIView):
 class RestaurantOrderListView(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated, IsRestaurantOwner]
     serializer_class = OrderSerializer
+    throttle_classes = [OrdersThrottle]
 
     def get_queryset(self):
         return Order.objects.filter(restaurant__owner=self.request.user).select_related(

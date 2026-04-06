@@ -23,12 +23,12 @@ export default function Orders() {
 
   const updateStatus = async (orderId, status) => {
     try {
-      await api.patch(`/orders/${orderId}/update-status/`, { status });
+      await api.post(`/orders/${orderId}/update-status/`, { status });
       setOrders((prev) =>
         prev.map((o) => (o.id === orderId ? { ...o, status } : o))
       );
     } catch (err) {
-      alert("Failed to update status");
+      alert(err.response?.data?.detail || "Failed to update status");
     }
   };
 

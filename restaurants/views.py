@@ -10,6 +10,7 @@ from .serializers import (
     RestaurantSerializer,
     FoodSerializer,
 )
+from users.throttling import RestaurantsThrottle
 
 
 # -----------------------------
@@ -83,6 +84,7 @@ class RestaurantViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Restaurant.objects.filter(is_active=True).select_related('owner').order_by("-created_at")
     serializer_class = RestaurantSerializer
     permission_classes = [permissions.AllowAny]
+    throttle_classes = [RestaurantsThrottle]
 
 
 # -----------------------------
@@ -93,6 +95,7 @@ class FoodViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = FoodSerializer
     permission_classes = [permissions.AllowAny]
     parser_classes = [MultiPartParser, FormParser]
+    throttle_classes = [RestaurantsThrottle]
 
     def get_queryset(self):
 
