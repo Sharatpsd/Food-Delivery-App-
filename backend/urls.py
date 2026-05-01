@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
+from django.http import JsonResponse
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -7,7 +8,15 @@ from django.conf.urls.static import static
 from rest_framework_simplejwt.views import TokenRefreshView
 from users.views import TokenObtainPairThrottledView
 
+
+def health_check(request):
+    return JsonResponse({
+        "status": "ok",
+        "message": "Bite Backend is running",
+    })
+
 urlpatterns = [
+    path("", health_check, name="health_check"),
 
     # =========================
     # ADMIN
@@ -62,17 +71,8 @@ urlpatterns = [
 # ======================================================
 # MEDIA FILE SUPPORT (for ImageField / FileField)
 # ======================================================
-if settings.DEBUG or getattr(settings, "ENABLE_MEDIA_SERVE", False):
+if settings.DEBUG:
     urlpatterns += static(
         settings.MEDIA_URL,
         document_root=settings.MEDIA_ROOT
     )
-
-
-# ======================================================
-# STATIC FILE SUPPORT (optional but helpful)
-# ======================================================
-urlpatterns += static(
-    settings.STATIC_URL,
-    document_root=settings.STATIC_ROOT
-)

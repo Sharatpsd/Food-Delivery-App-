@@ -25,6 +25,10 @@ def _to_bool(value, default=False):
     return default
 
 
+def _split_csv(value):
+    return [item.strip() for item in str(value).split(",") if item.strip()]
+
+
 # ================================================================
 # SECURITY
 # ================================================================
@@ -33,12 +37,24 @@ SECRET_KEY = config("SECRET_KEY", default="test-secret")
 
 DEBUG = _to_bool(config("DEBUG", default="False"), default=False)
 
-ALLOWED_HOSTS = [
+DEFAULT_ALLOWED_HOSTS = ",".join([
     "127.0.0.1",
     "localhost",
     "food-delivery-app-1-ihcm.onrender.com",
     ".onrender.com",
-]
+])
+
+DEFAULT_BROWSER_ORIGINS = ",".join([
+    "http://localhost:5173",
+    "http://localhost:5174",
+    "http://127.0.0.1:5174",
+    "https://food-delivery-frontend-mktt.onrender.com",
+    "https://food-delivery-app-1-ihcm.onrender.com",
+])
+
+ALLOWED_HOSTS = _split_csv(
+    config("ALLOWED_HOSTS", default=DEFAULT_ALLOWED_HOSTS)
+)
 
 
 # ================================================================
@@ -64,13 +80,9 @@ GOOGLE_CLIENT_IDS = [
 # CSRF
 # ================================================================
 
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:5173",
-    "http://localhost:5174",
-    "http://127.0.0.1:5174",
-    "https://food-delivery-frontend-mktt.onrender.com",
-    "https://food-delivery-app-1-ihcm.onrender.com",
-]
+CSRF_TRUSTED_ORIGINS = _split_csv(
+    config("CSRF_TRUSTED_ORIGINS", default=DEFAULT_BROWSER_ORIGINS)
+)
 
 
 # ================================================================
@@ -203,6 +215,7 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # ================================================================
 # CLOUDINARY CONFIG
@@ -224,12 +237,9 @@ cloudinary.config(
 # CORS
 # ================================================================
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "http://localhost:5174",
-    "http://127.0.0.1:5174",
-    "https://food-delivery-frontend-mktt.onrender.com",
-]
+CORS_ALLOWED_ORIGINS = _split_csv(
+    config("CORS_ALLOWED_ORIGINS", default=DEFAULT_BROWSER_ORIGINS)
+)
 
 CORS_ALLOW_CREDENTIALS = True
 
@@ -241,23 +251,16 @@ if DEBUG:
 # CACHING (for throttling)
 # ================================================================
 
+# Safe default for now:
+# use local in-memory cache in both development and production.
+# If Redis is added later, this section can be switched to django-redis
+# together with the required dependency and environment variables.
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
         "LOCATION": "unique-snowflake",
     }
 }
-
-if not DEBUG:
-    CACHES = {
-        "default": {
-            "BACKEND": "django_redis.cache.RedisCache",
-            "LOCATION": config("REDIS_URL", default="redis://127.0.0.1:6379/1"),
-            "OPTIONS": {
-                "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            }
-        }
-    }
 
 
 # ================================================================
