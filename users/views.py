@@ -1,30 +1,49 @@
-from rest_framework import generics, permissions
+"""
+Authentication design for the users app:
+- register returns JWT tokens plus a minimal user payload
+- password login returns JWT tokens plus the same user payload
+- Google login validates the Google token, resolves the user by email, and
+  returns the same standardized auth response
+- token refresh is throttled through a dedicated refresh view
+"""
+
+from rest_framework import generics, permissions, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from .serializers import (
+    AuthUserSerializer,
+    GoogleLoginSerializer,
+    RegisterSerializer,
+    TokenObtainPairWithUserSerializer,
+    UserSerializer,
+)
+from .throttling import RegisterThrottle, LoginThrottle, TokenRefreshThrottle
 
-from google.oauth2 import id_token
-from google.auth.transport import requests
 
-from django.conf import settings
-from .serializers import RegisterSerializer, UserSerializer
-from .models import User
-from .throttling import RegisterThrottle, LoginThrottle
+def build_auth_response(user):
+    refresh = RefreshToken.for_user(user)
+    return {
+        "access": str(refresh.access_token),
+        "refresh": str(refresh),
+        "user": AuthUserSerializer(user).data,
+    }
 
-
-# ============================"
-# USER REGISTER
-# ============================"
 class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
     permission_classes = [permissions.AllowAny]
     throttle_classes = [RegisterThrottle]
 
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        return Response(
+            build_auth_response(user),
+            status=status.HTTP_201_CREATED,
+        )
 
-# ============================
-# GET LOGGED-IN USER
-# ============================
 class UserView(generics.RetrieveAPIView):
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -32,78 +51,20 @@ class UserView(generics.RetrieveAPIView):
     def get_object(self):
         return self.request.user
 
-
-# ============================
-# TOKEN OBTAIN (LOGIN) WITH THROTTLING
-# ============================"
 class TokenObtainPairThrottledView(TokenObtainPairView):
+    serializer_class = TokenObtainPairWithUserSerializer
     throttle_classes = [LoginThrottle]
 
 
-# ============================"
-# GOOGLE LOGIN API
-# ============================"
+class TokenRefreshThrottledView(TokenRefreshView):
+    throttle_classes = [TokenRefreshThrottle]
+
 class GoogleLoginView(APIView):
     permission_classes = [permissions.AllowAny]
-    throttle_classes = [RegisterThrottle]
+    throttle_classes = [LoginThrottle]
+
     def post(self, request):
-        token = request.data.get("token")
-        google_client_ids = getattr(settings, "GOOGLE_CLIENT_IDS", None) or []
-        if not google_client_ids:
-            single_client = getattr(settings, "GOOGLE_CLIENT_ID", None)
-            if single_client:
-                google_client_ids = [single_client]
-
-        if not token:
-            return Response({"error": "Token missing"}, status=400)
-        if not google_client_ids:
-            return Response({"error": "Google client not configured"}, status=500)
-
-        google_user = None
-        verify_error = None
-
-        try:
-            for client_id in google_client_ids:
-                try:
-                    google_user = id_token.verify_oauth2_token(
-                        token,
-                        requests.Request(),
-                        client_id
-                    )
-                    break
-                except Exception as exc:
-                    verify_error = exc
-
-            if not google_user:
-                raise verify_error or Exception("No matching Google client ID")
-
-            email = google_user["email"]
-            name = google_user.get("name", "")
-
-        except Exception as exc:
-            if settings.DEBUG:
-                return Response(
-                    {"error": f"Invalid Google Token: {str(exc)}"},
-                    status=400
-                )
-            return Response({"error": "Invalid Google Token"}, status=400)
-
-        # Create or Get User
-        user, created = User.objects.get_or_create(
-            username=email,
-            defaults={"name": name, "role": "customer"}
-        )
-
-        # Generate JWT token
-        refresh = RefreshToken.for_user(user)
-
-        return Response({
-            "access": str(refresh.access_token),
-            "refresh": str(refresh),
-            "user": {
-                "id": user.id,
-                "username": user.username,
-                "name": user.name,
-                "role": user.role,
-            }
-        })
+        serializer = GoogleLoginSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        return Response(build_auth_response(user))

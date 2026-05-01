@@ -19,6 +19,7 @@ export default function Navbar() {
   const handleLogout = () => {
     localStorage.removeItem("access");
     localStorage.removeItem("refresh");
+    window.dispatchEvent(new Event("auth-change"));
     setMobileMenuOpen(false);
     navigate("/login");
   };

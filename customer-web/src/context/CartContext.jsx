@@ -1,4 +1,7 @@
-import { createContext, useContext, useState, useEffect, useCallback } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+
+import { getToken } from "../utils/auth";
+import { addCartItem, getCart, removeCartItem, updateCartItem } from "../utils/api";
 import {
   buildImageSources,
   getImageFromSources,
@@ -7,103 +10,209 @@ import {
 
 export const CartContext = createContext();
 
-const normalizeCartItem = (item) => {
+const normalizeBackendCartItem = (item, cartData) => {
+  const title = item.food_name || item.name || "Food item";
   const imageSources = buildImageSources(
     [item.image_url, item.image_final, item.image],
-    getLocalFoodFallback(item.title || item.name, item.id)
+    getLocalFoodFallback(title, item.food_id || item.id)
   );
+
   return {
-    ...item,
-    title: item.title || item.name || "Food item",
+    id: item.food_id,
+    cartItemId: item.id,
+    restaurant: cartData?.restaurant_name || "",
+    restaurantId: cartData?.restaurant_id || item.restaurant_id || null,
+    title,
+    name: title,
     imageSources,
     image: getImageFromSources(imageSources),
     quantity: Number(item.quantity) > 0 ? Number(item.quantity) : 1,
+    price: Number(item.price) || 0,
+    lineTotal: Number(item.line_total) || 0,
+  };
+};
+
+const normalizeCartResponse = (cartData) => {
+  const items = Array.isArray(cartData?.items)
+    ? cartData.items.map((item) => normalizeBackendCartItem(item, cartData))
+    : [];
+
+  return {
+    cart: items,
+    cartCount: Number(cartData?.item_count) || items.reduce((sum, item) => sum + item.quantity, 0),
+    totalPrice: Number(cartData?.total) || items.reduce((sum, item) => sum + item.price * item.quantity, 0),
   };
 };
 
 export function CartProvider({ children }) {
-  const [cart, setCart] = useState(() => {
-    try {
-      const saved = localStorage.getItem("cart");
-      if (!saved) return [];
-      const parsed = JSON.parse(saved);
-      return Array.isArray(parsed) ? parsed.map(normalizeCartItem) : [];
-    } catch {
-      return [];
+  const [cart, setCart] = useState([]);
+  const [cartCount, setCartCount] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [cartLoading, setCartLoading] = useState(false);
+
+  const applyCartResponse = useCallback((cartData) => {
+    const normalized = normalizeCartResponse(cartData);
+    setCart(normalized.cart);
+    setCartCount(normalized.cartCount);
+    setTotalPrice(normalized.totalPrice);
+  }, []);
+
+  const resetCart = useCallback(() => {
+    setCart([]);
+    setCartCount(0);
+    setTotalPrice(0);
+  }, []);
+
+  const refreshCart = useCallback(async () => {
+    if (!getToken()) {
+      resetCart();
+      return null;
     }
-  });
+
+    setCartLoading(true);
+    try {
+      const cartData = await getCart();
+      applyCartResponse(cartData);
+      return cartData;
+    } catch (error) {
+      if (error?.response?.status === 401) {
+        resetCart();
+      }
+      throw error;
+    } finally {
+      setCartLoading(false);
+    }
+  }, [applyCartResponse, resetCart]);
 
   useEffect(() => {
-    try {
-      localStorage.setItem("cart", JSON.stringify(cart));
-    } catch (error) {
-      console.error("Failed to save cart to localStorage:", error);
-    }
-  }, [cart]);
+    refreshCart().catch(() => {});
 
-  const addToCart = useCallback((food) => {
-    const normalizedFood = normalizeCartItem(food);
-
-    setCart((prev) => {
-      const exists = prev.find((item) => item.id === normalizedFood.id);
-      if (exists) {
-        return prev.map((item) =>
-          item.id === normalizedFood.id
-            ? {
-                ...item,
-                ...normalizedFood,
-                quantity: item.quantity + 1,
-              }
-            : item
-        );
+    const handleAuthChange = () => {
+      if (!getToken()) {
+        resetCart();
+        return;
       }
-      return [...prev, normalizedFood];
-    });
-  }, []);
+      refreshCart().catch(() => {});
+    };
 
-  const removeFromCart = useCallback((id) => {
-    setCart((prev) => prev.filter((item) => item.id !== id));
-  }, []);
+    window.addEventListener("focus", handleAuthChange);
+    window.addEventListener("storage", handleAuthChange);
+    window.addEventListener("auth-change", handleAuthChange);
 
-  const increaseQty = useCallback((id) => {
-    setCart((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
-      )
-    );
-  }, []);
+    return () => {
+      window.removeEventListener("focus", handleAuthChange);
+      window.removeEventListener("storage", handleAuthChange);
+      window.removeEventListener("auth-change", handleAuthChange);
+    };
+  }, [refreshCart, resetCart]);
 
-  const decreaseQty = useCallback((id) => {
-    setCart((prev) =>
-      prev
-        .map((item) =>
-          item.id === id
-            ? { ...item, quantity: Math.max(1, item.quantity - 1) }
-            : item
-        )
-        .filter((item) => item.quantity > 0)
-    );
-  }, []);
+  const addToCart = useCallback(
+    async (food) => {
+      const quantity = Number(food?.quantity) > 0 ? Number(food.quantity) : 1;
+      const cartData = await addCartItem({
+        foodId: food.id,
+        quantity,
+      });
+      applyCartResponse(cartData);
+      return cartData;
+    },
+    [applyCartResponse]
+  );
 
-  const clearCart = useCallback(() => {
-    setCart([]);
-  }, []);
+  const updateQuantityByFoodId = useCallback(
+    async (foodId, quantity) => {
+      const item = cart.find((entry) => entry.id === foodId);
+      if (!item) return null;
 
-  const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-  const isEmpty = cart.length === 0;
+      const cartData = await updateCartItem({
+        cartItemId: item.cartItemId,
+        quantity,
+      });
+      applyCartResponse(cartData);
+      return cartData;
+    },
+    [applyCartResponse, cart]
+  );
 
-  const value = {
-    cart,
-    cartCount,
-    totalPrice,
-    isEmpty,
-    addToCart,
-    removeFromCart,
-    increaseQty,
-    decreaseQty,
-    clearCart,
-  };
+  const removeFromCart = useCallback(
+    async (foodId) => {
+      const item = cart.find((entry) => entry.id === foodId);
+      if (!item) return null;
+
+      const cartData = await removeCartItem(item.cartItemId);
+      applyCartResponse(cartData);
+      return cartData;
+    },
+    [applyCartResponse, cart]
+  );
+
+  const increaseQty = useCallback(
+    async (foodId) => {
+      const item = cart.find((entry) => entry.id === foodId);
+      if (!item) return null;
+      return updateQuantityByFoodId(foodId, item.quantity + 1);
+    },
+    [cart, updateQuantityByFoodId]
+  );
+
+  const decreaseQty = useCallback(
+    async (foodId) => {
+      const item = cart.find((entry) => entry.id === foodId);
+      if (!item) return null;
+
+      if (item.quantity <= 1) {
+        return removeFromCart(foodId);
+      }
+
+      return updateQuantityByFoodId(foodId, item.quantity - 1);
+    },
+    [cart, removeFromCart, updateQuantityByFoodId]
+  );
+
+  const clearCart = useCallback(async () => {
+    if (!cart.length) {
+      resetCart();
+      return;
+    }
+
+    setCartLoading(true);
+    try {
+      for (const item of cart) {
+        await removeCartItem(item.cartItemId);
+      }
+      resetCart();
+    } finally {
+      setCartLoading(false);
+    }
+  }, [cart, resetCart]);
+
+  const value = useMemo(
+    () => ({
+      cart,
+      cartCount,
+      totalPrice,
+      isEmpty: cart.length === 0,
+      cartLoading,
+      refreshCart,
+      addToCart,
+      removeFromCart,
+      increaseQty,
+      decreaseQty,
+      clearCart,
+    }),
+    [
+      addToCart,
+      cart,
+      cartCount,
+      cartLoading,
+      clearCart,
+      decreaseQty,
+      increaseQty,
+      refreshCart,
+      removeFromCart,
+      totalPrice,
+    ]
+  );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }

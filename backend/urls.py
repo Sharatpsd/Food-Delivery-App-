@@ -5,8 +5,7 @@ from django.http import JsonResponse
 from django.conf import settings
 from django.conf.urls.static import static
 
-from rest_framework_simplejwt.views import TokenRefreshView
-from users.views import TokenObtainPairThrottledView
+from users.views import TokenObtainPairThrottledView, TokenRefreshThrottledView
 
 
 def health_check(request):
@@ -34,7 +33,7 @@ urlpatterns = [
 
     path(
         "api/auth/token/refresh/",
-        TokenRefreshView.as_view(),
+        TokenRefreshThrottledView.as_view(),
         name="token_refresh"
     ),
 

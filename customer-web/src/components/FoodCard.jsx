@@ -18,7 +18,7 @@ import {
 } from "../utils/image";
 
 export default function FoodCard({ food }) {
-  const { addToCart, cart } = useCart();
+  const { addToCart, cart, increaseQty, decreaseQty } = useCart();
   const navigate = useNavigate();
   const location = useLocation();
   const [isInCart, setIsInCart] = useState(false);
@@ -36,6 +36,9 @@ export default function FoodCard({ food }) {
     if (existingItem) {
       setIsInCart(true);
       setQuantity(existingItem.quantity);
+    } else {
+      setIsInCart(false);
+      setQuantity(1);
     }
   }, [cart, food.id]);
 
@@ -48,16 +51,24 @@ export default function FoodCard({ food }) {
     setIsLoading(true);
     
     try {
-      // Add single click logic
       if (!isInCart) {
-        await addToCart({ ...food, quantity: 1 });
-      } else {
-        // Update quantity
         await addToCart({ ...food, quantity });
+      } else {
+        const existingItem = cart.find((item) => item.id === food.id);
+        const nextQuantity = quantity - (existingItem?.quantity || 0);
+
+        if (nextQuantity > 0) {
+          await addToCart({ ...food, quantity: nextQuantity });
+        } else if (nextQuantity < 0) {
+          for (let i = 0; i < Math.abs(nextQuantity); i += 1) {
+            await decreaseQty(food.id);
+          }
+        }
       }
       setIsInCart(true);
     } catch (error) {
       console.error("Add to cart failed:", error);
+      alert(error?.response?.data?.detail || "Could not update cart.");
     } finally {
       setIsLoading(false);
     }

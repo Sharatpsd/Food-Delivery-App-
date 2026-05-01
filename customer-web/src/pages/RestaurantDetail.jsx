@@ -24,6 +24,7 @@ export default function RestaurantDetail() {
   const [restaurant, setRestaurant] = useState(null);
   const [foods, setFoods] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [cartBusy, setCartBusy] = useState(false);
   const [addedItemId, setAddedItemId] = useState(null);
   const [showToast, setShowToast] = useState(false);
   const [lastAddedItemName, setLastAddedItemName] = useState("");
@@ -40,16 +41,25 @@ export default function RestaurantDetail() {
     navigate("/");
   };
 
-  const handleAddToCart = (item) => {
+  const handleAddToCart = async (item) => {
     if (!localStorage.getItem("access")) {
       navigate(`/login?next=${encodeURIComponent(location.pathname)}`);
       return;
     }
 
-    addToCart({
-      ...item,
-      restaurant: restaurant.id,
-    });
+    setCartBusy(true);
+
+    try {
+      await addToCart({
+        ...item,
+        restaurant: restaurant.id,
+        quantity: 1,
+      });
+    } catch (error) {
+      alert(error?.response?.data?.detail || "Could not add item to cart.");
+      setCartBusy(false);
+      return;
+    }
 
     setAddedItemId(item.id);
     setLastAddedItemName(item.name);
@@ -65,6 +75,8 @@ export default function RestaurantDetail() {
     toastTimerRef.current = setTimeout(() => {
       setShowToast(false);
     }, 2200);
+
+    setCartBusy(false);
   };
 
   useEffect(() => {
@@ -73,8 +85,12 @@ export default function RestaurantDetail() {
         const res = await getRestaurantDetail(id);
         setRestaurant(res.data);
 
-        const foodsRes = await getRestaurantFoods(id);
-        setFoods(foodsRes.data);
+        if (Array.isArray(res.data?.foods) && res.data.foods.length) {
+          setFoods(res.data.foods);
+        } else {
+          const foodsRes = await getRestaurantFoods(id);
+          setFoods(foodsRes.data);
+        }
       } catch (err) {
         console.error("Restaurant load error:", err);
       } finally {
@@ -253,10 +269,11 @@ export default function RestaurantDetail() {
 
                   <button
                     onClick={() => handleAddToCart(item)}
+                    disabled={cartBusy}
                     className={`flex items-center gap-2 rounded px-4 py-2 text-sm font-semibold text-white transition ${
                       addedItemId === item.id
                         ? "bg-orange-500"
-                        : "bg-orange-500 hover:bg-orange-600"
+                        : "bg-orange-500 hover:bg-orange-600 disabled:opacity-60"
                     }`}
                   >
                     {addedItemId === item.id ? (
@@ -280,6 +297,5 @@ export default function RestaurantDetail() {
     </div>
   );
 }
-
 
 

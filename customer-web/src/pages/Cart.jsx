@@ -21,6 +21,7 @@ export default function Cart() {
     removeFromCart,
     totalPrice,
     clearCart,
+    cartLoading,
   } = useCart();
 
   const handleBack = () => {
@@ -30,6 +31,13 @@ export default function Cart() {
     }
     navigate("/");
   };
+
+  if (cartLoading)
+    return (
+      <div className="min-h-screen bg-[#111214] flex items-center justify-center text-white">
+        Loading cart...
+      </div>
+    );
 
   if (cart.length === 0)
     return (
@@ -115,7 +123,7 @@ export default function Cart() {
             <AnimatePresence>
               {cart.map((item, index) => (
                 <motion.div
-                  key={item.id}
+                  key={item.cartItemId || item.id}
                   initial={{ opacity: 0, x: 50 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -50, scale: 0.95 }}

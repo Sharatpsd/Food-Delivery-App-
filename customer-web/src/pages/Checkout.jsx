@@ -25,7 +25,7 @@ const pickErrorMessage = (error) => {
 };
 
 export default function Checkout() {
-  const { cart, totalPrice, clearCart } = useCart();
+  const { cart, totalPrice, clearCart, cartLoading } = useCart();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -43,6 +43,7 @@ export default function Checkout() {
   const [step, setStep] = useState(1);
   const [orderSuccess, setOrderSuccess] = useState(false);
   const [placedOrderId, setPlacedOrderId] = useState(null);
+  const [placedOrderTotal, setPlacedOrderTotal] = useState(0);
 
   useEffect(() => {
     if (!localStorage.getItem("access")) return;
@@ -78,9 +79,10 @@ export default function Checkout() {
         const payment = res.data;
 
         if (payment.status === "completed" || paymentStatus === "success") {
+          setPlacedOrderTotal(totalPrice);
           setPlacedOrderId(orderId);
           setOrderSuccess(true);
-          clearCart();
+          await clearCart();
           setStep(4);
           navigate("/checkout", { replace: true });
           return;
@@ -93,9 +95,10 @@ export default function Checkout() {
         );
       } catch {
         if (paymentStatus === "success") {
+          setPlacedOrderTotal(totalPrice);
           setPlacedOrderId(orderId);
           setOrderSuccess(true);
-          clearCart();
+          await clearCart();
           setStep(4);
           navigate("/checkout", { replace: true });
           return;
@@ -105,7 +108,7 @@ export default function Checkout() {
     };
 
     verifyPayment();
-  }, [location.search, clearCart, navigate]);
+  }, [location.search, clearCart, navigate, totalPrice]);
 
   const handleInputChange = (e) => {
     setFormData((prev) => ({
@@ -115,6 +118,10 @@ export default function Checkout() {
   };
 
   const handleOrder = async () => {
+    if (cartLoading) {
+      return;
+    }
+
     if (!cart.length) {
       alert("Cart is empty!");
       return;
@@ -165,8 +172,13 @@ export default function Checkout() {
     }
 
     try {
-      const orderRes = await api.post("/orders/create/", {
+      const addressParts = [formData.address, formData.flat].filter(Boolean);
+
+      const orderRes = await api.post("/orders/", {
         restaurant: restaurantId,
+        delivery_address: addressParts.join(", "),
+        contact_phone: formData.phone,
+        notes: formData.notes,
         items,
       });
 
@@ -184,7 +196,8 @@ export default function Checkout() {
       });
 
       if (paymentMethod === "cod") {
-        clearCart();
+        setPlacedOrderTotal(totalPrice);
+        await clearCart();
         setPlacedOrderId(orderId);
         setOrderSuccess(true);
         setStep(4);
@@ -214,7 +227,7 @@ export default function Checkout() {
             Your order has been placed successfully.
           </p>
           <p className="text-lg font-semibold mb-2">Order ID: #{placedOrderId || "-"}</p>
-          <p className="text-2xl font-bold text-orange-300 mb-8">BDT {totalPrice.toLocaleString()}</p>
+          <p className="text-2xl font-bold text-orange-300 mb-8">BDT {placedOrderTotal.toLocaleString()}</p>
           <button
             onClick={() => navigate("/orders")}
             className="bg-orange-600 text-white px-8 py-3 rounded-xl font-bold"
@@ -222,6 +235,14 @@ export default function Checkout() {
             Track My Order
           </button>
         </div>
+      </div>
+    );
+  }
+
+  if (cartLoading) {
+    return (
+      <div className="min-h-screen bg-[#111214] flex items-center justify-center text-white">
+        Loading checkout...
       </div>
     );
   }
@@ -375,7 +396,7 @@ export default function Checkout() {
             <h3 className="text-2xl font-bold mb-6">Order Summary</h3>
             <div className="space-y-3 mb-6 max-h-72 overflow-y-auto">
               {cart.map((item) => (
-                <div key={item.id} className="flex justify-between items-center border-b pb-2">
+                <div key={item.cartItemId || item.id} className="flex justify-between items-center border-b pb-2">
                   <div>
                     <p className="font-semibold">{item.title || item.name}</p>
                     <p className="text-sm text-gray-400">x{item.quantity}</p>

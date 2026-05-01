@@ -47,6 +47,12 @@ const requestPublicWithFallback = async (path, config = {}) => {
   throw lastError || new Error("No API base available");
 };
 
+const unwrapListData = (data) => {
+  if (Array.isArray(data)) return data;
+  if (Array.isArray(data?.results)) return data.results;
+  return [];
+};
+
 /*
 ===============================
 AXIOS INSTANCE
@@ -164,11 +170,11 @@ export const getRestaurants = async ({ category = "", search = "" } = {}) => {
   const params = {};
   if (search) params.search = search;
 
-  const res = await requestPublicWithFallback("/restaurants/restaurants/", {
+  const res = await requestPublicWithFallback("/restaurants/", {
     params,
   });
 
-  let data = res.data;
+  let data = unwrapListData(res.data);
 
   if (category) {
     const cat = category.toLowerCase();
@@ -183,7 +189,7 @@ export const getRestaurants = async ({ category = "", search = "" } = {}) => {
 };
 
 export const getRestaurantDetail = async (id) => {
-  const res = await requestPublicWithFallback(`/restaurants/restaurants/${id}/`);
+  const res = await requestPublicWithFallback(`/restaurants/${id}/`);
   return { data: res.data };
 };
 
@@ -192,7 +198,38 @@ export const getRestaurantFoods = async (restaurantId) => {
     params: { restaurant: restaurantId },
   });
 
-  return { data: res.data };
+  return { data: unwrapListData(res.data) };
+};
+
+/*
+===============================
+CART
+===============================
+*/
+
+export const getCart = async () => {
+  const res = await API.get("/orders/cart/");
+  return res.data;
+};
+
+export const addCartItem = async ({ foodId, quantity = 1 }) => {
+  const res = await API.post("/orders/cart/add/", {
+    food_id: foodId,
+    quantity,
+  });
+  return res.data;
+};
+
+export const updateCartItem = async ({ cartItemId, quantity }) => {
+  const res = await API.patch(`/orders/cart/items/${cartItemId}/`, {
+    quantity,
+  });
+  return res.data;
+};
+
+export const removeCartItem = async (cartItemId) => {
+  const res = await API.delete(`/orders/cart/items/${cartItemId}/`);
+  return res.data;
 };
 
 /*

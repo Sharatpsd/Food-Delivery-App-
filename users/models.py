@@ -13,6 +13,18 @@ class CustomUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+    def create_google_user(self, email, name="", **extra_fields):
+        normalized_email = self.normalize_email(email)
+        user = self.model(
+            username=normalized_email,
+            email=normalized_email,
+            name=name,
+            **extra_fields,
+        )
+        user.set_unusable_password()
+        user.save(using=self._db)
+        return user
+
     def create_superuser(self, username, email=None, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
