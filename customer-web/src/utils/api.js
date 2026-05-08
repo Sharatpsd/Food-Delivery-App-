@@ -47,10 +47,62 @@ const requestPublicWithFallback = async (path, config = {}) => {
   throw lastError || new Error("No API base available");
 };
 
+const requestAllPublicPages = async (path, config = {}) => {
+  const firstResponse = await requestPublicWithFallback(path, config);
+  const firstData = firstResponse.data;
+
+  if (!Array.isArray(firstData?.results) || !firstData?.next) {
+    return firstResponse;
+  }
+
+  const allResults = [...firstData.results];
+  let nextUrl = firstData.next;
+
+  while (nextUrl) {
+    const response = await axios.get(nextUrl, { timeout: 12000 });
+    const pageData = response.data;
+
+    if (Array.isArray(pageData?.results)) {
+      allResults.push(...pageData.results);
+    }
+
+    nextUrl = pageData?.next || null;
+  }
+
+  return {
+    ...firstResponse,
+    data: {
+      ...firstData,
+      results: allResults,
+      next: null,
+      previous: null,
+    },
+  };
+};
+
 const unwrapListData = (data) => {
   if (Array.isArray(data)) return data;
   if (Array.isArray(data?.results)) return data.results;
   return [];
+};
+
+const dedupeRestaurants = (restaurants = []) => {
+  const seen = new Map();
+
+  restaurants.forEach((restaurant) => {
+    const key = String(restaurant?.name || "").trim().toLowerCase();
+    if (!key) return;
+
+    const current = seen.get(key);
+    const currentFoodCount = Number(current?.food_count || 0);
+    const nextFoodCount = Number(restaurant?.food_count || 0);
+
+    if (!current || nextFoodCount > currentFoodCount) {
+      seen.set(key, restaurant);
+    }
+  });
+
+  return [...seen.values()];
 };
 
 /*
@@ -170,11 +222,14 @@ export const getRestaurants = async ({ category = "", search = "" } = {}) => {
   const params = {};
   if (search) params.search = search;
 
-  const res = await requestPublicWithFallback("/restaurants/", {
+  const res = await requestAllPublicPages("/restaurants/", {
     params,
   });
 
   let data = unwrapListData(res.data);
+  data = dedupeRestaurants(data).filter(
+    (restaurant) => Number(restaurant?.food_count || 0) > 0
+  );
 
   if (category) {
     const cat = category.toLowerCase();
@@ -194,7 +249,7 @@ export const getRestaurantDetail = async (id) => {
 };
 
 export const getRestaurantFoods = async (restaurantId) => {
-  const res = await requestPublicWithFallback(`/restaurants/foods/`, {
+  const res = await requestAllPublicPages(`/restaurants/foods/`, {
     params: { restaurant: restaurantId },
   });
 

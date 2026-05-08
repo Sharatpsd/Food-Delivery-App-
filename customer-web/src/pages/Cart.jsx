@@ -244,13 +244,13 @@ export default function Cart() {
                 <h4 className="font-semibold text-white">Delivery Address</h4>
               </div>
               <p className="text-sm text-gray-300">
-                Char BhadrÄsan, Dhaka Division, BD
+                Dhaka Division, BD
               </p>
               <Link
                 to="/checkout"
                 className="text-orange-300 hover:text-orange-200 text-sm font-medium mt-2 inline-block"
               >
-                Change Address â†’
+                Change Address’
               </Link>
             </div>
 

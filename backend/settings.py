@@ -36,6 +36,7 @@ def _split_csv(value):
 SECRET_KEY = config("SECRET_KEY", default="test-secret")
 
 DEBUG = _to_bool(config("DEBUG", default="False"), default=False)
+SERVE_LOCAL_MEDIA = DEBUG or not config("DATABASE_URL", default=None)
 
 DEFAULT_ALLOWED_HOSTS = ",".join([
     "127.0.0.1",

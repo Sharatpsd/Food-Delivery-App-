@@ -13,43 +13,44 @@ const normalizeApiBase = (baseUrl) => {
 const API_BASE = normalizeApiBase(import.meta.env.VITE_API_BASE_URL);
 const localFoodFiles = [
   "bbq.jpg",
-  "human-hand-holding-tray-with-roasted-ham.jpg",
-  "bbq lamp chops.jpg",
-  "Panshi Chicken Fried Rice.jpg",
-  "Hakka nodels.jpg",
+  "baked-turkey-with-lettuce-pan.jpg",
+  "bb1_lam.jpg",
+  "Panshi_Chicken_Fried_Rice.jpg",
+  "images.jpg",
   "Chicken-Kacchi-Biryani.jpg",
-  "Sultan's Chicken Biryani.jpg",
+  "Sultans_Chicken_Biryani.jpg",
   "cheese-loaded-pizza-photo.jpeg",
   "Pepperoni-pizza.jpg",
   "Chili-Chicken-Recipe.webp",
-  "Chillox Classic Burger.jpg",
-  "Mutton Korma.jpg",
-  "Mutton Tehari.jpg",
-  "Tempura Prawns.jpg",
-  "Salmon Nigiri.jpg",
-  "Star Special Seekh Kebab.jpg",
-  "Handi Chicken Biryani.jpg",
+  "Chillox_Classic_Burger.jpg",
+  "Mutton_Korma.jpg",
+  "Mutton_Tehari.jpg",
+  "Tempura_Prawns.jpg",
+  "Salmon_Nigiri.jpg",
+  "Star_Special_Seekh_Kebab.jpg",
+  "Chicken_Handi.jpg",
 ];
 
 const localFoodPool = localFoodFiles.map(
-  (file) => `/media/foods/${encodeURIComponent(file)}`
+  (file) => `/media/foods/images/${encodeURIComponent(file)}`
 );
 const localRestaurantFiles = [
   "bbq-party.jpg",
   "pansi.webp",
-  "cheez update.jpg",
+  "cheez_update.jpg",
   "handi_image.jpg",
   "izumi.jpg",
-  "takeout restaurent.jpg",
-  "kacci bhai logo.jpg",
-  "Star_Kabab (1).jpg",
+  "takeout_restaurent.jpg",
+  "kacci_bhai_logo.jpg",
+  "Star_Kabab_1.jpg",
   "images.jpg",
   "1000092399.jpg",
-  "chillox orginal .jpg",
+  "Chillox.jpg",
+  "sultan.png",
 ];
 
 const localRestaurantPool = localRestaurantFiles.map(
-  (file) => `/media/restaurants/${encodeURIComponent(file)}`
+  (file) => `/media/restaurants/logos/${encodeURIComponent(file)}`
 );
 
 const getSeed = (value) => {
@@ -68,44 +69,44 @@ const pickFromPool = (pool, seedValue) => {
 const keywordFoodMap = [
   {
     keys: ["bbq full chicken", "full chicken"],
-    file: "human-hand-holding-tray-with-roasted-ham.jpg",
+    file: "baked-turkey-with-lettuce-pan.jpg",
   },
   {
     keys: ["bbq beef ribs", "bbq ribs", "beef ribs", "bq ribs"],
-    file: "human-hand-holding-tray-with-roasted-ham.jpg",
+    file: "baked-turkey-with-lettuce-pan.jpg",
   },
-  { keys: ["bbq lamb chops", "lamb chops"], file: "bbq lamp chops.jpg" },
+  { keys: ["bbq lamb chops", "lamb chops"], file: "bb1_lam.jpg" },
   { keys: ["bbq"], file: "bbq.jpg" },
   {
     keys: ["panshi chicken fried rice"],
-    file: "Panshi Chicken Fried Rice.jpg",
+    file: "Panshi_Chicken_Fried_Rice.jpg",
   },
-  { keys: ["hakka noodles", "hakka noodle"], file: "Hakka nodels.jpg" },
-  { keys: ["panshi", "fried rice"], file: "Panshi Chicken Fried Rice.jpg" },
+  { keys: ["hakka noodles", "hakka noodle"], file: "images.jpg" },
+  { keys: ["panshi", "fried rice"], file: "Panshi_Chicken_Fried_Rice.jpg" },
   { keys: ["kacchi", "biryani"], file: "Chicken-Kacchi-Biryani.jpg" },
-  { keys: ["sultan"], file: "Sultan's Chicken Biryani.jpg" },
+  { keys: ["sultan"], file: "Sultans_Chicken_Biryani.jpg" },
   { keys: ["pizza"], file: "Pepperoni-pizza.jpg" },
-  { keys: ["burger", "chillox"], file: "Chillox Classic Burger.jpg" },
+  { keys: ["burger", "chillox"], file: "Chillox_Classic_Burger.jpg" },
   { keys: ["noodle", "chilli"], file: "Chili-Chicken-Recipe.webp" },
-  { keys: ["korma"], file: "Mutton Korma.jpg" },
-  { keys: ["tehari"], file: "Mutton Tehari.jpg" },
-  { keys: ["prawn", "shrimp", "tempura"], file: "Tempura Prawns.jpg" },
-  { keys: ["sushi", "nigiri"], file: "Salmon Nigiri.jpg" },
-  { keys: ["kebab"], file: "Star Special Seekh Kebab.jpg" },
-  { keys: ["handi"], file: "Handi Chicken Biryani.jpg" },
+  { keys: ["korma"], file: "Mutton_Korma.jpg" },
+  { keys: ["tehari"], file: "Mutton_Tehari.jpg" },
+  { keys: ["prawn", "shrimp", "tempura"], file: "Tempura_Prawns.jpg" },
+  { keys: ["sushi", "nigiri"], file: "Salmon_Nigiri.jpg" },
+  { keys: ["kebab"], file: "Star_Special_Seekh_Kebab.jpg" },
+  { keys: ["handi"], file: "Chicken_Handi.jpg" },
 ];
 const keywordRestaurantMap = [
   { keys: ["bbq"], file: "bbq-party.jpg" },
   { keys: ["panshi", "pansi"], file: "pansi.webp" },
-  { keys: ["cheez"], file: "cheez update.jpg" },
+  { keys: ["cheez"], file: "cheez_update.jpg" },
   { keys: ["handi"], file: "handi_image.jpg" },
   { keys: ["izumi"], file: "izumi.jpg" },
-  { keys: ["takeout"], file: "takeout restaurent.jpg" },
-  { keys: ["kacchi", "kacci"], file: "kacci bhai logo.jpg" },
-  { keys: ["star", "kabab", "kebab"], file: "Star_Kabab (1).jpg" },
-  { keys: ["sultan"], file: "sultan dine .jpg orginal.png" },
-  { keys: ["madchef"], file: "madchef1.jpg" },
-  { keys: ["chillox"], file: "chillox orginal .jpg" },
+  { keys: ["takeout"], file: "takeout_restaurent.jpg" },
+  { keys: ["kacchi", "kacci"], file: "kacci_bhai_logo.jpg" },
+  { keys: ["star", "kabab", "kebab"], file: "Star_Kabab_1.jpg" },
+  { keys: ["sultan"], file: "sultan.png" },
+  { keys: ["madchef"], file: "Chillox.jpg" },
+  { keys: ["chillox"], file: "Chillox.jpg" },
 ];
 
 const decodeIfEncodedUrl = (source) => {
@@ -130,41 +131,38 @@ export const toAbsoluteMediaUrl = (value) => {
   return `${API_BASE}/${source}`;
 };
 
-const toPublicMediaPath = (value) => {
-  if (!value) return null;
-  const source = decodeIfEncodedUrl(String(value).trim());
+const shouldIgnoreRemoteImage = (value) => {
+  if (!value) return false;
 
-  if (source.startsWith("http")) {
-    try {
-      const parsed = new URL(source);
-      if (parsed.pathname.startsWith("/media/")) return parsed.pathname;
-    } catch {
-      return null;
-    }
-    return null;
+  try {
+    const source = decodeIfEncodedUrl(String(value).trim());
+    const parsed = new URL(source);
+    const host = parsed.hostname.toLowerCase();
+
+    if (host.includes("seeklogo.com")) return true;
+    if (host.includes("via.placeholder.com")) return true;
+  } catch {
+    return false;
   }
 
-  if (source.startsWith("/media/")) return source;
-  if (source.startsWith("media/")) return `/${source}`;
-
-  const mediaIndex = source.indexOf("/media/");
-  if (mediaIndex >= 0) return source.slice(mediaIndex);
-
-  return null;
+  return false;
 };
 
 export const buildImageSources = (values = [], fallback = null) => {
   const sources = [];
 
+  const fallbackAbsolute = toAbsoluteMediaUrl(fallback);
+  if (fallbackAbsolute) sources.push(fallbackAbsolute);
+
   values.forEach((value) => {
+    if (shouldIgnoreRemoteImage(value)) {
+      return;
+    }
+
     const absolute = toAbsoluteMediaUrl(value);
     if (absolute) sources.push(absolute);
-
-    const mediaPath = toPublicMediaPath(value);
-    if (mediaPath) sources.push(mediaPath);
   });
 
-  if (fallback) sources.push(fallback);
   return [...new Set(sources.filter(Boolean))];
 };
 
@@ -176,7 +174,7 @@ export const getLocalFoodFallback = (name = "", seed = "") => {
   const mapped = keywordFoodMap.find(({ keys }) =>
     keys.some((key) => lower.includes(key))
   );
-  if (mapped) return `/media/foods/${encodeURIComponent(mapped.file)}`;
+  if (mapped) return `/media/foods/images/${encodeURIComponent(mapped.file)}`;
   return pickFromPool(localFoodPool, `${name}-${seed}`) || localFoodPool[0];
 };
 
@@ -186,7 +184,7 @@ export const getLocalRestaurantFallback = (name = "", seed = "") =>
   const mapped = keywordRestaurantMap.find(({ keys }) =>
     keys.some((key) => lower.includes(key))
   );
-  if (mapped) return `/media/restaurants/${encodeURIComponent(mapped.file)}`;
+  if (mapped) return `/media/restaurants/logos/${encodeURIComponent(mapped.file)}`;
   return (
     pickFromPool(localRestaurantPool, `${name}-${seed}`) || localRestaurantPool[0]
   );

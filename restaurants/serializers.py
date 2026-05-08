@@ -78,6 +78,9 @@ class RestaurantListSerializer(serializers.ModelSerializer):
         return build_media_url(self.context.get("request"), obj.logo, obj.logo_url)
 
     def get_food_count(self, obj):
+        annotated_count = getattr(obj, "available_food_count", None)
+        if annotated_count is not None:
+            return annotated_count
         return obj.foods.filter(is_available=True).count()
 
 

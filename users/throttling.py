@@ -7,11 +7,11 @@ class LoginThrottle(SimpleRateThrottle):
     """
     scope = "login"
 
-    def get_cache_key(self):
-        if self.request.user and self.request.user.is_authenticated:
-            ident = self.request.user.pk
+    def get_cache_key(self, request, view):
+        if request.user and request.user.is_authenticated:
+            ident = request.user.pk
         else:
-            ident = self.get_ident(self.request)
+            ident = self.get_ident(request)
         return self.cache_format % {"scope": self.scope, "ident": ident}
 
 
@@ -21,11 +21,11 @@ class RegisterThrottle(SimpleRateThrottle):
     """
     scope = "register"
 
-    def get_cache_key(self):
-        if self.request.user and self.request.user.is_authenticated:
-            ident = self.request.user.pk
+    def get_cache_key(self, request, view):
+        if request.user and request.user.is_authenticated:
+            ident = request.user.pk
         else:
-            ident = self.get_ident(self.request)
+            ident = self.get_ident(request)
         return self.cache_format % {"scope": self.scope, "ident": ident}
 
 
@@ -35,11 +35,11 @@ class TokenRefreshThrottle(SimpleRateThrottle):
     """
     scope = "token_refresh"
 
-    def get_cache_key(self):
-        if self.request.user and self.request.user.is_authenticated:
-            ident = self.request.user.pk
+    def get_cache_key(self, request, view):
+        if request.user and request.user.is_authenticated:
+            ident = request.user.pk
         else:
-            ident = self.get_ident(self.request)
+            ident = self.get_ident(request)
         return self.cache_format % {"scope": self.scope, "ident": ident}
 
 
@@ -49,11 +49,11 @@ class OrdersThrottle(SimpleRateThrottle):
     """
     scope = "orders"
 
-    def get_cache_key(self):
-        if self.request.user and self.request.user.is_authenticated:
-            ident = self.request.user.pk
+    def get_cache_key(self, request, view):
+        if request.user and request.user.is_authenticated:
+            ident = request.user.pk
         else:
-            ident = self.get_ident(self.request)
+            ident = self.get_ident(request)
         return self.cache_format % {"scope": self.scope, "ident": ident}
 
 
@@ -63,9 +63,9 @@ class RestaurantsThrottle(SimpleRateThrottle):
     """
     scope = "restaurants"
 
-    def get_cache_key(self):
-        if self.request.user and self.request.user.is_authenticated:
-            ident = self.request.user.pk
+    def get_cache_key(self, request, view):
+        if request.user and request.user.is_authenticated:
+            ident = request.user.pk
         else:
-            ident = self.get_ident(self.request)
+            ident = self.get_ident(request)
         return self.cache_format % {"scope": self.scope, "ident": ident}

@@ -1,4 +1,4 @@
-from django.db.models import Q
+from django.db.models import Count, Q
 
 from rest_framework import generics, permissions, viewsets
 from rest_framework.decorators import action
@@ -78,7 +78,15 @@ class RestaurantListView(generics.ListAPIView):
     throttle_classes = [RestaurantsThrottle]
 
     def get_queryset(self):
-        queryset = Restaurant.objects.filter(is_active=True).order_by("-created_at")
+        queryset = Restaurant.objects.filter(is_active=True).annotate(
+            available_food_count=Count(
+                'foods',
+                filter=Q(foods__is_available=True),
+                distinct=True,
+            )
+        ).filter(
+            available_food_count__gt=0
+        ).order_by("-created_at")
 
         search = self.request.query_params.get("search", "").strip()
         city = self.request.query_params.get("city", "").strip()
