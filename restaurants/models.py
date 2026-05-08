@@ -6,7 +6,7 @@ from django.conf import settings
 # Category
 # ============================
 class Category(models.Model):
-    name = models.CharField(max_length=150)
+    name = models.CharField(max_length=150, unique=True)
 
     def __str__(self):
         return self.name
@@ -175,6 +175,9 @@ class Food(models.Model):
     is_available = models.BooleanField(default=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ("restaurant", "name")
 
     def get_image(self):
         if self.image:

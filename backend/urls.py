@@ -64,6 +64,11 @@ urlpatterns = [
         "api/delivery/",
         include("delivery.urls")
     ),
+
+    path(
+        "api/admin/",
+        include("admin_panel.urls")
+    ),
 ]
 
 

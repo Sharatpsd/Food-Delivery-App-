@@ -110,6 +110,7 @@ INSTALLED_APPS = [
     "orders",
     "payments",
     "delivery",
+    "admin_panel",
 ]
 
 

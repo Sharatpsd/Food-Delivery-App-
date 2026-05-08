@@ -1,194 +1,197 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ChefHat, ArrowRight, Eye, EyeOff, User, Phone, Lock } from "lucide-react";
+import { Eye, EyeOff, User, Phone, Lock, Mail } from "lucide-react";
 import api from "../utils/api";
 
 export default function Register() {
+  const [formData, setFormData] = useState({
+    name: "",
+    username: "",
+    email: "",
+    phone: "",
+    password: "",
+    password2: "",
+  });
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-const [formData, setFormData] = useState({
-name: "",
-username: "",
-phone: "",
-password: "",
-password2: "",
-});
+  const navigate = useNavigate();
 
-const [showPassword, setShowPassword] = useState(false);
-const [showConfirm, setShowConfirm] = useState(false);
-const [loading, setLoading] = useState(false);
+  const handleChange = (e) => {
+    setFormData((current) => ({
+      ...current,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
-const navigate = useNavigate();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-const handleChange = (e) => {
-setFormData({
-...formData,
-[e.target.name]: e.target.value,
-});
-};
+    if (formData.password !== formData.password2) {
+      alert("Passwords do not match");
+      return;
+    }
 
-const handleSubmit = async (e) => {
-e.preventDefault();
+    const email = formData.email.trim();
+    if (!email) {
+      alert("Email is required");
+      return;
+    }
 
-if (formData.password !== formData.password2) {
-alert("Passwords do not match");
-return;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      alert("Please enter a valid email address");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const payload = {
+        username: formData.username.trim(),
+        email,
+        password: formData.password,
+        password2: formData.password2,
+        name: formData.name.trim(),
+        phone: formData.phone.trim(),
+        role: "customer",
+        address: "",
+      };
+
+      await api.post("/auth/register/", payload);
+
+      alert("Account created successfully");
+      navigate("/login");
+    } catch (err) {
+      console.log("REGISTER ERROR", err.response?.data);
+      alert(JSON.stringify(err.response?.data) || "Registration failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-[#0f1218] via-[#141922] to-[#1b222d] px-4 sm:px-6">
+      <div className="pointer-events-none absolute -left-28 top-12 h-72 w-72 rounded-full bg-orange-500/20 blur-3xl" />
+      <div className="pointer-events-none absolute -right-24 bottom-12 h-72 w-72 rounded-full bg-red-500/20 blur-3xl" />
+
+      <motion.div
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 0.7 }}
+        className="relative z-10 w-full max-w-lg rounded-3xl border border-white/10 bg-[#1b1f27]/95 p-7 shadow-2xl backdrop-blur-xl sm:p-10"
+      >
+        <div className="mb-10 text-center">
+          <h1 className="text-6xl font-black text-orange-300">Bite</h1>
+          <p className="mt-2 text-gray-300">Create your account</p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="relative">
+            <User className="absolute left-4 top-5 text-gray-400" />
+            <input
+              type="text"
+              name="name"
+              placeholder="Full Name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              className="w-full rounded-xl border border-white/15 bg-[#11161d] py-4 pl-12 text-white placeholder-gray-400 focus:border-orange-400"
+            />
+          </div>
+
+          <div className="relative">
+            <User className="absolute left-4 top-5 text-gray-400" />
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              value={formData.username}
+              onChange={handleChange}
+              required
+              className="w-full rounded-xl border border-white/15 bg-[#11161d] py-4 pl-12 text-white placeholder-gray-400 focus:border-orange-400"
+            />
+          </div>
+
+          <div className="relative">
+            <Mail className="absolute left-4 top-5 text-gray-400" />
+            <input
+              type="email"
+              name="email"
+              placeholder="Email Address"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className="w-full rounded-xl border border-white/15 bg-[#11161d] py-4 pl-12 text-white placeholder-gray-400 focus:border-orange-400"
+            />
+          </div>
+
+          <div className="relative">
+            <Phone className="absolute left-4 top-5 text-gray-400" />
+            <input
+              type="text"
+              name="phone"
+              placeholder="Phone"
+              value={formData.phone}
+              onChange={handleChange}
+              required
+              className="w-full rounded-xl border border-white/15 bg-[#11161d] py-4 pl-12 text-white placeholder-gray-400 focus:border-orange-400"
+            />
+          </div>
+
+          <div className="relative">
+            <Lock className="absolute left-4 top-5 text-gray-400" />
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              className="w-full rounded-xl border border-white/15 bg-[#11161d] py-4 pl-12 pr-12 text-white placeholder-gray-400 focus:border-orange-400"
+            />
+
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-4 top-4 text-gray-300 transition hover:text-orange-300"
+            >
+              {showPassword ? <EyeOff /> : <Eye />}
+            </button>
+          </div>
+
+          <div className="relative">
+            <Lock className="absolute left-4 top-5 text-gray-400" />
+            <input
+              type={showConfirm ? "text" : "password"}
+              name="password2"
+              placeholder="Confirm Password"
+              value={formData.password2}
+              onChange={handleChange}
+              required
+              className="w-full rounded-xl border border-white/15 bg-[#11161d] py-4 pl-12 pr-12 text-white placeholder-gray-400 focus:border-orange-400"
+            />
+
+            <button
+              type="button"
+              onClick={() => setShowConfirm(!showConfirm)}
+              className="absolute right-4 top-4 text-gray-300 transition hover:text-orange-300"
+            >
+              {showConfirm ? <EyeOff /> : <Eye />}
+            </button>
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full rounded-xl bg-orange-600 py-4 font-bold text-white"
+          >
+            {loading ? "Creating Account..." : "Sign Up"}
+          </button>
+        </form>
+      </motion.div>
+    </div>
+  );
 }
-
-setLoading(true);
-
-try {
-
-const payload = {
-username: formData.username,
-password: formData.password,
-name: formData.name,
-phone: formData.phone,
-role: "customer",
-address: "",
-};
-
-await api.post("/auth/register/", payload);
-
-alert("Account created successfully");
-navigate("/login");
-
-} catch (err) {
-
-console.log("REGISTER ERROR ðŸ‘‰", err.response?.data);
-
-alert(
-JSON.stringify(err.response?.data) ||
-"Registration failed"
-);
-
-} finally {
-setLoading(false);
-}
-
-};
-
-return (
-
-<div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-[#0f1218] via-[#141922] to-[#1b222d] px-4 sm:px-6">
-<div className="pointer-events-none absolute -left-28 top-12 h-72 w-72 rounded-full bg-orange-500/20 blur-3xl" />
-<div className="pointer-events-none absolute -right-24 bottom-12 h-72 w-72 rounded-full bg-red-500/20 blur-3xl" />
-
-<motion.div
-initial={{ scale: 0.9, opacity: 0 }}
-animate={{ scale: 1, opacity: 1 }}
-transition={{ duration: 0.7 }}
-className="relative z-10 w-full max-w-lg rounded-3xl border border-white/10 bg-[#1b1f27]/95 p-7 shadow-2xl backdrop-blur-xl sm:p-10"
->
-
-<div className="text-center mb-10">
-<h1 className="text-6xl font-black text-orange-300">Bite</h1>
-<p className="text-gray-300 mt-2">Create your account</p>
-</div>
-
-<form onSubmit={handleSubmit} className="space-y-6">
-
-<div className="relative">
-<User className="absolute left-4 top-5 text-gray-400" />
-<input
-type="text"
-name="name"
-placeholder="Full Name"
-value={formData.name}
-onChange={handleChange}
-required
-className="w-full rounded-xl border border-white/15 bg-[#11161d] py-4 pl-12 text-white placeholder-gray-400 focus:border-orange-400"
-/>
-</div>
-
-<div className="relative">
-<User className="absolute left-4 top-5 text-gray-400" />
-<input
-type="text"
-name="username"
-placeholder="Username"
-value={formData.username}
-onChange={handleChange}
-required
-className="w-full rounded-xl border border-white/15 bg-[#11161d] py-4 pl-12 text-white placeholder-gray-400 focus:border-orange-400"
-/>
-</div>
-
-<div className="relative">
-<Phone className="absolute left-4 top-5 text-gray-400" />
-<input
-type="text"
-name="phone"
-placeholder="Phone"
-value={formData.phone}
-onChange={handleChange}
-required
-className="w-full rounded-xl border border-white/15 bg-[#11161d] py-4 pl-12 text-white placeholder-gray-400 focus:border-orange-400"
-/>
-</div>
-
-<div className="relative">
-<Lock className="absolute left-4 top-5 text-gray-400" />
-<input
-type={showPassword ? "text" : "password"}
-name="password"
-placeholder="Password"
-value={formData.password}
-onChange={handleChange}
-required
-className="w-full rounded-xl border border-white/15 bg-[#11161d] py-4 pl-12 pr-12 text-white placeholder-gray-400 focus:border-orange-400"
-/>
-
-<button
-type="button"
-onClick={() => setShowPassword(!showPassword)}
-className="absolute right-4 top-4 text-gray-300 transition hover:text-orange-300"
->
-{showPassword ? <EyeOff /> : <Eye />}
-</button>
-
-</div>
-
-<div className="relative">
-<Lock className="absolute left-4 top-5 text-gray-400" />
-<input
-type={showConfirm ? "text" : "password"}
-name="password2"
-placeholder="Confirm Password"
-value={formData.password2}
-onChange={handleChange}
-required
-className="w-full rounded-xl border border-white/15 bg-[#11161d] py-4 pl-12 pr-12 text-white placeholder-gray-400 focus:border-orange-400"
-/>
-
-<button
-type="button"
-onClick={() => setShowConfirm(!showConfirm)}
-className="absolute right-4 top-4 text-gray-300 transition hover:text-orange-300"
->
-{showConfirm ? <EyeOff /> : <Eye />}
-</button>
-
-</div>
-
-<button
-type="submit"
-disabled={loading}
-className="w-full bg-orange-600 text-white py-4 rounded-xl font-bold"
->
-
-{loading ? "Creating Account..." : "Sign Up"}
-
-</button>
-
-</form>
-
-</motion.div>
-
-</div>
-
-);
-
-}
-
-

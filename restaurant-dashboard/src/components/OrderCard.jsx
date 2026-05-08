@@ -1,66 +1,95 @@
-export default function OrderCard({ order, onStatusChange }) {
+import StatusBadge from "./StatusBadge";
+import { formatCurrency } from "../utils/api";
+
+const nextActions = {
+  pending: { label: "Accept order", status: "accepted", tone: "from-emerald-500 to-emerald-600" },
+  accepted: { label: "Start cooking", status: "cooking", tone: "from-orange-500 to-orange-600" },
+  cooking: { label: "Ready for delivery", status: "on_the_way", tone: "from-sky-500 to-sky-600" },
+  on_the_way: { label: "Mark delivered", status: "delivered", tone: "from-violet-500 to-violet-600" },
+};
+
+export default function OrderCard({ order, onStatusChange, busy = false }) {
+  const items = order.items_detail || [];
+  const action = nextActions[order.status];
+
   return (
-    <div className="bg-white rounded-lg shadow p-6 border-l-4 border-orange-500">
-      <div className="flex justify-between items-start mb-4">
+    <article className="rounded-[2rem] border border-white/10 bg-[#131821]/95 p-6 shadow-[0_22px_60px_rgba(0,0,0,0.28)] backdrop-blur-xl">
+      <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
         <div>
-          <h3 className="text-lg font-bold">Order #{order.id}</h3>
-          <p className="text-gray-600">Customer: {order.customer_name || "N/A"}</p>
-          <p className="font-semibold text-lg mt-1">৳{parseFloat(order.total).toFixed(2)}</p>
+          <div className="flex flex-wrap items-center gap-3">
+            <h3 className="text-2xl font-black text-white">Order #{order.id}</h3>
+            <StatusBadge status={order.status} />
+          </div>
+          <p className="mt-3 text-sm text-slate-400">
+            Customer: <span className="font-semibold text-slate-200">{order.customer_name || "Walk-in guest"}</span>
+          </p>
+          <p className="mt-1 text-sm text-slate-400">
+            Contact: <span className="font-semibold text-slate-200">{order.contact_phone || "Not shared"}</span>
+          </p>
+          <p className="mt-1 text-sm text-slate-400">
+            Address: <span className="font-semibold text-slate-200">{order.delivery_address || "Pickup / not added"}</span>
+          </p>
         </div>
-        <span className="inline-block px-3 py-1 bg-gray-200 rounded-full text-sm font-semibold">
-          {order.status.replace("_", " ").toUpperCase()}
-        </span>
+
+        <div className="rounded-3xl border border-orange-400/20 bg-orange-500/10 px-5 py-4 text-left">
+          <p className="text-xs uppercase tracking-[0.25em] text-orange-200">Order value</p>
+          <p className="mt-2 text-3xl font-black text-white">{formatCurrency(order.total)}</p>
+          <p className="mt-1 text-xs text-slate-400">
+            {items.length} item{items.length === 1 ? "" : "s"} in queue
+          </p>
+        </div>
       </div>
 
-      {/* Items List */}
-      {order.items_detail && order.items_detail.length > 0 && (
-        <div className="mb-4 text-sm text-gray-600">
-          <strong>Items:</strong>
-          <ul className="mt-1 ml-4">
-            {order.items_detail.map((item, idx) => (
-              <li key={idx}>
-                • {item.food_name} x {item.quantity}
-              </li>
-            ))}
-          </ul>
+      <div className="mt-6 grid gap-3 md:grid-cols-2">
+        {items.length ? (
+          items.map((item, index) => (
+            <div
+              key={`${order.id}-${item.food_name}-${index}`}
+              className="rounded-2xl border border-white/8 bg-white/[0.03] px-4 py-4"
+            >
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <p className="font-semibold text-white">{item.food_name}</p>
+                  <p className="mt-1 text-sm text-slate-400">
+                    Qty {item.quantity}
+                  </p>
+                </div>
+                <p className="text-sm font-bold text-orange-200">
+                  {formatCurrency(item.price)}
+                </p>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="rounded-2xl border border-dashed border-white/10 bg-white/[0.03] px-4 py-6 text-sm text-slate-400 md:col-span-2">
+            Order item details are not available for this ticket.
+          </div>
+        )}
+      </div>
+
+      {order.notes && (
+        <div className="mt-5 rounded-2xl border border-white/8 bg-black/20 px-4 py-4">
+          <p className="text-xs uppercase tracking-[0.22em] text-slate-400">Kitchen note</p>
+          <p className="mt-2 text-sm leading-6 text-slate-200">{order.notes}</p>
         </div>
       )}
 
-      {/* Status Update Buttons */}
-      <div className="flex gap-2 flex-wrap">
-        {order.status === "pending" && (
+      <div className="mt-6 flex flex-wrap items-center gap-3">
+        {action ? (
           <button
-            onClick={() => onStatusChange(order.id, "accepted")}
-            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-sm font-semibold transition"
+            type="button"
+            disabled={busy}
+            onClick={() => onStatusChange(order.id, action.status)}
+            className={`rounded-2xl bg-gradient-to-r ${action.tone} px-5 py-3 text-sm font-semibold text-white shadow-[0_14px_30px_rgba(0,0,0,0.2)] transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60`}
           >
-            Accept
+            {busy ? "Updating..." : action.label}
           </button>
-        )}
-        {order.status === "accepted" && (
-          <button
-            onClick={() => onStatusChange(order.id, "cooking")}
-            className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded text-sm font-semibold transition"
-          >
-            Start Cooking
-          </button>
-        )}
-        {order.status === "cooking" && (
-          <button
-            onClick={() => onStatusChange(order.id, "on_the_way")}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm font-semibold transition"
-          >
-            Ready for Delivery
-          </button>
-        )}
-        {order.status === "on_the_way" && (
-          <button
-            onClick={() => onStatusChange(order.id, "delivered")}
-            className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded text-sm font-semibold transition"
-          >
-            Mark Delivered
-          </button>
+        ) : (
+          <span className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-slate-400">
+            No further action available
+          </span>
         )}
       </div>
-    </div>
+    </article>
   );
 }

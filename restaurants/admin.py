@@ -2,6 +2,13 @@ from django.contrib import admin
 from .models import RestaurantRequest, DeliveryRequest, Restaurant, Food, Category
 
 
+def get_matching_restaurant(name, city):
+    queryset = Restaurant.objects.filter(name__iexact=name.strip())
+    if city.strip():
+        queryset = queryset.filter(city__iexact=city.strip())
+    return queryset.order_by("id").first()
+
+
 @admin.register(RestaurantRequest)
 class RestaurantRequestAdmin(admin.ModelAdmin):
     list_display = ("name", "owner", "city", "approved", "created_at")
@@ -12,15 +19,26 @@ class RestaurantRequestAdmin(admin.ModelAdmin):
             if not req.approved:
                 req.approved = True
                 req.save()
-                Restaurant.objects.create(
-                    owner=req.owner,
-                    name=req.name,
-                    logo=req.logo,
-                    address=req.address,
-                    city=req.city,
-                    theme=req.theme,
-                    is_active=True,
-                )
+                restaurant = get_matching_restaurant(req.name, req.city)
+                if restaurant:
+                    restaurant.owner = restaurant.owner or req.owner
+                    restaurant.address = restaurant.address or req.address
+                    restaurant.city = restaurant.city or req.city
+                    restaurant.theme = restaurant.theme or req.theme
+                    if req.logo and not restaurant.logo:
+                        restaurant.logo = req.logo
+                    restaurant.is_active = True
+                    restaurant.save()
+                else:
+                    Restaurant.objects.create(
+                        owner=req.owner,
+                        name=req.name,
+                        logo=req.logo,
+                        address=req.address,
+                        city=req.city,
+                        theme=req.theme,
+                        is_active=True,
+                    )
         self.message_user(request, "Requests approved & restaurants created.")
 
 
@@ -44,7 +62,7 @@ class RestaurantAdmin(admin.ModelAdmin):
 class FoodAdmin(admin.ModelAdmin):
     list_display = ("name", "restaurant", "price", "is_available")
     list_filter = ("restaurant", "is_available")
-    search_fields = ("title",)
+    search_fields = ("name",)
 
 
 @admin.register(Category)

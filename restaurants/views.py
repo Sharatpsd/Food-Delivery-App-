@@ -27,6 +27,13 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
         return owner == request.user
 
 
+def get_matching_restaurant(name, city):
+    queryset = Restaurant.objects.filter(name__iexact=name.strip())
+    if city.strip():
+        queryset = queryset.filter(city__iexact=city.strip())
+    return queryset.order_by("id").first()
+
+
 class RestaurantRequestViewSet(viewsets.ModelViewSet):
     queryset = RestaurantRequest.objects.select_related('owner').order_by("-created_at")
     serializer_class = RestaurantRequestSerializer
@@ -46,14 +53,25 @@ class RestaurantRequestViewSet(viewsets.ModelViewSet):
         req.approved = True
         req.save(update_fields=['approved'])
 
-        Restaurant.objects.create(
-            owner=req.owner,
-            name=req.name,
-            logo=req.logo,
-            address=req.address,
-            city=req.city,
-            theme=req.theme,
-        )
+        restaurant = get_matching_restaurant(req.name, req.city)
+        if restaurant:
+            restaurant.owner = restaurant.owner or req.owner
+            restaurant.address = restaurant.address or req.address
+            restaurant.city = restaurant.city or req.city
+            restaurant.theme = restaurant.theme or req.theme
+            if req.logo and not restaurant.logo:
+                restaurant.logo = req.logo
+            restaurant.is_active = True
+            restaurant.save()
+        else:
+            Restaurant.objects.create(
+                owner=req.owner,
+                name=req.name,
+                logo=req.logo,
+                address=req.address,
+                city=req.city,
+                theme=req.theme,
+            )
 
         return Response({"detail": "Restaurant approved & created."})
 
