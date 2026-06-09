@@ -2,10 +2,12 @@ from django.db.models import Count, Q
 
 from rest_framework import generics, permissions, viewsets
 from rest_framework.decorators import action
+from rest_framework.exceptions import PermissionDenied
 from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.response import Response
 
 from users.throttling import RestaurantsThrottle
+from users.permissions import IsAdminRole
 
 from .models import DeliveryRequest, Food, Restaurant, RestaurantRequest
 from .serializers import (
@@ -17,6 +19,7 @@ from .serializers import (
     RestaurantRequestSerializer,
     RestaurantSerializer,
 )
+from .services import approve_restaurant_request
 
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
@@ -27,66 +30,89 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
         return owner == request.user
 
 
-def get_matching_restaurant(name, city):
-    queryset = Restaurant.objects.filter(name__iexact=name.strip())
-    if city.strip():
-        queryset = queryset.filter(city__iexact=city.strip())
-    return queryset.order_by("id").first()
-
-
 class RestaurantRequestViewSet(viewsets.ModelViewSet):
-    queryset = RestaurantRequest.objects.select_related('owner').order_by("-created_at")
     serializer_class = RestaurantRequestSerializer
     permission_classes = [permissions.IsAuthenticated]
     parser_classes = [MultiPartParser, FormParser]
 
+    def get_queryset(self):
+        queryset = RestaurantRequest.objects.select_related('owner').order_by("-created_at")
+        if getattr(self.request.user, "role", None) == "admin":
+            return queryset
+        return queryset.filter(owner=self.request.user)
+
     def perform_create(self, serializer):
+        if self.request.user.role != 'customer':
+            raise PermissionDenied("Only customers can submit restaurant requests.")
+
+        phone = self.request.data.get("phone", "").strip()
+        email = self.request.data.get("email", "").strip()
+        updates = []
+        if phone and self.request.user.phone != phone:
+            self.request.user.phone = phone
+            updates.append("phone")
+        if email and not self.request.user.email:
+            self.request.user.email = email
+            updates.append("email")
+        if updates:
+            self.request.user.save(update_fields=updates)
+
         serializer.save(owner=self.request.user)
 
-    @action(detail=True, methods=["post"], permission_classes=[permissions.IsAdminUser])
+    @action(detail=True, methods=["post"], permission_classes=[IsAdminRole])
     def approve(self, request, pk=None):
         req = self.get_object()
 
         if req.approved:
             return Response({"detail": "Already approved."}, status=400)
 
-        req.approved = True
-        req.save(update_fields=['approved'])
+        try:
+            restaurant = approve_restaurant_request(req)
+        except ValueError as exc:
+            return Response({"detail": str(exc)}, status=400)
 
-        restaurant = get_matching_restaurant(req.name, req.city)
-        if restaurant:
-            restaurant.owner = restaurant.owner or req.owner
-            restaurant.address = restaurant.address or req.address
-            restaurant.city = restaurant.city or req.city
-            restaurant.theme = restaurant.theme or req.theme
-            if req.logo and not restaurant.logo:
-                restaurant.logo = req.logo
-            restaurant.is_active = True
-            restaurant.save()
-        else:
-            Restaurant.objects.create(
-                owner=req.owner,
-                name=req.name,
-                logo=req.logo,
-                address=req.address,
-                city=req.city,
-                theme=req.theme,
-            )
-
-        return Response({"detail": "Restaurant approved & created."})
+        return Response({
+            "detail": "Restaurant approved successfully.",
+            "restaurant_id": restaurant.id,
+        })
 
 
 class DeliveryRequestViewSet(viewsets.ModelViewSet):
-    queryset = DeliveryRequest.objects.select_related('user').order_by("-created_at")
     serializer_class = DeliveryRequestSerializer
     permission_classes = [permissions.IsAuthenticated]
     parser_classes = [MultiPartParser, FormParser]
 
-    def perform_create(self, serializer):
-        from rest_framework.exceptions import PermissionDenied
+    def get_queryset(self):
+        queryset = DeliveryRequest.objects.select_related('user').order_by("-created_at")
+        if getattr(self.request.user, "role", None) == "admin":
+            return queryset
+        return queryset.filter(user=self.request.user)
 
+    def perform_create(self, serializer):
         if self.request.user.role != 'customer':
             raise PermissionDenied("Only customers can submit delivery requests.")
+
+        updates = []
+        full_name = self.request.data.get("full_name") or self.request.data.get("name", "")
+        phone = self.request.data.get("phone", "").strip()
+        email = self.request.data.get("email", "").strip()
+        address = self.request.data.get("address", "").strip()
+
+        if full_name and self.request.user.name != full_name:
+            self.request.user.name = full_name
+            updates.append("name")
+        if phone and self.request.user.phone != phone:
+            self.request.user.phone = phone
+            updates.append("phone")
+        if email and not self.request.user.email:
+            self.request.user.email = email
+            updates.append("email")
+        if address and self.request.user.address != address:
+            self.request.user.address = address
+            updates.append("address")
+        if updates:
+            self.request.user.save(update_fields=updates)
+
         serializer.save(user=self.request.user)
 
 

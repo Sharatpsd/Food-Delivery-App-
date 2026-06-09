@@ -1,9 +1,11 @@
 from pathlib import Path
 from datetime import timedelta
+from urllib.parse import urlparse
 from decouple import config
 import os
 import dj_database_url
 import cloudinary
+from django.core.exceptions import ImproperlyConfigured
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -27,6 +29,13 @@ def _to_bool(value, default=False):
 
 def _split_csv(value):
     return [item.strip() for item in str(value).split(",") if item.strip()]
+
+
+def _is_local_hostname(hostname):
+    if not hostname:
+        return True
+    normalized = hostname.strip().lower()
+    return normalized in {"localhost", "127.0.0.1"} or normalized.endswith(".local")
 
 
 # ================================================================
@@ -310,8 +319,14 @@ SIMPLE_JWT = {
 # ================================================================
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+SECURE_SSL_REDIRECT = not DEBUG
 SESSION_COOKIE_SECURE = not DEBUG
 CSRF_COOKIE_SECURE = not DEBUG
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_HSTS_SECONDS = 3600 if not DEBUG else 0
+SECURE_HSTS_INCLUDE_SUBDOMAINS = not DEBUG
+SECURE_HSTS_PRELOAD = not DEBUG
+X_FRAME_OPTIONS = "DENY"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
@@ -326,3 +341,17 @@ SSLCOMMERZ_STORE_ID = config("SSLCOMMERZ_STORE_ID", default="")
 SSLCOMMERZ_STORE_PASSWORD = config("SSLCOMMERZ_STORE_PASSWORD", default="")
 
 SSLCOMMERZ_IS_SANDBOX = config("SSLCOMMERZ_IS_SANDBOX", cast=bool, default=True)
+
+
+if not DEBUG:
+    if SECRET_KEY == "test-secret":
+        raise ImproperlyConfigured("SECRET_KEY must be set in production.")
+
+    if not DATABASE_URL:
+        raise ImproperlyConfigured("DATABASE_URL must be set when DEBUG=False.")
+
+    parsed_frontend_url = urlparse(FRONTEND_BASE_URL)
+    if parsed_frontend_url.scheme != "https" or _is_local_hostname(parsed_frontend_url.hostname):
+        raise ImproperlyConfigured(
+            "FRONTEND_BASE_URL must be a public HTTPS URL in production."
+        )

@@ -11,6 +11,19 @@ class IsOwnerOrReadOnly(BasePermission):
         return hasattr(obj, "owner") and obj.owner == request.user
 
 
+class IsAdminRole(BasePermission):
+    """
+    Only users with role 'admin'.
+    """
+
+    def has_permission(self, request, view):
+        return bool(
+            request.user and
+            request.user.is_authenticated and
+            getattr(request.user, "role", None) == "admin"
+        )
+
+
 class IsRestaurantOwner(BasePermission):
     """
     Only users with role 'restaurant'

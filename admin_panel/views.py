@@ -8,7 +8,7 @@ from django.db.models.functions import TruncDate
 from django.utils import timezone
 from datetime import timedelta
 from users.models import User
-from restaurants.models import Restaurant, RestaurantRequest
+from restaurants.models import DeliveryRequest, Restaurant, RestaurantRequest
 from orders.models import Order
 from payments.models import Payment
 from .serializers import (
@@ -50,12 +50,9 @@ class DashboardStatsView(APIView):
             status='delivered'
         ).aggregate(Sum('total'))['total__sum'] or 0
 
-        pending_restaurant_requests = RestaurantRequest.objects.count()
-        
-        pending_delivery_approvals = User.objects.filter(
-            role='delivery',
-            is_active=False
-        ).count()
+        pending_restaurant_requests = RestaurantRequest.objects.filter(approved=False).count()
+
+        pending_delivery_approvals = DeliveryRequest.objects.filter(approved=False).count()
 
         avg_order_value = 0
         if completed_orders > 0:
@@ -125,36 +122,23 @@ class UserViewSet(viewsets.ModelViewSet):
 class RestaurantRequestViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdmin]
     serializer_class = RestaurantRequestSerializer
-    queryset = RestaurantRequest.objects.all()
+
+    def get_queryset(self):
+        return RestaurantRequest.objects.filter(approved=False).order_by("-created_at")
 
     @action(detail=True, methods=['post'])
     def approve(self, request, pk=None):
         """Approve a restaurant request"""
         request_obj = self.get_object()
-        
-        if not request_obj.owner:
+        from restaurants.services import approve_restaurant_request
+
+        try:
+            restaurant = approve_restaurant_request(request_obj)
+        except ValueError as exc:
             return Response(
-                {'detail': 'Owner not found'},
+                {'detail': str(exc)},
                 status=status.HTTP_400_BAD_REQUEST
             )
-
-        # Create restaurant
-        restaurant = Restaurant.objects.create(
-            owner=request_obj.owner,
-            name=request_obj.name,
-            logo=request_obj.logo,
-            address=request_obj.address,
-            city=request_obj.city,
-            theme=request_obj.theme,
-            is_active=True,
-        )
-
-        # Mark owner as restaurant role
-        request_obj.owner.role = 'restaurant'
-        request_obj.owner.save()
-
-        # Delete request
-        request_obj.delete()
 
         return Response({
             'detail': 'Restaurant approved successfully',
@@ -285,23 +269,53 @@ class DeliveryAgentApprovalView(APIView):
 
     def get(self, request):
         """Get pending delivery agent approvals"""
-        agents = User.objects.filter(role='delivery', is_active=False)
-        serializer = UserSerializer(agents, many=True)
-        return Response(serializer.data)
+        requests_qs = DeliveryRequest.objects.filter(approved=False).select_related('user').order_by('-created_at')
+        agents = [
+            {
+                'id': delivery_request.id,
+                'user_id': delivery_request.user_id,
+                'name': delivery_request.full_name or delivery_request.user.name or delivery_request.user.username,
+                'username': delivery_request.user.username,
+                'email': delivery_request.user.email,
+                'phone': delivery_request.phone or delivery_request.user.phone,
+                'city': delivery_request.city,
+                'date_joined': delivery_request.created_at,
+            }
+            for delivery_request in requests_qs
+        ]
+        return Response(agents)
 
     def post(self, request):
         """Approve delivery agent"""
-        agent_id = request.data.get('agent_id')
+        request_id = request.data.get('agent_id')
         try:
-            agent = User.objects.get(id=agent_id, role='delivery')
-            agent.is_active = True
-            agent.save()
+            delivery_request = DeliveryRequest.objects.select_related('user').get(
+                id=request_id,
+                approved=False,
+            )
+            agent = delivery_request.user
+            update_fields = []
+
+            if agent.role != 'delivery':
+                agent.role = 'delivery'
+                update_fields.append('role')
+            if delivery_request.full_name and agent.name != delivery_request.full_name:
+                agent.name = delivery_request.full_name
+                update_fields.append('name')
+            if delivery_request.phone and agent.phone != delivery_request.phone:
+                agent.phone = delivery_request.phone
+                update_fields.append('phone')
+            if update_fields:
+                agent.save(update_fields=update_fields)
+
+            delivery_request.approved = True
+            delivery_request.save(update_fields=['approved'])
             return Response({
                 'detail': 'Delivery agent approved',
                 'agent': UserSerializer(agent).data
             })
-        except User.DoesNotExist:
+        except DeliveryRequest.DoesNotExist:
             return Response(
-                {'detail': 'Agent not found'},
+                {'detail': 'Pending delivery request not found'},
                 status=status.HTTP_404_NOT_FOUND
             )

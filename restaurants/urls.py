@@ -12,8 +12,8 @@ from .views import (
 
 
 router = DefaultRouter()
-router.register("restaurant-requests", RestaurantRequestViewSet)
-router.register("delivery-requests", DeliveryRequestViewSet)
+router.register("restaurant-requests", RestaurantRequestViewSet, basename="restaurantrequest")
+router.register("delivery-requests", DeliveryRequestViewSet, basename="deliveryrequest")
 router.register("restaurants", RestaurantViewSet)
 router.register("foods", FoodViewSet)
 

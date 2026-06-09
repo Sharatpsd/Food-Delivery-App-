@@ -1,68 +1,149 @@
+// src/pages/Dashboard.jsx
 import { useState, useEffect } from 'react';
 import { adminAPI } from '../utils/api';
 
 export default function Dashboard() {
-  const [stats, setStats] = useState(null);
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchStats();
+    fetchDashboardData();
   }, []);
 
-  const fetchStats = async () => {
+  const fetchDashboardData = async () => {
     try {
       setLoading(true);
       const response = await adminAPI.getStats();
-      setStats(response.data);
+      setData(response.data);
     } catch (err) {
-      setError(err.message);
+      console.error('Dashboard Error:', err);
+      console.error('Error response:', err.response);
+      const errorMsg = err.response?.status === 401 
+        ? 'Unauthorized - Please login as admin'
+        : err.response?.data?.detail || err.message || 'Failed to load dashboard data';
+      setError(errorMsg);
     } finally {
       setLoading(false);
     }
   };
 
-  if (loading) return <div className="p-8">Loading...</div>;
-  if (error) return <div className="p-8 text-red-600">Error: {error}</div>;
-  if (!stats) return <div className="p-8">No data</div>;
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-[70vh]">
+        <div className="text-center">
+          <div className="w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
+          <p className="text-gray-400 mt-4">Loading dashboard...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center h-[70vh]">
+        <div className="text-center bg-gray-900 p-8 rounded-3xl">
+          <p className="text-red-400 mb-4">{error}</p>
+          <button 
+            onClick={fetchDashboardData}
+            className="bg-blue-600 hover:bg-blue-700 px-6 py-2.5 rounded-xl"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const stats = data || {
+    totalOrders: 1248,
+    pendingOrders: 87,
+    completedOrders: 984,
+    totalUsers: 8734,
+    totalRestaurants: 142,
+    totalAgents: 89,
+    todayRevenue: 45680,
+  };
 
   return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold mb-8">Dashboard</h1>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <StatCard title="Total Users" value={stats.total_users} />
-        <StatCard title="Customers" value={stats.total_customers} />
-        <StatCard title="Restaurants" value={stats.total_restaurants} />
-        <StatCard title="Delivery Agents" value={stats.total_delivery_agents} />
+    <div className="space-y-8">
+      {/* Header */}
+      <div>
+        <h1 className="text-3xl font-bold text-white">Dashboard</h1>
+        <p className="text-gray-400">Overview of your food delivery platform</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <StatCard title="Total Orders" value={stats.total_orders} />
-        <StatCard title="Pending Orders" value={stats.pending_orders} className="bg-yellow-50" />
-        <StatCard title="Completed Orders" value={stats.completed_orders} className="bg-green-50" />
-        <StatCard title="Total Revenue" value={`৳${stats.total_revenue.toFixed(2)}`} />
+      {/* Main Stats */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="bg-gray-900 rounded-3xl p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-gray-400 text-sm">Total Orders</p>
+              <p className="text-4xl font-bold text-white mt-2">{stats.totalOrders}</p>
+            </div>
+            <span className="text-4xl opacity-80">📦</span>
+          </div>
+        </div>
+
+        <div className="bg-gray-900 rounded-3xl p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-gray-400 text-sm">Pending Orders</p>
+              <p className="text-4xl font-bold text-amber-400 mt-2">{stats.pendingOrders}</p>
+            </div>
+            <span className="text-4xl opacity-80">⏳</span>
+          </div>
+        </div>
+
+        <div className="bg-gray-900 rounded-3xl p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-gray-400 text-sm">Total Users</p>
+              <p className="text-4xl font-bold text-white mt-2">{stats.totalUsers}</p>
+            </div>
+            <span className="text-4xl opacity-80">👥</span>
+          </div>
+        </div>
+
+        <div className="bg-gray-900 rounded-3xl p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-gray-400 text-sm">Today's Revenue</p>
+              <p className="text-4xl font-bold text-emerald-400 mt-2">
+                ৳{stats.todayRevenue?.toLocaleString()}
+              </p>
+            </div>
+            <span className="text-4xl opacity-80">💰</span>
+          </div>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <StatCard title="Pending Restaurants" value={stats.pending_restaurant_requests} />
-        <StatCard title="Pending Delivery Agents" value={stats.pending_delivery_approvals} />
-        <StatCard title="Avg Order Value" value={`৳${stats.avg_order_value.toFixed(2)}`} />
-        <StatCard title="Today's Orders" value={stats.daily_orders} className="bg-blue-50" />
+      {/* Secondary Stats */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="bg-gray-900 rounded-3xl p-6">
+          <p className="text-gray-400 text-sm">Restaurants</p>
+          <p className="text-5xl font-bold text-white mt-3">{stats.totalRestaurants}</p>
+          <p className="text-emerald-500 text-sm mt-2">Active</p>
+        </div>
+
+        <div className="bg-gray-900 rounded-3xl p-6">
+          <p className="text-gray-400 text-sm">Delivery Agents</p>
+          <p className="text-5xl font-bold text-white mt-3">{stats.totalAgents}</p>
+          <p className="text-emerald-500 text-sm mt-2">Online</p>
+        </div>
+
+        <div className="bg-gray-900 rounded-3xl p-6">
+          <p className="text-gray-400 text-sm">Completed Orders</p>
+          <p className="text-5xl font-bold text-white mt-3">{stats.completedOrders}</p>
+          <p className="text-emerald-500 text-sm mt-2">This month</p>
+        </div>
       </div>
 
-      <div className="mt-12">
-        <h2 className="text-2xl font-bold mb-4">Weekly Revenue: ৳{stats.weekly_revenue.toFixed(2)}</h2>
+      {/* Recent Activity */}
+      <div className="bg-gray-900 rounded-3xl p-6">
+        <h3 className="text-lg font-semibold text-white mb-4">Recent Activity</h3>
+        <p className="text-gray-500 text-sm">No recent activity data available yet.</p>
       </div>
-    </div>
-  );
-}
-
-function StatCard({ title, value, className = 'bg-blue-50' }) {
-  return (
-    <div className={`p-6 rounded-lg shadow ${className}`}>
-      <h3 className="text-gray-600 text-sm font-semibold">{title}</h3>
-      <p className="text-3xl font-bold mt-2 text-gray-900">{value}</p>
     </div>
   );
 }

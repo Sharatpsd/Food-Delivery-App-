@@ -3,7 +3,6 @@ from urllib.parse import urlencode
 
 import requests
 from django.conf import settings
-from django.db import transaction
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, permissions
@@ -71,7 +70,7 @@ def _init_sslcommerz(payment, request):
         "ipn_url": f"{callback_base}ipn/",
         "emi_option": 0,
         "cus_name": payment.order.customer.name or payment.order.customer.username,
-        "cus_email": payment.order.customer.username,
+        "cus_email": payment.order.customer.email or payment.order.customer.username,
         "cus_phone": payment.order.customer.phone or "01700000000",
         "cus_add1": payment.order.customer.address or "Dhaka",
         "cus_city": payment.order.restaurant.city or "Dhaka",
@@ -171,43 +170,6 @@ class InitiatePaymentView(generics.CreateAPIView):
 
         serializer = self.get_serializer(payment)
         return Response(serializer.data, status=201)
-
-
-class CompletePaymentView(generics.GenericAPIView):
-    permission_classes = [permissions.IsAuthenticated, IsCustomer]
-
-    def post(self, request):
-        payment_id = request.data.get("payment_id")
-        transaction_id = request.data.get("transaction_id")
-
-        if not payment_id:
-            return Response({"detail": "payment_id required"}, status=400)
-
-        if not transaction_id:
-            return Response({"detail": "transaction_id required"}, status=400)
-
-        try:
-            with transaction.atomic():
-                payment = Payment.objects.select_for_update().get(
-                    id=payment_id,
-                    order__customer=request.user,
-                )
-
-                if payment.status == "completed":
-                    return Response({"detail": "Payment already completed"}, status=400)
-
-                payment.transaction_id = transaction_id
-                payment.status = "completed"
-                payment.save(update_fields=["transaction_id", "status"])
-
-                order = payment.order
-                order.status = "accepted"
-                order.save(update_fields=["status"])
-
-        except Payment.DoesNotExist:
-            return Response({"detail": "Invalid payment"}, status=404)
-
-        return Response({"detail": "Payment successful!"}, status=200)
 
 
 class PaymentStatusView(generics.RetrieveAPIView):

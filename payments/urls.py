@@ -1,7 +1,6 @@
 from django.urls import path
 from .views import (
     InitiatePaymentView,
-    CompletePaymentView,
     PaymentStatusView,
     SSLCommerzSuccessCallbackView,
     SSLCommerzFailCallbackView,
@@ -11,7 +10,6 @@ from .views import (
 
 urlpatterns = [
     path("initiate/", InitiatePaymentView.as_view()),
-    path("complete/", CompletePaymentView.as_view()),
     path("status/<int:order_id>/", PaymentStatusView.as_view()),
     path("callback/success/", SSLCommerzSuccessCallbackView.as_view()),
     path("callback/fail/", SSLCommerzFailCallbackView.as_view()),
