@@ -17,6 +17,19 @@ import {
   getLocalFoodFallback,
 } from "../utils/image";
 
+const getApiErrorMessage = (error, fallback) => {
+  const data = error?.response?.data;
+  if (typeof data?.detail === "string" && data.detail.trim()) return data.detail;
+
+  if (data && typeof data === "object") {
+    const firstValue = Object.values(data)[0];
+    if (Array.isArray(firstValue) && firstValue[0]) return String(firstValue[0]);
+    if (typeof firstValue === "string" && firstValue.trim()) return firstValue;
+  }
+
+  return fallback;
+};
+
 export default function FoodCard({ food }) {
   const { addToCart, cart, increaseQty, decreaseQty } = useCart();
   const navigate = useNavigate();
@@ -68,7 +81,7 @@ export default function FoodCard({ food }) {
       setIsInCart(true);
     } catch (error) {
       console.error("Add to cart failed:", error);
-      alert(error?.response?.data?.detail || "Could not update cart.");
+      alert(getApiErrorMessage(error, "Could not update cart."));
     } finally {
       setIsLoading(false);
     }

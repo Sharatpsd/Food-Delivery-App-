@@ -4,6 +4,19 @@ import { ArrowLeft, Upload } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import api, { submitRestaurantOwnerRequest } from "../utils/api";
 
+const getApiErrorMessage = (error, fallback) => {
+  const data = error?.response?.data;
+  if (typeof data?.detail === "string" && data.detail.trim()) return data.detail;
+
+  if (data && typeof data === "object") {
+    const firstValue = Object.values(data)[0];
+    if (Array.isArray(firstValue) && firstValue[0]) return String(firstValue[0]);
+    if (typeof firstValue === "string" && firstValue.trim()) return firstValue;
+  }
+
+  return fallback;
+};
+
 export default function RestaurantOwner() {
   const [formData, setFormData] = useState({
     restaurantName: "",
@@ -54,10 +67,10 @@ export default function RestaurantOwner() {
 
     try {
       const result = await submitRestaurantOwnerRequest(data);
-      alert(result.message || "Request submitted successfully");
+      alert(result.detail || result.message || "Request submitted successfully");
       navigate("/");
     } catch (error) {
-      alert("Error submitting request");
+      alert(getApiErrorMessage(error, "Error submitting request"));
     } finally {
       setLoading(false);
     }

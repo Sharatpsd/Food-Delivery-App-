@@ -78,8 +78,8 @@ export default function Checkout() {
         const res = await api.get(`/payments/status/${orderId}/`);
         const payment = res.data;
 
-        if (payment.status === "completed" || paymentStatus === "success") {
-          setPlacedOrderTotal(totalPrice);
+        if (payment.status === "completed") {
+          setPlacedOrderTotal(Number(payment.amount) || totalPrice);
           setPlacedOrderId(orderId);
           setOrderSuccess(true);
           await clearCart();
@@ -94,15 +94,6 @@ export default function Checkout() {
             : "Payment failed. Please try again."
         );
       } catch {
-        if (paymentStatus === "success") {
-          setPlacedOrderTotal(totalPrice);
-          setPlacedOrderId(orderId);
-          setOrderSuccess(true);
-          await clearCart();
-          setStep(4);
-          navigate("/checkout", { replace: true });
-          return;
-        }
         alert("Could not verify payment status.");
       }
     };

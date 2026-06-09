@@ -11,6 +11,19 @@ const STATUS_COLORS = {
   cancelled: { bg: "bg-red-100", text: "text-red-800", label: "Cancelled" },
 };
 
+const getApiErrorMessage = (error, fallback) => {
+  const data = error?.response?.data;
+  if (typeof data?.detail === "string" && data.detail.trim()) return data.detail;
+
+  if (data && typeof data === "object") {
+    const firstValue = Object.values(data)[0];
+    if (Array.isArray(firstValue) && firstValue[0]) return String(firstValue[0]);
+    if (typeof firstValue === "string" && firstValue.trim()) return firstValue;
+  }
+
+  return error?.message || fallback;
+};
+
 export default function Orders() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -24,7 +37,7 @@ export default function Orders() {
     setLoading(true);
     setError(null);
     try {
-      const res = await api.get("/orders/customer-orders/");
+      const res = await api.get("/orders/my-orders/");
       setOrders(res.data.results || res.data);
     } catch (err) {
       if (err.response?.status === 401) {
@@ -34,11 +47,7 @@ export default function Orders() {
       } else if (err.message === "Network Error") {
         setError("Network error. Please check your connection.");
       } else {
-        setError(
-          err.response?.data?.detail ||
-            err.message ||
-            "Failed to load orders"
-        );
+        setError(getApiErrorMessage(err, "Failed to load orders"));
       }
     } finally {
       setLoading(false);

@@ -16,6 +16,20 @@ const toSafeNumber = (value, fallback = 0) => {
 };
 
 const formatMoney = (amount) => `BDT ${Math.round(amount).toLocaleString()}`;
+
+const getApiErrorMessage = (error, fallback) => {
+  const data = error?.response?.data;
+  if (typeof data?.detail === "string" && data.detail.trim()) return data.detail;
+
+  if (data && typeof data === "object") {
+    const firstValue = Object.values(data)[0];
+    if (Array.isArray(firstValue) && firstValue[0]) return String(firstValue[0]);
+    if (typeof firstValue === "string" && firstValue.trim()) return firstValue;
+  }
+
+  return fallback;
+};
+
 export default function RestaurantDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -56,7 +70,7 @@ export default function RestaurantDetail() {
         quantity: 1,
       });
     } catch (error) {
-      alert(error?.response?.data?.detail || "Could not add item to cart.");
+      alert(getApiErrorMessage(error, "Could not add item to cart."));
       setCartBusy(false);
       return;
     }
@@ -297,5 +311,4 @@ export default function RestaurantDetail() {
     </div>
   );
 }
-
 
