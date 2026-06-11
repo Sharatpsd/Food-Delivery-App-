@@ -35,22 +35,18 @@ const localFoodPool = localFoodFiles.map(
   (file) => `/media/foods/images/${encodeURIComponent(file)}`
 );
 const localRestaurantFiles = [
-  "bbq-party.jpg",
-  "pansi.webp",
-  "cheez_update.jpg",
-  "handi_image.jpg",
+  "cafe_rio.png",
+  "haji biriyani.jpg",
+  "handi_res.jpg",
   "izumi.jpg",
-  "takeout_restaurent.jpg",
-  "kacci_bhai_logo.jpg",
-  "Star_Kabab_1.jpg",
-  "images.jpg",
-  "1000092399.jpg",
-  "Chillox.jpg",
+  "kacchi-bhai.jpg",
+  "spicy-ramna.jpg",
   "sultan.png",
+  "takeout.jpg",
 ];
 
 const localRestaurantPool = localRestaurantFiles.map(
-  (file) => `/media/restaurants/logos/${encodeURIComponent(file)}`
+  (file) => `/restaurants/${encodeURIComponent(file)}`
 );
 
 const getSeed = (value) => {
@@ -96,19 +92,15 @@ const keywordFoodMap = [
   { keys: ["handi"], file: "Chicken_Handi.jpg" },
 ];
 const keywordRestaurantMap = [
-  { keys: ["bbq"], file: "bbq-party.jpg" },
-  { keys: ["panshi", "pansi"], file: "pansi.webp" },
-  { keys: ["cheez"], file: "cheez_update.jpg" },
-  { keys: ["handi"], file: "handi_image.jpg" },
   { keys: ["izumi"], file: "izumi.jpg" },
-  { keys: ["takeout"], file: "takeout_restaurent.jpg" },
-  { keys: ["kacchi", "kacci"], file: "kacci_bhai_logo.jpg" },
-  { keys: ["star", "kabab", "kebab"], file: "Star_Kabab_1.jpg" },
+  { keys: ["haji"], file: "haji biriyani.jpg" },
+  { keys: ["handi"], file: "handi_res.jpg" },
+  { keys: ["kacchi", "kacci"], file: "kacchi-bhai.jpg" },
   { keys: ["sultan"], file: "sultan.png" },
-  { keys: ["madchef"], file: "Chillox.jpg" },
-  { keys: ["chillox"], file: "Chillox.jpg" },
+  { keys: ["takeout"], file: "takeout.jpg" },
+  { keys: ["spicy"], file: "spicy-ramna.jpg" },
+  { keys: ["cafe"], file: "cafe_rio.png" },
 ];
-
 const decodeIfEncodedUrl = (source) => {
   if (!source) return source;
   if (source.includes("https%3A") || source.includes("http%3A")) {
@@ -184,7 +176,7 @@ export const getLocalRestaurantFallback = (name = "", seed = "") =>
   const mapped = keywordRestaurantMap.find(({ keys }) =>
     keys.some((key) => lower.includes(key))
   );
-  if (mapped) return `/media/restaurants/logos/${encodeURIComponent(mapped.file)}`;
+  if (mapped) return `/restaurants/${encodeURIComponent(mapped.file)}`;
   return (
     pickFromPool(localRestaurantPool, `${name}-${seed}`) || localRestaurantPool[0]
   );
