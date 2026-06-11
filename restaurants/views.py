@@ -128,8 +128,6 @@ class RestaurantListView(generics.ListAPIView):
                 filter=Q(foods__is_available=True),
                 distinct=True,
             )
-        ).filter(
-            available_food_count__gt=0
         ).order_by("-created_at")
 
         search = self.request.query_params.get("search", "").strip()
