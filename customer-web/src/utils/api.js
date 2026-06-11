@@ -213,6 +213,7 @@ API.interceptors.response.use(
 );
 
 /*
+=/*
 ===============================
 RESTAURANTS
 ===============================
@@ -227,9 +228,9 @@ export const getRestaurants = async ({ category = "", search = "" } = {}) => {
   });
 
   let data = unwrapListData(res.data);
-  data = dedupeRestaurants(data).filter(
-    (restaurant) => Number(restaurant?.food_count || 0) > 0
-  );
+
+  // Remove duplicates only
+  data = dedupeRestaurants(data);
 
   if (category) {
     const cat = category.toLowerCase();
@@ -255,7 +256,6 @@ export const getRestaurantFoods = async (restaurantId) => {
 
   return { data: unwrapListData(res.data) };
 };
-
 /*
 ===============================
 CART
